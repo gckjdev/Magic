@@ -1,0 +1,33 @@
+
+
+package barrage;
+
+option java_package = "com.orange.protocol.message";
+option java_outer_classname = "CommonProtos";
+
+
+message PBDevice
+{
+    required int32 type = 1;            // refer to PBDeviceType
+    optional string model = 2;
+    optional string os = 3;
+
+    // for iPhone
+    optional string deviceId = 4;
+    optional string deviceToken = 5;
+    optional bool isJailBroken = 6;
+}
+
+message PBPoint
+{
+    optional int32 posX = 1;
+    optional int32 poxY = 2;
+}
+
+
+message PBPointList
+{
+    repeated PBPoint point = 1;
+}
+
+

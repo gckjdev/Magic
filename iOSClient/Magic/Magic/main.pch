@@ -1,0 +1,26 @@
+//
+//  main.pch
+//  BarrageClient
+//
+//  Created by pipi on 14/11/29.
+//  Copyright (c) 2014年 PIPICHENG. All rights reserved.
+//
+
+#ifndef BarrageClient_main_pch
+#define BarrageClient_main_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#ifdef __OBJC__
+
+
+//define this constant if you want to use Masonry without the 'mas_' prefix
+#define MAS_SHORTHAND
+
+//define this constant if you want to enable auto-boxing for default syntax
+#define MAS_SHORTHAND_GLOBALS
+
+#endif
+
+
+#endif

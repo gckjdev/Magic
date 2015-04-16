@@ -1,0 +1,26 @@
+
+
+package barrage;
+
+option java_package = "com.orange.protocol.message";
+option java_outer_classname = "ConstantsProtos";
+
+enum PBDeviceType
+{
+    DEVICE_TYPE_IPHONE = 1;
+    DEVICE_TYPE_ANDROID = 2;
+    DEVICE_TYPE_WINDOW = 3;
+
+}
+
+enum PBFeedType
+{
+    FEED_IMAGE_TEXT = 0;            // 图文
+
+}
+
+enum PBFeedActionType
+{
+    ACTION_BARRAGE_TEXT = 0;        // 文字弹幕
+
+}

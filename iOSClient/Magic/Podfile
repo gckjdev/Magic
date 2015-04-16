@@ -1,0 +1,36 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.0'
+pod "AFNetworking", "~> 2.0"
+
+pod "Qiniu", "~> 7.0"
+pod 'iOS-WebP', '~>0.3'
+
+pod 'SDWebImage', '~>3.6'
+pod 'ProtocolBuffers', '1.9.7'
+pod 'pop', '~> 1.0'
+
+pod 'SCLAlertView-Objective-C'
+pod 'Masonry'
+pod 'RDVTabBarController'
+pod 'UIView+draggable', '0.4'
+pod 'THLabel', '~> 1.4.6'
+pod 'REMenu', '~> 1.10'
+pod 'HTKDynamicResizingCell', '~> 0.0.1'
+pod 'RETableViewManager', '~> 1.5.14'
+pod 'UITextField+Shake'
+pod 'MHTextField', '~> 0.5'
+pod 'AFViewShaker', '~> 0.0.2'
+pod 'MLPAutoCompleteTextField'
+pod 'HTAutocompleteTextField'
+pod 'RFKeyboardToolbar'
+pod 'TMCache'
+pod 'UMengFeedback', '~> 2.0'
+pod 'UzysAssetsPickerController'
+pod 'IQKeyboardManager'
+pod 'SKSplashView'
+pod "SKTagView"
+pod 'TWMessageBarManager', '~> 1.7.1'
+pod 'MBProgressHUD', '~> 0.8'
+pod 'MWPhotoBrowser'
+pod 'Vertigo'
+pod 'BlocksKit'

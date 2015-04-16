@@ -1,0 +1,545 @@
+//
+//  BarrageNetworkRequest.m
+//  Draw
+//
+//  Created by qqn_pipi on 13-6-9.
+//
+//
+
+#import "BarrageNetworkRequest.h"
+#import "PPNetworkConstants.h"
+#import "StringUtil.h"
+#import "PPDebug.h"
+#import "BarrageError.h"
+//#import "UserManager.h"
+//#import "GroupManager.h"
+//#import "DrawError.h"
+
+@implementation GameNetworkOutput
+@end;
+
+@implementation BarrageNetworkRequest
+
+
++ (NSString*)addDefaultParameters:(NSString*)str parameters:(NSDictionary*)para
+{
+    /*
+    // userId
+    if (para == nil || [para objectForKey:PARA_USERID] == nil){
+        NSString* userId = [[UserManager defaultManager] userId];
+        if ([userId length] > 0){
+            str = [str stringByAddQueryParameter:PARA_USERID value:userId];
+        }
+    }
+    
+    // appId
+    if (para == nil || [para objectForKey:PARA_APPID] == nil){
+        str = [str stringByAddQueryParameter:PARA_APPID value:[GameApp appId]];
+    }
+    
+    // gameId
+    if (para == nil || [para objectForKey:PARA_GAME_ID] == nil){
+        str = [str stringByAddQueryParameter:PARA_GAME_ID value:[GameApp gameId]];
+    }
+    */
+
+    // groupId
+//    if (para == nil || [para objectForKey:PARA_GROUPID] == nil){
+//        NSString* groupId = [[GroupManager defaultManager] userCurrentGroupId];
+//        if ([groupId length] > 0){
+//            str = [str stringByAddQueryParameter:PARA_GROUPID value:groupId];
+//        }
+//    }
+    
+    return str;
+}
+
+/*
+//when returnPB is YES, the returnArray has no sence.
++ (GameNetworkOutput*)sendGetRequestWithBaseURL:(NSString*)baseURL
+                                         method:(NSString *)method
+                                     parameters:(NSDictionary *)parameters
+                                       returnPB:(BOOL)returnPB
+                                returnJSONArray:(BOOL)returnJSONArray
+{
+    GameNetworkOutput* output = [[[GameNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        PPDebug(@"<GET> parameters=%@, isReturnProtocolBuffer=%d, isReturnJSONArray=%d", [parameters description], returnPB, returnJSONArray);
+        
+        NSString* str = [NSString stringWithString:baseURL];
+        str = [str stringByAddQueryParameter:METHOD value:method];
+        str = [self addDefaultParameters:str parameters:parameters];
+        for (NSString *key in [parameters allKeys]) {
+            NSObject* obj = [parameters objectForKey:key];
+            NSString *value = nil;
+            if ([obj isKindOfClass:[NSNumber class]]){
+                value = [NSString stringWithInt:[(NSNumber*)obj intValue]];
+            }
+            else if ([obj isKindOfClass:[NSString class]]){
+                value = (NSString*)obj;
+            }
+            else{
+                value = [obj description];
+            }
+            str = [str stringByAddQueryParameter:key value:value];
+        }
+        if (returnPB) {
+            str = [str stringByAddQueryParameter:PARA_FORMAT value:FORMAT_PROTOCOLBUFFER];
+        }
+        return str;
+    };
+    
+    PPNetworkResponseBlock responseHandler = ^(NSDictionary *dict, CommonNetworkOutput *origOutput) {
+        
+        if (returnPB){
+            @try {
+                GameNetworkOutput* output = nil;
+                if ([origOutput isKindOfClass:[GameNetworkOutput class]]){
+                    output = (GameNetworkOutput*)origOutput;
+                }
+                
+                if (output.resultCode == ERROR_SUCCESS && output.responseData != nil){
+                    output.pbResponse = [DataQueryResponse parseFromData:output.responseData];
+                    output.resultCode = output.pbResponse.resultCode;
+                }
+                
+                PPDebug(@"RECV PB DATA, RESULT CODE = %d", output.resultCode);
+            }
+            @catch (NSException *exception) {
+                PPDebug(@"RECV PB DATA but catch exception = %@", [exception debugDescription]);
+                output.resultCode = ERROR_CLIENT_PARSE_DATA;
+            }
+        }
+        else{
+            // for JSON handling
+            if (returnJSONArray) {
+                output.jsonDataArray = [dict objectForKey:RET_DATA];
+            }else{
+                output.jsonDataDict = [dict objectForKey:RET_DATA];
+            }
+        }
+        return;
+    };
+    
+    int format = returnPB ? FORMAT_PB : FORMAT_JSON;
+    
+    return (GameNetworkOutput*)[PPNetworkRequest sendRequest:baseURL
+                                         constructURLHandler:constructURLHandler
+                                             responseHandler:responseHandler
+                                                outputFormat:format
+                                                      output:output];
+}
+
+
+//when returnPB is YES, the returnArray has no sence.
++ (GameNetworkOutput*)uploadDataRequestWithBaseURL:(NSString*)baseURL
+                                            method:(NSString *)method
+                                        parameters:(NSDictionary *)parameters
+                                     imageDataDict:(NSDictionary *)imageDict
+                                      postDataDict:(NSDictionary *)dataDict
+                                          returnPB:(BOOL)returnPB
+                                   returnJSONArray:(BOOL)returnJSONArray
+                                  progressDelegate:(id)progressDelegate
+
+{
+    GameNetworkOutput* output = [[[GameNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+                
+        NSString* str = [NSString stringWithString:baseURL];
+        str = [str stringByAddQueryParameter:METHOD value:method];
+        str = [self addDefaultParameters:str parameters:parameters];        
+        for (NSString *key in [parameters allKeys]) {
+            NSObject* obj = [parameters objectForKey:key];
+            NSString *value = nil;
+            if ([obj isKindOfClass:[NSNumber class]]){
+                value = [NSString stringWithInt:[(NSNumber*)obj intValue]];
+            }
+            else if ([obj isKindOfClass:[NSString class]]){
+                value = (NSString*)obj;
+            }
+            else{
+                value = [obj description];
+            }
+            str = [str stringByAddQueryParameter:key value:value];
+        }
+        if (returnPB) {
+            str = [str stringByAddQueryParameter:PARA_FORMAT value:FORMAT_PROTOCOLBUFFER];
+        }
+        return str;
+    };
+    
+    PPNetworkResponseBlock responseHandler = ^(NSDictionary *dict, CommonNetworkOutput *origOutput) {
+        
+        if (returnPB){
+            @try {
+                GameNetworkOutput* output = nil;
+                if ([origOutput isKindOfClass:[GameNetworkOutput class]]){
+                    output = (GameNetworkOutput*)origOutput;
+                }
+                
+                if (output.resultCode == ERROR_SUCCESS && output.responseData != nil){
+                    output.pbResponse = [DataQueryResponse parseFromData:output.responseData];
+                    output.resultCode = output.pbResponse.resultCode;
+                }
+                
+                PPDebug(@"RECV PB DATA, RESULT CODE = %d", output.resultCode);
+            }
+            @catch (NSException *exception) {
+                PPDebug(@"RECV PB DATA but catch exception = %@", [exception debugDescription]);
+                output.resultCode = ERROR_CLIENT_PARSE_DATA;
+            }
+        }
+        else{
+            // for JSON handling
+            if (returnJSONArray) {
+                output.jsonDataArray = [dict objectForKey:RET_DATA];
+            }else{
+                output.jsonDataDict = [dict objectForKey:RET_DATA];
+            }
+        }
+        return;
+    };
+    
+    int format = returnPB ? FORMAT_PB : FORMAT_JSON;
+    
+    return (GameNetworkOutput*)[PPNetworkRequest uploadRequest:baseURL
+                                                 imageDataDict:imageDict
+                                                  postDataDict:dataDict
+                                           constructURLHandler:constructURLHandler
+                                               responseHandler:responseHandler
+                                                  outputFormat:format
+                                                        output:output
+                                              progressDelegate:progressDelegate];
+}
+
++ (void)handlePBResponse:(GameNetworkOutput*)output
+                  method:(NSString *)method
+                callback:(PBResponseResultBlock)callback
+             isPostError:(BOOL)isPostError
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSError *error = DRAW_ERROR(output.resultCode);
+        if (error) {
+            PPDebug(@"<loadPBData> error = %@, method = %@", error, method);
+            if (isPostError){
+                [DrawError postError:error];
+            }
+        }
+        EXECUTE_BLOCK(callback, output.pbResponse, error);
+    });
+}
+
++ (void)loadPBData:(dispatch_queue_t)queue
+           hostURL:(NSString*)hostURL
+            method:(NSString *)method
+        parameters:(NSDictionary *)parameters
+          callback:(PBResponseResultBlock)callback
+       isPostError:(BOOL)isPostError
+{
+    
+    dispatch_async(queue, ^{
+        GameNetworkOutput* output = [BarrageNetworkRequest
+                                     sendGetRequestWithBaseURL:hostURL
+                                     method:method
+                                     parameters:parameters
+                                     returnPB:YES
+                                     returnJSONArray:NO];
+        
+        [self handlePBResponse:output method:method callback:callback isPostError:isPostError];
+        
+    });
+}
+
++ (void)loadPBData:(dispatch_queue_t)queue
+           hostURL:(NSString*)hostURL
+            method:(NSString *)method
+          postData:(NSData *)postData
+        parameters:(NSDictionary *)parameters
+          callback:(PBResponseResultBlock)callback
+       isPostError:(BOOL)isPostError
+{
+    
+    dispatch_async(queue, ^{
+        GameNetworkOutput* output = [BarrageNetworkRequest
+                                     sendPostRequestWithBaseURL:hostURL
+                                     method:method
+                                     parameters:parameters
+                                     postData:postData
+                                     returnPB:YES
+                                     returnJSONArray:NO];
+
+        [self handlePBResponse:output method:method callback:callback isPostError:isPostError];        
+    });
+}
+
++ (GameNetworkOutput*)apiServerGetAndResponseJSON:(NSString *)method
+                                       parameters:(NSDictionary *)parameters
+                                    isReturnArray:(BOOL)isReturnArray
+{
+    return [self sendGetRequestWithBaseURL:API_SERVER_URL
+                             method:method
+                         parameters:parameters
+                           returnPB:NO
+                    returnJSONArray:isReturnArray];
+}
+
++ (GameNetworkOutput*)apiServerGetAndResponsePB:(NSString *)method
+                                     parameters:(NSDictionary *)parameters
+{
+    return [self sendGetRequestWithBaseURL:API_SERVER_URL
+                             method:method
+                         parameters:parameters
+                           returnPB:YES
+                    returnJSONArray:NO];
+}
+
++ (GameNetworkOutput*)apiServerPostAndResponseJSON:(NSString *)method
+                                       parameters:(NSDictionary *)parameters
+                                          postData:(NSData*)postData
+                                    isReturnArray:(BOOL)isReturnArray
+{
+    return [self sendPostRequestWithBaseURL:API_SERVER_URL
+                                     method:method
+                                 parameters:parameters
+                                   postData:postData
+                                   returnPB:NO
+                            returnJSONArray:isReturnArray];
+}
+
++ (GameNetworkOutput*)apiServerPostAndResponsePB:(NSString *)method
+                                     parameters:(NSDictionary *)parameters
+                                        postData:(NSData*)postData
+{
+    return [self sendPostRequestWithBaseURL:API_SERVER_URL
+                                     method:method
+                                 parameters:parameters
+                                   postData:postData
+                                   returnPB:YES
+                            returnJSONArray:NO];
+}
+
++ (GameNetworkOutput*)trafficApiServerGetAndResponseJSON:(NSString *)method
+                                       parameters:(NSDictionary *)parameters
+                                    isReturnArray:(BOOL)isReturnArray
+{
+    return [self sendGetRequestWithBaseURL:TRAFFIC_SERVER_URL
+                             method:method
+                         parameters:parameters
+                           returnPB:NO
+                    returnJSONArray:isReturnArray];
+}
+
+
++ (GameNetworkOutput*)trafficApiServerGetAndResponsePB:(NSString *)method
+                                     parameters:(NSDictionary *)parameters
+{
+    return [self sendGetRequestWithBaseURL:TRAFFIC_SERVER_URL
+                             method:method
+                         parameters:parameters
+                           returnPB:YES
+                    returnJSONArray:NO];
+}
+
++ (GameNetworkOutput*)trafficApiServerPostAndResponseJSON:(NSString *)method
+                                        parameters:(NSDictionary *)parameters
+                                          postData:(NSData*)postData
+                                     isReturnArray:(BOOL)isReturnArray
+{
+    return [self sendPostRequestWithBaseURL:TRAFFIC_SERVER_URL
+                                     method:method
+                                 parameters:parameters
+                                   postData:postData
+                                   returnPB:NO
+                            returnJSONArray:isReturnArray];
+}
+
+
+
++ (GameNetworkOutput*)trafficApiServerUploadAndResponsePB:(NSString *)method
+                                               parameters:(NSDictionary *)parameters
+                                            imageDataDict:(NSDictionary *)imageDict
+                                             postDataDict:(NSDictionary *)dataDict
+                                         progressDelegate:(id)progressDelegate
+{
+    NSString *URL = TRAFFIC_SERVER_URL;
+    
+#ifdef DEBUG
+//    URL = @"http://192.168.1.12:8100/api/i?";
+//    URL = @"http://58.215.184.18:8699/api/i?";
+//    URL = @"http://localhost:8100/api/i?";
+//    URL = @"http://192.168.1.12:8100/api/i?";
+#endif
+    
+    return [self uploadDataRequestWithBaseURL:URL
+                                       method:method
+                                   parameters:parameters
+                                imageDataDict:imageDict
+                                 postDataDict:dataDict
+                                     returnPB:YES
+                              returnJSONArray:NO
+                             progressDelegate:progressDelegate];
+}
+*/
+
+//+ (GameNetworkOutput*)trafficApiServerPostAndResponsePB:(NSString *)method
+//                                             parameters:(NSDictionary *)parameters
+//                                               postData:(NSData*)postData
+//{
+//    return [self sendPostRequestWithBaseURL:TRAFFIC_SERVER_URL
+//                                     method:method
+//                                 parameters:parameters
+//                                   postData:postData
+//                                   returnPB:YES
+//                            returnJSONArray:NO];
+//}
+
+//when returnPB is YES, the returnArray has no sence.
++ (GameNetworkOutput*)sendPostRequestWithBaseURL:(NSString*)baseURL
+                                          method:(NSString *)method
+                                      parameters:(NSDictionary *)parameters
+                                        postData:(NSData*)postData
+                                        returnPB:(BOOL)returnPB
+                                 returnJSONArray:(BOOL)returnJSONArray
+{
+    GameNetworkOutput* output = [[GameNetworkOutput alloc] init];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        PPDebug(@"<POST> parameters=%@, isReturnProtocolBuffer=%d, isReturnJSONArray=%d", [parameters description], returnPB, returnJSONArray);
+        
+        NSString* str = [NSString stringWithString:baseURL];
+        str = [str stringByAddQueryParameter:METHOD value:method];
+        str = [self addDefaultParameters:str parameters:parameters];
+        for (NSString *key in [parameters allKeys]) {
+            //            NSString *value = [parameters objectForKey:key];
+            NSObject* obj = [parameters objectForKey:key];
+            NSString *value = nil;
+            if ([obj isKindOfClass:[NSNumber class]]){
+                value = [NSString stringWithInt:[(NSNumber*)obj intValue]];
+            }
+            else if ([obj isKindOfClass:[NSString class]]){
+                value = (NSString*)obj;
+            }
+            else{
+                value = [obj description];
+            }            str = [str stringByAddQueryParameter:key value:value];
+        }
+        if (returnPB) {
+            str = [str stringByAddQueryParameter:PARA_FORMAT value:FORMAT_PROTOCOLBUFFER];
+        }
+        return str;
+    };
+    
+    PPNetworkResponseBlock responseHandler = ^(NSDictionary *dict, CommonNetworkOutput *origOutput) {
+        
+        if (returnPB){
+            @try {
+                GameNetworkOutput* output = nil;
+                if ([origOutput isKindOfClass:[GameNetworkOutput class]]){
+                    output = (GameNetworkOutput*)origOutput;
+                }
+                
+                if (output.resultCode == ERROR_SUCCESS && output.responseData != nil){
+                    output.pbResponse = [PBDataResponse parseFromData:output.responseData];
+                    output.resultCode = output.pbResponse.resultCode;
+                }
+                
+                PPDebug(@"RECV PB DATA, RESULT CODE = %d", output.resultCode);
+            }
+            @catch (NSException *exception) {
+                PPDebug(@"RECV PB DATA but catch exception = %@", [exception debugDescription]);
+                output.resultCode = ERROR_CLIENT_PARSE_DATA;
+            }
+        }
+        else{
+            // for JSON handling
+            if (returnJSONArray) {
+                output.jsonDataArray = [dict objectForKey:RET_DATA];
+            }else{
+                output.jsonDataDict = [dict objectForKey:RET_DATA];
+            }
+        }
+        return;
+    };
+    
+    int format = returnPB ? FORMAT_PB : FORMAT_JSON;
+    
+    return (GameNetworkOutput*)[PPNetworkRequest sendPostRequest:baseURL
+                                                            data:postData
+                                             constructURLHandler:constructURLHandler
+                                                 responseHandler:responseHandler
+                                                    outputFormat:format
+                                                          output:output];
+}
+
++ (void)handlePBResponse:(GameNetworkOutput*)output
+                  method:(NSString *)method
+                callback:(PBResponseResultBlock)callback
+             isPostError:(BOOL)isPostError
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSError *error = BARRAGE_ERROR(output.resultCode);
+        if (error) {
+            PPDebug(@"<handleResponse> error = %@, method = %@", error, method);
+            if (isPostError){
+                [BarrageError postError:error];
+            }
+        }
+        
+        EXECUTE_BLOCK(callback, output.pbResponse, error);
+    });
+}
+
++ (void)post:(NSString*)method
+         url:(NSString*)url
+       queue:(dispatch_queue_t)queue
+     request:(PBDataRequest*)request
+    callback:(PBResponseResultBlock)callback
+ isPostError:(BOOL)isPostError
+{
+    if (request == nil)
+        return;
+
+    NSData* postData = [request data];
+    if (postData == nil){
+        // TODO add callback and isPostError handling
+        return;
+    }
+
+    if (queue == NULL){
+        // use default
+        queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    }
+    
+    dispatch_async(queue, ^{
+        GameNetworkOutput* output = [BarrageNetworkRequest
+                                     sendPostRequestWithBaseURL:url
+                                     method:method
+                                     parameters:nil
+                                     postData:postData
+                                     returnPB:YES
+                                     returnJSONArray:NO];
+        
+        [self handlePBResponse:output method:method callback:callback isPostError:isPostError];
+    });
+}
+
++ (void)testPost
+{
+    PBDataRequestBuilder* builder = [PBDataRequest builder];
+    [builder setType:1];
+    [builder setRequestId:(int)time(0)];
+    
+    PBDataRequest* request = [builder build];
+    [self post:@"req" url:@"http://localhost:8100/?" queue:NULL request:request callback:^(PBDataResponse *response, NSError *error) {
+        
+    } isPostError:NO];
+}
+
+
+@end

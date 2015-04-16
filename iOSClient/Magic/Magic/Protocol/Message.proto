@@ -1,0 +1,513 @@
+
+import "Common.proto";
+import "User.proto";
+import "Barrage.proto";
+
+package barrage;
+
+option java_package = "com.orange.protocol.message";
+option java_outer_classname = "MessageProtos";
+
+enum PBProcessFriendResultType
+{
+    ACCEPT_FRIEND = 0;
+    REJECT_FRIEND = 1;
+    REPLY_MEMO = 2;
+}
+
+enum PBMessageType
+{
+    MESSAGE_LOGIN_USER = 1;                         // 登录
+    MESSAGE_REGISTER_USER = 2;                      // 注册
+
+    MESSAGE_SEARCH_USER = 3;                        // 搜索用户
+    MESSAGE_UPDATE_USER_INFO = 4;                   // 更新用户好友
+    MESSAGE_ADD_USER_FRIEND = 5;                    // 添加用户好友
+    MESSAGE_GET_USER_FRIEND_LIST = 6;               // 获得用户好友列表
+    MESSAGE_PROCESS_USER_FRIEND = 7;                // 处理用户好友申请
+    MESSAGE_VERIFY_INVITE_CODE = 8;                 // 验证邀请码
+    MESSAGE_GET_NEW_INVITE_CODE = 9;                // 获得邀请码
+
+    MESSAGE_ADD_USER_TAG = 10;                      // 添加用户标签
+    MESSAGE_DELETE_USER_TAG = 11;                   // 删除用户标签
+    MESSAGE_GET_USER_TAG_LIST = 12;                 // 获取用户标签列表
+
+    MESSAGE_GET_USER_INVITE_CODE_LIST = 13;         // 获取用户邀请码列表
+    MESSAGE_APPLY_INVITE_CODE = 14;                 // 申请邀请码
+    MESSAGE_UPDATE_INVITE_CODE = 15;                // 更新邀请码状态
+
+    MESSAGE_CREATE_FEED = 30;                       // 分享消息
+    MESSAGE_REPLY_FEED = 31;                        // 回复消息（弹幕）
+    MESSAGE_GET_USER_TIMELINE_FEED = 32;            // 获取用户消息流
+    MESSAGE_DELETE_FEED_ACTION = 33;                // 删除弹幕评论
+    MESSAGE_DELETE_FEED = 34;                       // 删除整个弹幕
+    MESSAGE_DELETE_FRIEND = 35;                     // 删除好友
+    MESSAGE_SEND_USER_FEEDBACK = 36;                 // 获取用户意见反馈
+
+
+    //新消息
+    MESSAGE_GET_MY_NEW_FEED_LIST =  37;            // 获取用户新的信息(别人分享给你的弹幕，自己评论的弹幕)
+    MESSAGE_GET_FEED_BY_ID =  38;                  //新消息通过FeedId获取Feed
+    MESSAGE_READ_MY_NEW_FEED = 39;                  // 已读新消息反馈
+
+    MESSAGE_GET_USER_FEED = 40;                     // 获取用户照片
+    MESSAGE_VERIFY_USER_EMAIL = 41;                 //验证用户邮箱
+
+    MESSAGE_SEND_CHAT = 50;                         // 发送消息
+    MESSAGE_GET_CHAT_LIST = 51;                     // 接收消息
+
+    MESSAGE_GET_QINIU_UPLOAD_TOKEN = 100;           // 获取云存储TOKEN
+}
+
+message PBLoginUserRequest
+{
+    required int32 type = 1;            // refer to PBLoginType
+    optional string xiaoji = 2;
+    optional string email = 3;
+    optional string mobile = 4;
+    optional string snsId = 5;
+    optional PBSNSUser snsUser = 6;     // 社交帐号资料
+    optional string password = 20;
+}
+
+message PBLoginUserResponse
+{
+    optional PBUser user = 1;
+}
+
+message PBRegisterUserRequest
+{
+    required int32 type = 1;            // refer to PBRegisterType
+    required PBUser user = 2;
+
+    optional string inviteCode = 50;    // 邀请码
+}
+
+message PBRegisterUserResponse
+{
+    optional PBUser user = 1;
+    optional bool isUserExist = 2;      // 注册返回的用户，是否是原来已经注册的
+}
+
+message PBVerifyInviteCodeRequest
+{
+    required string inviteCode = 1;            // refer to register type
+}
+
+message PBVerifyInviteCodeResponse
+{
+    optional PBUser user = 1;                  // used by which user if needed
+}
+
+message PBGetNewInviteCodeRequest
+{
+    optional int32 count = 1[default=1];      // 生成邀请码的数目
+}
+
+message PBGetNewInviteCodeResponse
+{
+    repeated string inviteCodes = 1;                // 生成邀请码的数
+}
+
+
+
+
+message PBGetUserInviteCodeListRequest
+{
+}
+
+message PBGetUserInviteCodeListResponse
+{
+    optional PBUserInviteCodeList codeList = 1;
+}
+
+message PBApplyInviteCodeRequest
+{
+    optional int32 count = 1;                       // 申请的数量
+}
+
+message PBApplyInviteCodeResponse
+{
+    optional PBUserInviteCodeList codeList = 1;     // 返回完整列表
+}
+
+message PBUpdateInviteCodeRequest
+{
+    required PBUserInviteCodeList codeList = 1;     // 要更新的完整列表
+}
+
+message PBUpdateInviteCodeResponse
+{
+    optional PBUserInviteCodeList codeList = 1;     // 返回完整列表
+}
+
+message PBSearchUserRequest
+{
+    required string keyword = 1;                    // 查询关键字
+    optional int32 offset = 2;
+    optional int32 limit = 3[default=30];
+}
+
+message PBSearchUserResponse
+{
+    repeated PBUser users = 1;
+}
+
+message PBUpdateUserInfoRequest
+{
+    required PBUser user = 1;
+}
+
+message PBUpdateUserInfoResponse
+{
+    optional PBUser user = 1;
+}
+
+message PBAddUserTagRequest
+{
+    required PBUserTag tag = 1;                 // 要添加的标签
+}
+
+message PBAddUserTagResponse
+{
+    optional PBUserTagList tags = 1;            // 返回完整的标签列表
+}
+
+
+message PBDeleteUserTagRequest
+{
+    required PBUserTag tag = 1;                 // 要删除的标签
+}
+
+message PBDeleteUserTagResponse
+{
+    optional PBUserTagList tags = 1;            // 返回删除后完整的标签列表
+}
+
+message PBGetUserTagListRequest
+{
+}
+
+message PBGetUserTagListResponse
+{
+    optional PBUserTagList tags = 1;            // 返回完整的标签列表
+}
+
+message PBAddUserFriendRequest
+{
+    optional PBUser friend = 1;                 // 用户信息，非二维码扫描添加需要传递本信息
+    optional string memo = 2;                   // 添加好友申请备注
+    optional int32 sourceType = 3;              // 来源，参考FriendAddSourceType
+    optional string scanCode = 4;               // 如果是二维码扫描，这个是扫描获得的扫描码
+}
+
+message PBAddUserFriendResponse
+{
+}
+
+enum PBGetUserFriendListType
+{
+    TYPE_FRIEND_LIST = 0;                       // 返回好友列表
+    TYPE_REQUEST_FRIEND_LIST = 1;               // 返回好友请求列表
+
+    TYPE_ALL = 10;                              // 返回所有
+}
+
+message PBGetUserFriendListRequest
+{
+    optional PBUserTag tag = 1;                     // 用于查询过滤的标签，没有表示所有
+    optional int32 type = 2;                        // 参考
+}
+
+message PBGetUserFriendListResponse
+{
+    optional PBUserFriendList friends = 1;
+}
+
+message PBProcessUserFriendRequest
+{
+    required string friendId = 1;
+    optional int32 processResult = 2;                   // 参考PBProcessFriendResultType
+    optional string memo = 3;                           // 处理备注信息
+}
+
+message PBProcessUserFriendResponse
+{
+    optional PBUser friends = 1;
+}
+
+
+
+
+
+message PBCreateFeedRequest
+{
+    required PBFeed feed = 1;
+}
+
+message PBCreateFeedResponse
+{
+    optional string feedId = 1;
+}
+
+message PBReplyFeedRequest
+{
+    required PBFeedAction action = 1;
+}
+
+message PBReplyFeedResponse
+{
+    required PBFeedAction action = 1;
+}
+
+message PBDeleteFeedActionRequest
+{
+    required string feedId  = 1;
+    required string actionId = 2;
+}
+
+message PBDeleteFeedActionResponse
+{
+    optional PBFeed feed = 1;           // TBD
+}
+
+message PBDeleteFeedRequest
+{
+    required string feedId = 1;
+}
+
+message PBDeleteFeedResponse
+{
+    optional PBFeed feed = 1;           // TBD
+}
+
+message PBDeleteFriendRequest
+{
+    required string userId = 1;
+    required int32 addStatus = 2;
+}
+
+message PBDeleteFriendResponse
+{
+
+}
+
+message PBGetUserFeedRequest
+{
+    optional int32 offset = 2;
+    optional int32 limit = 3[default=30];
+}
+
+message PBGetUserFeedResponse
+{
+    repeated PBFeed feeds = 1;
+}
+
+//新消息
+message PBGetMyNewFeedListRequest
+{
+    optional PBUser user = 1;
+    optional PBDevice device = 2;
+}
+
+message PBGetMyNewFeedListResponse
+{
+    optional PBMyNewFeedList  myNewFeedList= 1;
+}
+
+message PBGetFeedByIdRequest
+{
+    required string feedId = 1;
+}
+
+message PBGetFeedByIdResponse
+{
+    optional PBFeed feed = 1;
+}
+
+message PBReadMyNewFeedRequest
+{
+    required string feedId = 1;
+}
+
+message PBReadMyNewFeedResponse
+{
+
+}
+
+
+
+message PBGetUserTimelineFeedRequest
+{
+    optional string offsetFeedId = 1;
+    optional int32 limit = 2[default=20];
+}
+
+message PBGetUserTimelineFeedResponse
+{
+    repeated PBFeed feeds = 1;
+}
+
+
+message PBSendUserFeedbackRequest
+{
+    optional string message         = 1;        // 反馈信息
+    optional string contactInfo     = 2;        // 联系方式
+
+    optional PBUser user = 3;                   // 用户信息
+    optional PBDevice device = 4;               // 用户设备信息
+
+    optional string reqId = 5;
+}
+
+message PBSendUserFeedbackResponse
+{
+}
+
+message PBVerifyUserEmailRequest
+{
+    optional string destEmail = 2;
+    optional string verifyCode = 3;             //验证码
+}
+
+message PBVerifyUserEmailResponse
+{
+
+}
+
+
+message PBSendChatRequest
+{
+    required PBChat chat = 1;
+}
+
+message PBSendChatResponse
+{
+    optional PBChat chat = 1;
+}
+
+message PBGetChatListRequest
+{
+    optional string chatOffsetId = 1;       // 从哪个消息ID开始
+    optional int32 limit = 2;               // 返回记录数
+}
+
+message PBGetChatListResponse
+{
+    repeated PBChat chat = 1;
+}
+
+
+
+message PBDataRequest
+{
+    required int32 type = 1;
+    optional int32 requestId = 2;
+    optional int32 version = 3;
+    optional string userId = 4;
+
+    optional PBDevice device = 30;
+    optional string countryCode = 31;
+    optional string languageCode = 32;
+    optional int32 clientDate = 33;
+
+    // user request
+    optional PBLoginUserRequest loginUserRequest = 40;
+    optional PBRegisterUserRequest registerUserRequest = 41;
+    optional PBSearchUserRequest searchUserRequest = 42;
+    optional PBUpdateUserInfoRequest updateUserInfoRequest = 43;
+    optional PBAddUserFriendRequest addUserFriendRequest = 44;
+    optional PBGetUserFriendListRequest getUserFriendListRequest = 45;
+    optional PBVerifyInviteCodeRequest verifyInviteCodeRequest = 46;
+    optional PBProcessUserFriendRequest processUserFriendRequest = 47;
+    optional PBGetNewInviteCodeRequest getNewInviteCodeRequest = 48;
+
+    optional PBAddUserTagRequest addUserTagRequest = 49;
+    optional PBDeleteUserTagRequest deleteUserTagRequest = 50;
+    optional PBGetUserTagListRequest getUserTagListRequest = 51;
+
+    optional PBGetUserInviteCodeListRequest getUserInviteCodeListRequest = 52;
+    optional PBApplyInviteCodeRequest applyInviteCodeRequest = 53;
+    optional PBUpdateInviteCodeRequest updateInviteCodeRequest = 54;
+    optional PBDeleteFriendRequest     deleteFriendRequest = 55;
+
+    optional PBSendUserFeedbackRequest   sendUserFeedbackRequest = 56;
+
+
+    optional PBGetMyNewFeedListRequest      getMyNewFeedListRequest = 57;
+
+
+
+
+    // feed request
+    optional PBCreateFeedRequest createFeedRequest = 60;
+    optional PBReplyFeedRequest replyFeedRequest = 61;
+    optional PBGetUserTimelineFeedRequest getUserTimelineFeedRequest = 62;
+    optional PBDeleteFeedActionRequest deleteFeedActionRequest = 63;
+    optional PBDeleteFeedRequest deleteFeedRequest = 64;
+    optional PBGetFeedByIdRequest getFeedByIdRequest = 65;
+    optional PBReadMyNewFeedRequest readMyNewFeedRequest = 66;
+    optional PBGetUserFeedRequest   getUserFeedRequest = 67;
+
+    // chat
+    optional PBSendChatRequest sendChatRequest = 70;
+    optional PBGetChatListRequest getChatListRequest = 71;
+
+
+    // user request
+    optional PBVerifyUserEmailRequest    verifyUserEmailRequest = 90;
+}
+
+message PBDataResponse
+{
+    required int32 resultCode = 1 [default=0];
+    optional int32 requestId = 2;
+    optional int32 version = 3;
+    optional int32 totalCount = 4;      // 返回记录总数
+    optional string stringData = 5;     // 返回的字符串数据
+
+    // user response
+    optional PBLoginUserResponse loginUserResponse = 40;
+    optional PBRegisterUserResponse registerUserResponse = 41;
+    optional PBSearchUserResponse searchUserResponse = 42;
+    optional PBUpdateUserInfoResponse updateUserInfoResponse = 43;
+    optional PBAddUserFriendResponse addUserFriendResponse = 44;
+    optional PBGetUserFriendListResponse getUserFriendListResponse = 45;
+    optional PBVerifyInviteCodeResponse verifyInviteCodeResponse = 46;
+    optional PBProcessUserFriendResponse processUserFriendResponse = 47;
+    optional PBGetNewInviteCodeResponse getNewInviteCodeResponse = 48;
+
+    optional PBAddUserTagResponse addUserTagResponse = 49;
+    optional PBDeleteUserTagResponse deleteUserTagResponse = 50;
+    optional PBGetUserTagListResponse getUserTagListResponse = 51;
+
+    optional PBGetUserInviteCodeListResponse getUserInviteCodeListResponse = 52;
+    optional PBApplyInviteCodeResponse applyInviteCodeResponse = 53;
+    optional PBUpdateInviteCodeResponse updateInviteCodeResponse = 54;
+    optional PBDeleteFriendResponse   deleteFriendResponse = 55;
+
+    optional PBSendUserFeedbackResponse sendUserFeedbackResponse = 56;
+
+    optional PBGetMyNewFeedListResponse      getMyNewFeedListResponse = 57;
+
+    // feed response
+    optional PBCreateFeedResponse createFeedResponse = 60;
+    optional PBReplyFeedResponse replyFeedResponse = 61;
+    optional PBGetUserTimelineFeedResponse getUserTimelineFeedResponse = 62;
+    optional PBDeleteFeedActionResponse deleteFeedActionResponse = 63;
+    optional PBDeleteFeedResponse  deleteFeedResponse = 64;
+    optional PBGetFeedByIdResponse getFeedByIdResponse = 65;
+    optional PBReadMyNewFeedResponse myNewFeedResponse = 66;
+    optional PBGetUserFeedResponse   getUserFeedResponse = 67;
+
+    // chat
+    optional PBSendChatResponse sendChatResponse = 70;
+    optional PBGetChatListResponse getChatListResponse = 71;
+
+
+    // user response
+    optional PBVerifyUserEmailResponse  verifyUserEmailResponse  = 90;
+
+
+}
+

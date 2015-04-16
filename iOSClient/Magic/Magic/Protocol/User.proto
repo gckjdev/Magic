@@ -1,0 +1,258 @@
+
+import "Common.proto";
+
+package barrage;
+
+option java_package = "com.orange.protocol.message";
+option java_outer_classname = "UserProtos";
+
+enum FriendAddSourceType
+{
+    ADD_BY_SEARCH = 1;
+    ADD_BY_SCAN_QRCODE = 2;
+}
+
+enum FriendAddConfigType
+{
+    REQUIRE_ACCEPT = 0;                 // 需要我验证
+    ACCEPT_ALL = 1;                     // 所有好友请求都通过验证
+    DISALLOW_ADD_ME = 7;                // 不允许任何人添加我为好友
+}
+
+enum FriendRequestDirection
+{
+    REQ_DIRECTION_SENDER = 0;           // 发起者
+    REQ_DIRECTION_RECEIVER = 1;         // 接收者
+    REQ_DIRECTION_NONE = 2;             // 不存在
+}
+
+enum FriendAddStatusType
+{
+    REQ_WAIT_ACCEPT = 0;                // 待接受
+    REQ_ACCEPTED = 1;                   // 已接受
+    REQ_REJECTED = 2;                   // 已拒绝
+    REQ_STATUS_NONE = 7;                // 没有请求/接受关系
+}
+
+// align with ShareSDK shareType
+enum PBLoginType
+{
+    LOGIN_XIAOJI = 100;
+    LOGIN_EMAIL  = 101;
+    LOGIN_MOBILE = 102;
+    LOGIN_QQ     = 6;                   // QQ Space
+    LOGIN_SINA   = 1;
+    LOGIN_WEIXIN = 23;                  // WeChat Friend
+}
+
+enum PBRegisterType
+{
+    REG_XIAOJI = 100;
+    REG_EMAIL  = 101;
+    REG_MOBILE = 102;
+    REG_QQ     = 6;
+    REG_SINA   = 1;
+    REG_WEIXIN = 23;
+}
+
+message PBSNSUser {
+    required int32  type = 1;                     // ShareSDK的shareType
+    optional string userId = 2;
+    optional string nick = 3;
+    optional string accessToken = 4;
+    optional string accessTokenSecret = 5;
+    optional string refreshToken = 6;
+    optional int32 expiredTime = 7;
+    optional string qqOpenId  = 8;                // QQ Weibo Only
+    optional string credential = 20;              // Share SDK保存的授权信息，Base64字符串
+}
+
+enum PBTagColor
+{
+    SYSTEM = 0;
+    CUSTOM = 1;
+    MYSELF = 2;
+    HOT = 3;
+    RECENT = 4;
+}
+
+message PBUser {
+
+    required string userId = 1;                       // 用户ID
+    optional string nick = 2;                         // 用户昵称
+    optional string avatar = 3;                       // 用户头像
+    optional bool gender = 4 [default=false];         // 用户性别，TRUE：男；FALSE：女
+
+    repeated PBSNSUser snsUsers = 5;                  // 用户社交网络信息
+    optional string xiaojiNumber = 6;                 // 小吉号码
+
+    optional string email = 7;
+    optional string password = 8;
+    optional string mobile = 9;                       // 手机号码
+    optional string qqOpenId = 10;                    // QQ ID
+    optional string sinaId = 11;                      // SINA UserID
+    optional string weixinId = 12;                    // WeChat UserID
+
+    optional string birthday = 31;                    // 格式：19800102
+    optional int32  zodiac = 32;                      // 星座：1-12
+    optional string bloodGroup = 33;                  // 血型
+
+    optional int32  regDate = 34;                     // 注册日期
+    optional int32  regFrom = 35;                     // 注册来源，参考PBRegisterType
+    optional int32  visitDate = 36;                   // 最后一次访问日期
+    optional int32  sDate = 37;                       // 状态改变日期（头像、签名、昵称）
+
+    optional string avatarBg = 41;                    // 用户背景图URL
+    optional string signature = 42;                   // 用户签名
+    optional string avatars = 43;                     // 用户状态头像
+    optional string bAvatars = 44;                    // 用户用于弹幕的头像列表
+
+    optional string location = 51;                    // 所在地点描述字符串：如 广东 广州；一般从用户社交网络获取，或者从GPS转换获取，用于显示
+    optional string countryCode = 52;                 // 国家代码，如 CN
+    optional string language = 53;                    // 设备语言，如 zh_Hans
+    optional float  longitude = 54;                   // 用户位置经度
+    optional float  latitude = 55;                    // 用户位置纬度
+
+    // level & experience
+    optional int32  level = 61;                       // 当前等级
+    optional int64  experience = 62;                  // 当前经验
+
+
+    // device info
+    optional PBDevice currentDevice = 71;
+    repeated PBDevice devices = 72;
+
+    optional int32  emailVerifyStatus = 81;           // 用户邮件验证状态
+    optional string emailVerifyCode = 82;             // 用户邮件验证码
+    optional int32  mobileVerifyStatus = 83;          // 用户邮件验证状态
+
+
+
+    // add friend settings
+    optional int32 addConfig = 91;                    // 好友添加请求设置，参考 FriendAddConfigType
+
+    // 以下信息用于每个用户自己对自己好友的设置信息，仅用于好友列表返回
+    repeated PBUserTag tags = 100;                    // 好友：用户所属标签信息
+    optional string memo = 101;                       // 好友：备注
+    optional int32  addSource = 102;                  // 好友：从什么渠道添加，参考FriendAddSourceType
+    optional int32  addDate = 103;                    // 好友：添加时间
+    optional int32  addDir = 104;                     // 好友：添加方向
+    optional string replyMemo = 105;                  // 好友：回复请求的内容
+    optional int32  addStatus = 106[default=7];       // 好友：回复状态，参考FriendAddStatusType
+
+    optional int32 bStyle = 200;                      // 用户本地弹幕风格
+    optional int32 bSpeed = 201;                      // 用户本地弹幕速度
+}
+
+message PBUserTag
+{
+    optional string name = 1;                     // tag里面的文字
+    required string tid = 2;                      // tag的唯一标签
+    optional bool isCustom = 3;                   // 是否是用户自定义的标签
+    optional int32 color = 4;                     // 标签颜色，参考PBTagColor
+
+    repeated PBUser users = 10;                   // 标签用户，用于某些情况下的数据返回和注入
+    repeated string userIds = 11;                 // 标签用户ID列表
+}
+
+message PBUserTagList
+{
+    repeated PBUserTag tags = 1;                  // 标签-好友列表
+}
+
+message PBUserFriendList
+{
+    repeated PBUser friends = 1;                  // 用户好友列表
+    repeated PBUser requestFriends = 2;           // 新的好友请求列表（包括自己请求的和别人向自己发起的请求）
+    optional int32  requestNewCount = 3;          // 新的好友请求数目
+}
+
+enum PBInviteCodeStatus
+{
+    CODE_STATUS_READY = 0;                        // 可用
+    CODE_STATUS_SENT = 1;                         // 已经给某个用户
+    CODE_STATUS_USED = 2;                         // 已经使用
+    CODE_STATUS_INVALID = 3;                      // 无效
+}
+
+message PBInviteCode
+{
+    required string code = 1;
+    optional int32 status = 2;                    // 状态，参考PBInviteCodeStatus
+    optional string sendTo = 3;                   // 发放给谁（文字信息，自定义填写）
+    optional int32 sendType = 4;                  // 发放渠道，参考ShareSDK ShareType
+    optional string ownerUserId = 5;              // 邀请码拥有者
+    optional string usedByUserId = 6;             // 邀请码使用者
+}
+
+message PBUserInviteCodeList
+{
+    optional string userId = 1;                   // 用户ID
+    repeated PBInviteCode availableCodes = 2;     // 可用邀请码信息
+    repeated PBInviteCode sentCodes = 3;          // 已用邀请码信息
+    optional int32 applyCount = 4;                // 当日已申请邀请码数量，服务器返回
+}
+
+message PBUserGroup                               // 用于储存每次feed的toUser，自动建立tag
+{
+    repeated PBUser users = 10;                   // 同一组里面的用户
+    required string groupId = 11;                 // 该组的唯一标志ID
+
+    optional int32 occurence = 1;                 // 该组出现过的次数
+    optional int32 rejection = 2;                 // 该组被拒绝建立标签的次数
+    optional int32 lastOccurenceDate = 3;         // 该组上一次发出feed的时候
+    optional int32 lastRejectionDate = 4;         // 该组上一次被拒绝建立为Tag的时间
+}
+
+message PBUserGroupList
+{
+    repeated PBUserGroup groups = 1;              // group的数组
+}
+
+
+
+enum PBChatSource
+{
+    FROM_WECHAT = 1;            // 微信公众号
+    FROM_APP = 2;               // APP客户端
+    FROM_WEB = 3;               // Web网站
+    FROM_MOBILE_WEB = 4;        // 手机网站
+    FROM_AGENT = 5;             // 客服人工
+    FROM_AGENT_AUTO = 6;        // 客服自动
+    FROM_SYSTEM = 7;            // 系统群发
+}
+
+enum PBChatType
+{
+    NORMAL_CHAT = 0;
+}
+
+enum PBChatStatus
+{
+    MESSAGE_SENDING = 0;                        // 发送中
+    MESSAGE_SENT = 1;                           // 已发送
+    MESSAGE_FAILURE = 2;                        // 发送失败
+    MESSAGE_DELETED = 3;                        // 已删除
+    MESSAGE_CANCEL = 4;                         // 取消发送
+}
+
+message PBChat
+{
+    required string chatId = 1;                 // 消息ID
+    optional string sessionId = 2;              // 会话ID，多个消息可以属于同一次会话
+    optional PBUser fromUser = 3;               // 发送方用户信息
+    optional string fromUserId = 4;             // 发送方用户ID
+    optional PBDevice fromDevice = 5;           // 发送方设备信息
+    optional PBUser toUser = 6;                 // 接受方用户信息
+    optional string toUserId = 7;               // 接受方用户ID
+
+    optional string text = 10;                  // 消息文本
+    optional string image = 11;                 // 消息图片
+    optional string thumb = 12;                 // 消息图片缩略图
+    optional string voice = 13;                 // 语音
+
+    optional int32 createDate = 20;             // 创建日期
+    optional int32 status = 21;                 // 状态，参考PBChatStatus
+    optional int32 type = 22;                   // 类型，参考PBChatType
+    optional int32 source = 23;                 // 来源，参考PBChatSource
+}

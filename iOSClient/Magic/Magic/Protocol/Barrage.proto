@@ -1,0 +1,122 @@
+
+import "Common.proto";
+import "User.proto";
+
+package barrage;
+
+option java_package = "com.orange.protocol.message";
+option java_outer_classname = "BarrageProtos";
+
+enum PBBarrageStyle
+{
+    POP_DECAY = 0;                  // 摩擦
+    POP_SPRING = 1;                 // 弹簧
+    POP_LINEAR = 2;                 // 匀速
+    POP_EASE_IN = 3;                // 加速
+    POP_EASE_OUT = 4;               // 减速
+    POP_EASE_INOUT = 5;             // 先加速再减速
+}
+
+enum PBBarrageMode
+{
+    FOR_COMMENT = 0;                // 用于评论
+    FOR_CHAT = 1;                   // 用于聊天
+}
+
+enum PBBarrageSpeed
+{
+    NORMAL = 0;
+    SUPER_HIGH = 1;
+    HIGH = 2;
+    LOW = 3;
+    VERY_LOW= 4;
+}
+
+enum PBColorMode
+{
+    WHITE_TEXT_BLACK_BG = 0;                        // 黑底白字
+    BLACK_TEXT_WHITE_BG = 1;                        // 白底黑字
+    CUSTOM_TEXT_TRANSPARENT_BG = 2;                 // 透明底自定义字体颜色
+}
+
+message PBFeed
+{
+    optional int32  type = 1[default=0];            // 类型
+    optional string feedId = 2;
+
+    optional PBUser createUser = 3;                 // 创建用户，基础信息即可
+    repeated PBUser toUsers = 4;                    // 参与的用户，基础信息即可
+    optional bool openToAll = 5[default=false];     // 是否面向所有用户
+
+    optional PBDevice device = 30;
+    optional string location = 34;
+    optional float  longitude = 35;                     // 位置经度
+    optional float  latitude = 36;                      // 位置纬度
+
+    optional string cdnKey = 40;                        // 图片在CDN服务器上的key，参考 http://developer.qiniu.com/docs/v6/api/overview/concepts.html
+    optional string image = 41;                         // 图片URL
+    optional string text = 42;                          // 文字
+    optional int32  date = 43;                          // 创建时间
+    optional float  width = 44;                         // 图片宽度
+    optional float  height = 45;                        // 图片高度
+
+    optional int32  bMode = 50;                         // 弹幕风格，参考 PBBarrageMode
+
+    // 用于返回数据
+    repeated PBFeedAction actions = 100;                // 弹幕列表
+    optional int32 lastIndex = 101;                     // 用户最近一次播放的位置
+    optional int32 newCount = 102;                      // 新弹幕数量
+}
+
+message PBFeedAction
+{
+    optional string actionId = 1;               // ID
+    optional int32  type = 2;                   // Action类型，默认为弹幕（0）
+    optional string feedId = 3;                 // 对应的图片ID
+    optional PBUser user = 4;                   // 用户，基础信息即可
+    optional string text = 5;                   // 弹幕文字
+    optional string avatar = 6;                 // 弹幕头像
+    optional bool showAvatar = 7[default=true]; // 是否显示弹幕头像
+
+    optional float posX = 10;                    // 位置 X坐标
+    optional float posY = 11;                    // 位置 Y坐标
+
+    // 字体颜色模式
+    optional int32 colorMode = 12;               // 参考 PBColorMode
+    optional int32 color = 13;                   // 颜色 RBGA表示，在PBColorMode要求指定字体颜色时有效
+
+    optional int32 angel = 18;                   // 文字的角度，默认为0（右边）
+    optional bool hasBg = 19[default=true];      // 弹幕是否有背景
+
+    optional int32 date = 20;                    // 日期
+    optional int32 bStyle = 30;                  // 弹幕出现形式，参考PBBarrageStyle
+}
+
+enum PBMyNewFeedType
+{
+    TYPE_NEW_FEED_TO_ME = 1;                          // 分享给我的新图片消息
+    TYPE_COMMENT_MY_FEED = 2;                         // 评论我发表的图片的
+    TYPE_MY_INVOLVED_COMMENT = 3;                     // 我参与过评论的
+}
+
+// 我的新消息
+message PBMyNewFeed
+{
+    required string feedId = 1;                     // 消息的feedId
+    optional string actionId = 2;                   // 评论的ID
+    optional int32 type = 3;                        // 消息类型，参考PBMyFeedType
+    optional int32 count = 4;                       // 消息中新消息的总数
+    optional int32 mDate = 5;                       // 更新日期
+    optional bool isRead = 6;                       // 用户是否已读
+    optional string userId = 7;                     // 触发该消息的用户ID
+
+    optional PBFeed feed = 10;                      // 消息的Feed信息，仅用于本地缓存，服务器正常情况下不返回
+    optional string image = 11;                     // 消息的图片URL
+}
+
+message PBMyNewFeedList
+{
+    repeated PBMyNewFeed myFeeds = 1;               // 新消息列表
+}
+
+
