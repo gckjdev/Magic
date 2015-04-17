@@ -547,6 +547,9 @@
 		3638C3161ADF87A8008246CF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C3151ADF87A8008246CF /* libz.dylib */; };
 		3638C3181ADF888A008246CF /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C3171ADF888A008246CF /* libicucore.dylib */; };
 		3638C3191ADF8C21008246CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3638BD2B1ADF7C53008246CF /* Info.plist */; };
+		3638C31B1AE0B070008246CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31A1AE0B070008246CF /* MobileCoreServices.framework */; };
+		3638C31D1AE0B07D008246CF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31C1AE0B07D008246CF /* CFNetwork.framework */; };
+		3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */; };
 		93FD21456C5B9ADF108E75CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E987D56EAB81CEF90C80AA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1360,6 +1363,10 @@
 		3638C3131ADF878D008246CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3638C3151ADF87A8008246CF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3638C3171ADF888A008246CF /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		3638C31A1AE0B070008246CF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3638C31C1AE0B07D008246CF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
+		3638C3201AE0B0D1008246CF /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		3D127CDED7A3722734306BED /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62E987D56EAB81CEF90C80AA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0282C8927B1D9A94CDA328 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -1370,12 +1377,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3638C3141ADF878D008246CF /* SystemConfiguration.framework in Frameworks */,
+				3638C31D1AE0B07D008246CF /* CFNetwork.framework in Frameworks */,
+				3638C31B1AE0B070008246CF /* MobileCoreServices.framework in Frameworks */,
 				3638C3181ADF888A008246CF /* libicucore.dylib in Frameworks */,
 				3638C3161ADF87A8008246CF /* libz.dylib in Frameworks */,
-				3638C3141ADF878D008246CF /* SystemConfiguration.framework in Frameworks */,
 				3638C3121ADF877E008246CF /* QuartzCore.framework in Frameworks */,
 				3638C3101ADF8770008246CF /* CoreTelephony.framework in Frameworks */,
 				3638C30E1ADF8767008246CF /* libz.1.2.5.dylib in Frameworks */,
+				3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */,
 				3638C30C1ADF875B008246CF /* Security.framework in Frameworks */,
 				3638C30A1ADF874A008246CF /* libstdc++.dylib in Frameworks */,
 				3638C3081ADF873A008246CF /* libsqlite3.dylib in Frameworks */,
@@ -1498,6 +1508,7 @@
 		3638BD531ADF8076008246CF /* 3PP-SDK */ = {
 			isa = PBXGroup;
 			children = (
+				3638C31E1AE0B0D1008246CF /* MiPush */,
 				3638BD541ADF8076008246CF /* ShareSDK */,
 				3638BD7A1ADF8076008246CF /* SMS_SDK */,
 				3638BD7C1ADF8076008246CF /* UMAnalytics */,
@@ -3340,9 +3351,20 @@
 			path = UserCell;
 			sourceTree = "<group>";
 		};
+		3638C31E1AE0B0D1008246CF /* MiPush */ = {
+			isa = PBXGroup;
+			children = (
+				3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */,
+				3638C3201AE0B0D1008246CF /* MiPushSDK.h */,
+			);
+			path = MiPush;
+			sourceTree = "<group>";
+		};
 		E38F6A87C15D3155CD5DABB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3638C31C1AE0B07D008246CF /* CFNetwork.framework */,
+				3638C31A1AE0B070008246CF /* MobileCoreServices.framework */,
 				3638C3171ADF888A008246CF /* libicucore.dylib */,
 				3638C3151ADF87A8008246CF /* libz.dylib */,
 				3638C3131ADF878D008246CF /* SystemConfiguration.framework */,
@@ -4152,6 +4174,7 @@
 					"$(PROJECT_DIR)/Magic/3PP-SDK/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Magic/3PP-SDK/UMAnalytics",
 					"$(PROJECT_DIR)/Magic/Common/DB/LevelDB/LevelDB",
+					"$(PROJECT_DIR)/Magic/3PP-SDK/MiPush",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -4180,6 +4203,7 @@
 					"$(PROJECT_DIR)/Magic/3PP-SDK/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Magic/3PP-SDK/UMAnalytics",
 					"$(PROJECT_DIR)/Magic/Common/DB/LevelDB/LevelDB",
+					"$(PROJECT_DIR)/Magic/3PP-SDK/MiPush",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "NSLayoutConstraint+MASDebugAdditions.h"
+#import "MiPushSDK.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MiPushSDKDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIViewController *viewController;

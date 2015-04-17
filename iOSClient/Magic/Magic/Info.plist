@@ -88,5 +88,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>MiSDKAppID</key>
+	<string>2882303761517325295</string>
+	<key>MiSDKAppKey</key>
+	<string>5521732590295</string>
+	<key>MiSDKRun</key>
+	<string>Debug</string>
 </dict>
 </plist>

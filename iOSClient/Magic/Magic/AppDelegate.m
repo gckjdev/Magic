@@ -56,6 +56,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [UMFeedback setAppkey:UMENG_APP_KEY];
+    [MiPushSDK registerMiPush:self];
     
     [self setupMobClick];
     [self setupKeyboard];
@@ -436,5 +437,91 @@
 
 
 }
+
+#pragma mark UIApplicationDelegate
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    PPDebug(@"<didRegisterForRemoteNotificationsWithDeviceToken> deviceToken=%@", deviceToken);
+    
+    // 注册APNS成功, 注册deviceToken
+    [MiPushSDK bindDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+{
+    // 注册APNS失败
+    // 自行处理
+    PPDebug(@"<didFailToRegisterForRemoteNotificationsWithError> error=%@", err);
+}
+
+// iOS8
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [self setupMiPushStatistic:userInfo];
+}
+
+// iOS7
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [self setupMiPushStatistic:userInfo];
+}
+
+#pragma mark MiPushSDKDelegate
+
+- (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
+{
+    // 请求成功
+    PPDebug(@"<MiPush> success, data=%@", data);
+    
+    if ([selector isEqualToString:@"bindDeviceToken:"]) {
+        
+        UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
+        action.identifier = @"action1"; //按钮的标示
+        action.title=@"启动"; //按钮的标题
+        action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+        
+        UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
+        action2.identifier = @"action2";
+        action2.title=@"忽略";
+        action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+        action.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+        action.destructive = YES;
+        
+        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+        categorys.identifier = @"category"; //这组动作的唯一标示
+        [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
+        
+        UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound)
+                                                                            categories:[NSSet setWithObjects:categorys, nil]];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
+    }
+}
+
+- (void)miPushRequestErrWithSelector:(NSString *)selector error:(int)error data:(NSDictionary *)data
+{
+    // 请求失败
+    PPDebug(@"<MiPush> ERROR!!!!! error=%d, data=%@", error, data);
+}
+
+#pragma mark MiPush
+
+- (void)setupMiPushAlias
+{
+    // 设置别名
+//    [MiPushSDK setAlias:@“alias”]
+    
+    // 订阅内容
+//    [MiPushSDK subscribe:@“topic”]
+}
+
+- (void)setupMiPushStatistic:(NSDictionary*)userInfo
+{
+    NSString *messageId = [userInfo objectForKey:@"_id_"];
+    [MiPushSDK openAppNotify:messageId];
+}
+
+
+
+
 
 @end
