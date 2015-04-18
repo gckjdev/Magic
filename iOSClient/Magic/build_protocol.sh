@@ -2,12 +2,12 @@
 
 echo build Objective-C codes
 
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Common.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Constants.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Error.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Message.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/User.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Barrage.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Common.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Constants.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Error.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Message.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/User.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Barrage.proto
 
 
 
@@ -20,22 +20,19 @@ protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protoco
 
 echo build Java server codes
 
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageCoreServer/src  ./BarrageClient/Protocol/Common.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageCoreServer/src  ./BarrageClient/Protocol/Constants.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageCoreServer/src  ./BarrageClient/Protocol/Error.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageCoreServer/src  ./BarrageClient/Protocol/Message.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageCoreServer/src ./BarrageClient/Protocol/User.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageCoreServer/src ./BarrageClient/Protocol/Barrage.proto
-
-
-
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Common.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Constants.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Error.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Message.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src ./Magic/Protocol/User.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src ./Magic/Protocol/Barrage.proto
 
 echo build Java Android code
 
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageAndroid/MainApplication/app/src/main/java  ./BarrageClient/Protocol/Common.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageAndroid/MainApplication/app/src/main/java  ./BarrageClient/Protocol/Constants.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageAndroid/MainApplication/app/src/main/java  ./BarrageClient/Protocol/Error.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageAndroid/MainApplication/app/src/main/java  ./BarrageClient/Protocol/Message.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageAndroid/MainApplication/app/src/main/java  ./BarrageClient/Protocol/User.proto
-protoc --proto_path=./BarrageClient/Protocol/ --java_out=../BarrageAndroid/MainApplication/app/src/main/java  ./BarrageClient/Protocol/Barrage.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../BarrageAndroid/MainApplication/app/src/main/java  ./Magic/Protocol/Common.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../BarrageAndroid/MainApplication/app/src/main/java  ./Magic/Protocol/Constants.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../BarrageAndroid/MainApplication/app/src/main/java  ./Magic/Protocol/Error.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../BarrageAndroid/MainApplication/app/src/main/java  ./Magic/Protocol/Message.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../BarrageAndroid/MainApplication/app/src/main/java  ./Magic/Protocol/User.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../BarrageAndroid/MainApplication/app/src/main/java  ./Magic/Protocol/Barrage.proto
 
