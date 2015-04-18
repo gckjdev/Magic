@@ -708,104 +708,26 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
 
 - (void)uploadUserAvatar:(UIImage*)image callback:(UserServiceCallBackBlock)callback
 {
-    // upload image to QiNiu Yun and get return URL
-    id<CreateImageInfoProtocol> imageInfo = [self getImageInfo];
-    NSString* token = [[CdnManager sharedInstance] getUserDataToken];
-    NSString* prefix = [[CdnManager sharedInstance] getUserAvatarDataPrefix];
-    NSString* key = [imageInfo createKey:prefix];
-    
-    NSData* data = [imageInfo getImageData:image quality:UPLOAD_IMAGE_QUALITY];
-    if (data == nil){
-        NSError* error = nil;
-        error = [NSError errorWithDomain:@"Error Create Image Data" code:PBErrorErrorCreateImage userInfo:nil];
+   
+    [self uploadImage:image prefix:[[CdnManager sharedInstance] getUserAvatarDataPrefix] callback:^(NSString *imageURL, NSError *error) {
+        if (error == nil) {
+            [self updateUserAvatar:imageURL callback:callback];
+        }
+        
         EXECUTE_BLOCK(callback, nil, error);
-        return;
-    }
-    
-    QNUploadManager *upManager = [[QNUploadManager alloc] init];
-    QNUploadOption *opt = [[QNUploadOption alloc] initWithMime:[imageInfo getMimeType]
-                                               progressHandler:^(NSString *key, float percent) {
-                                                   // TODO post image upload notification
-                                                   PPDebug(@"<uploadUserAvatar> upload image key(%@) percent(%.2f)", key, percent);
-                                               }
-                                                        params:nil
-                                                      checkCrc:YES
-                                            cancellationSignal:nil];
-    
-    [upManager putData:data key:key token:token
-              complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                  
-                  PPDebug(@"upload image info = %@, resp=%@", info, resp);
-                  if (info.error == nil && info.statusCode == 200){
-                      
-                      // success
-                      NSString* cdnKey = [resp objectForKey:@"key"];
-                      
-                      // avatar url
-                      NSString* url = [[CdnManager sharedInstance] getUserDataUrl:cdnKey];
-                      
-                      // now can send request to server
-                      [self updateUserAvatar:url callback:callback];
-                  }
-                  else{
-                      // failure
-                      NSError* error = [NSError errorWithDomain:@"Error Upload Image to Server" code:PBErrorErrorUploadImage userInfo:nil];
-                      EXECUTE_BLOCK(callback, nil, error);
-                  }
-              } option:opt];
+    }];
 
 }
 
 - (void)uploadUserBackground:(UIImage*)image callback:(UserServiceCallBackBlock)callback
 {
-    // TODO optimize background image size
-    
-    // upload image to QiNiu Yun and get return URL
-    id<CreateImageInfoProtocol> imageInfo = [self getImageInfo];
-    NSString* token = [[CdnManager sharedInstance] getUserDataToken];
-    NSString* prefix = [[CdnManager sharedInstance] getUserBackgroundDataPrefix];
-    NSString* key = [imageInfo createKey:prefix];
-    
-    NSData* data = [imageInfo getImageData:image quality:UPLOAD_IMAGE_QUALITY];
-    if (data == nil){
-        NSError* error = nil;
-        error = [NSError errorWithDomain:@"Error Create Image Data" code:PBErrorErrorCreateImage userInfo:nil];
+    [self uploadImage:image prefix:[[CdnManager sharedInstance] getUserBackgroundDataPrefix] callback:^(NSString *imageURL, NSError *error) {
+        if (error == nil) {
+            [self updateUserBackground:imageURL callback:callback];
+        }
+        
         EXECUTE_BLOCK(callback, nil, error);
-        return;
-    }
-    
-    QNUploadManager *upManager = [[QNUploadManager alloc] init];
-    QNUploadOption *opt = [[QNUploadOption alloc] initWithMime:[imageInfo getMimeType]
-                                               progressHandler:^(NSString *key, float percent) {
-                                                   // TODO post image upload notification
-                                                   
-                                                   PPDebug(@"<uploadUserBackground> upload image key(%@) percent(%.2f)", key, percent);
-                                               }
-                                                        params:nil
-                                                      checkCrc:YES
-                                            cancellationSignal:nil];
-    
-    [upManager putData:data key:key token:token
-              complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                  
-                  PPDebug(@"upload image info = %@, resp=%@", info, resp);
-                  if (info.error == nil && info.statusCode == 200){
-                      
-                      // success
-                      NSString* cdnKey = [resp objectForKey:@"key"];
-                      
-                      // avatar url
-                      NSString* url = [[CdnManager sharedInstance] getUserDataUrl:cdnKey];
-                      
-                      // now can send request to server
-                      [self updateUserBackground:url callback:callback];
-                  }
-                  else{
-                      // failure
-                      NSError* error = [NSError errorWithDomain:@"Error Upload Image to Server" code:PBErrorErrorUploadImage userInfo:nil];
-                      EXECUTE_BLOCK(callback, nil, error);
-                  }
-              } option:opt];
+    }];
 }
 
 

@@ -550,6 +550,17 @@
 		3638C31B1AE0B070008246CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31A1AE0B070008246CF /* MobileCoreServices.framework */; };
 		3638C31D1AE0B07D008246CF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31C1AE0B07D008246CF /* CFNetwork.framework */; };
 		3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */; };
+		6567FA141AE20CDD0043FF64 /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6567FA131AE20CDD0043FF64 /* ChatService.m */; };
+		65B3DAB01AE0C051008507FD /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA51AE0C051008507FD /* ChatViewController.m */; };
+		65B3DAB11AE0C051008507FD /* ChatCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA81AE0C051008507FD /* ChatCellFrame.m */; };
+		65B3DAB21AE0C051008507FD /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAAA1AE0C051008507FD /* ChatMessage.m */; };
+		65B3DAB31AE0C051008507FD /* ChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAAD1AE0C051008507FD /* ChatCell.m */; };
+		65B3DAB41AE0C051008507FD /* ChatToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAAF1AE0C051008507FD /* ChatToolView.m */; };
+		65B3DAB71AE0C0A8008507FD /* MessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAB61AE0C0A8008507FD /* MessageTableView.m */; };
+		65B3DABE1AE0C107008507FD /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DABB1AE0C107008507FD /* NSString+Extension.m */; };
+		65B3DABF1AE0C107008507FD /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DABD1AE0C107008507FD /* UIImage+Extension.m */; };
+		65B3DAC11AE0C3DC008507FD /* messages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65B3DAC01AE0C3DC008507FD /* messages.plist */; };
+		65B3DAC41AE0FB4B008507FD /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAC31AE0FB4B008507FD /* AudioManager.m */; };
 		93FD21456C5B9ADF108E75CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E987D56EAB81CEF90C80AA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1369,6 +1380,27 @@
 		3638C3201AE0B0D1008246CF /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		3D127CDED7A3722734306BED /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62E987D56EAB81CEF90C80AA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6567FA121AE20CDD0043FF64 /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
+		6567FA131AE20CDD0043FF64 /* ChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatService.m; sourceTree = "<group>"; };
+		65B3DAA41AE0C051008507FD /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		65B3DAA51AE0C051008507FD /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		65B3DAA71AE0C051008507FD /* ChatCellFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCellFrame.h; sourceTree = "<group>"; };
+		65B3DAA81AE0C051008507FD /* ChatCellFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCellFrame.m; sourceTree = "<group>"; };
+		65B3DAA91AE0C051008507FD /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		65B3DAAA1AE0C051008507FD /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
+		65B3DAAC1AE0C051008507FD /* ChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCell.h; sourceTree = "<group>"; };
+		65B3DAAD1AE0C051008507FD /* ChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCell.m; sourceTree = "<group>"; };
+		65B3DAAE1AE0C051008507FD /* ChatToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatToolView.h; sourceTree = "<group>"; };
+		65B3DAAF1AE0C051008507FD /* ChatToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatToolView.m; sourceTree = "<group>"; };
+		65B3DAB51AE0C0A8008507FD /* MessageTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableView.h; sourceTree = "<group>"; };
+		65B3DAB61AE0C0A8008507FD /* MessageTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableView.m; sourceTree = "<group>"; };
+		65B3DABA1AE0C107008507FD /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		65B3DABB1AE0C107008507FD /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		65B3DABC1AE0C107008507FD /* UIImage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extension.h"; sourceTree = "<group>"; };
+		65B3DABD1AE0C107008507FD /* UIImage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extension.m"; sourceTree = "<group>"; };
+		65B3DAC01AE0C3DC008507FD /* messages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = messages.plist; sourceTree = "<group>"; };
+		65B3DAC21AE0FB4B008507FD /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
+		65B3DAC31AE0FB4B008507FD /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
 		AA0282C8927B1D9A94CDA328 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1459,6 +1491,7 @@
 		3638BD291ADF7C53008246CF /* Magic */ = {
 			isa = PBXGroup;
 			children = (
+				65B3DAA21AE0C051008507FD /* Chat */,
 				3638BD531ADF8076008246CF /* 3PP-SDK */,
 				3638BD801ADF8076008246CF /* Barrage */,
 				3638BD861ADF8076008246CF /* Common */,
@@ -1715,6 +1748,8 @@
 			children = (
 				3638BDA51ADF8076008246CF /* CHAudioPlayer.h */,
 				3638BDA61ADF8076008246CF /* CHAudioPlayer.m */,
+				65B3DAC21AE0FB4B008507FD /* AudioManager.h */,
+				65B3DAC31AE0FB4B008507FD /* AudioManager.m */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -2566,14 +2601,14 @@
 		3638BF391ADF8077008246CF /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				3638BF4D1ADF8077008246CF /* User.proto */,
+				3638BF4C1ADF8077008246CF /* Message.proto */,
 				3638BF3A1ADF8077008246CF /* Barrage.proto */,
 				3638BF3B1ADF8077008246CF /* Common.proto */,
 				3638BF3C1ADF8077008246CF /* Constants.proto */,
 				3638BF3D1ADF8077008246CF /* Error.proto */,
 				3638BF3E1ADF8077008246CF /* Gen */,
 				3638BF4B1ADF8077008246CF /* GenJava */,
-				3638BF4C1ADF8077008246CF /* Message.proto */,
-				3638BF4D1ADF8077008246CF /* User.proto */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -3360,6 +3395,72 @@
 			path = MiPush;
 			sourceTree = "<group>";
 		};
+		6567FA111AE20CA90043FF64 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				6567FA121AE20CDD0043FF64 /* ChatService.h */,
+				6567FA131AE20CDD0043FF64 /* ChatService.m */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		65B3DAA21AE0C051008507FD /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				6567FA111AE20CA90043FF64 /* Service */,
+				65B3DAB91AE0C107008507FD /* Common */,
+				65B3DAA31AE0C051008507FD /* Controller */,
+				65B3DAA61AE0C051008507FD /* Model */,
+				65B3DAAB1AE0C051008507FD /* View */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		65B3DAA31AE0C051008507FD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				65B3DAA41AE0C051008507FD /* ChatViewController.h */,
+				65B3DAA51AE0C051008507FD /* ChatViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		65B3DAA61AE0C051008507FD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				65B3DAA71AE0C051008507FD /* ChatCellFrame.h */,
+				65B3DAA81AE0C051008507FD /* ChatCellFrame.m */,
+				65B3DAA91AE0C051008507FD /* ChatMessage.h */,
+				65B3DAAA1AE0C051008507FD /* ChatMessage.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		65B3DAAB1AE0C051008507FD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				65B3DAAC1AE0C051008507FD /* ChatCell.h */,
+				65B3DAAD1AE0C051008507FD /* ChatCell.m */,
+				65B3DAB51AE0C0A8008507FD /* MessageTableView.h */,
+				65B3DAB61AE0C0A8008507FD /* MessageTableView.m */,
+				65B3DAAE1AE0C051008507FD /* ChatToolView.h */,
+				65B3DAAF1AE0C051008507FD /* ChatToolView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		65B3DAB91AE0C107008507FD /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				65B3DAC01AE0C3DC008507FD /* messages.plist */,
+				65B3DABA1AE0C107008507FD /* NSString+Extension.h */,
+				65B3DABB1AE0C107008507FD /* NSString+Extension.m */,
+				65B3DABC1AE0C107008507FD /* UIImage+Extension.h */,
+				65B3DABD1AE0C107008507FD /* UIImage+Extension.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		E38F6A87C15D3155CD5DABB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3679,6 +3780,7 @@
 				3638C2061ADF8079008246CF /* camera_normal@2x.png in Resources */,
 				3638C1B21ADF8079008246CF /* addfriend_2dcode@2x.png in Resources */,
 				3638C25E1ADF8079008246CF /* tag_selected@2x.png in Resources */,
+				65B3DAC11AE0C3DC008507FD /* messages.plist in Resources */,
 				3638C2D41ADF8079008246CF /* email@2x.png in Resources */,
 				3638C18F1ADF8079008246CF /* delete_friend_pressed@3x.png in Resources */,
 				3638C2931ADF8079008246CF /* share_wechat_section_pressed@2x.png in Resources */,
@@ -3818,10 +3920,12 @@
 				3638C1331ADF8079008246CF /* ASIInputStream.m in Sources */,
 				3638BD301ADF7C53008246CF /* AppDelegate.m in Sources */,
 				3638C1181ADF8079008246CF /* UIViewUtils.m in Sources */,
+				65B3DAB71AE0C0A8008507FD /* MessageTableView.m in Sources */,
 				3638C2F61ADF8079008246CF /* UserService.m in Sources */,
 				3638C10C1ADF8079008246CF /* CreateFeedController.m in Sources */,
 				3638C1191ADF8079008246CF /* CHAudioPlayer.m in Sources */,
 				3638C2CC1ADF8079008246CF /* PBUser+Extend.m in Sources */,
+				65B3DAB11AE0C051008507FD /* ChatCellFrame.m in Sources */,
 				3638C2CD1ADF8079008246CF /* RegisterCodeManager.m in Sources */,
 				3638C1CB1ADF8079008246CF /* PPPopTableView.m in Sources */,
 				3638C1101ADF8079008246CF /* CommonManager.m in Sources */,
@@ -3853,6 +3957,7 @@
 				3638C2C41ADF8079008246CF /* CompleteInfoController.m in Sources */,
 				3638C2A01ADF8079008246CF /* CommonBarrageCell.m in Sources */,
 				3638C15A1ADF8079008246CF /* UIUtils.m in Sources */,
+				65B3DAB41AE0C051008507FD /* ChatToolView.m in Sources */,
 				3638C1391ADF8079008246CF /* SMSManager.m in Sources */,
 				3638C1DF1ADF8079008246CF /* Constants.pb.m in Sources */,
 				3638C2A51ADF8079008246CF /* LoginByEmailController.m in Sources */,
@@ -3865,7 +3970,9 @@
 				3638C10D1ADF8079008246CF /* BCButton.m in Sources */,
 				3638C1441ADF8079008246CF /* UIDevice+IdentifierAddition.m in Sources */,
 				3638C29E1ADF8079008246CF /* ShareBarrageView.m in Sources */,
+				6567FA141AE20CDD0043FF64 /* ChatService.m in Sources */,
 				3638C2CE1ADF8079008246CF /* UserManager.m in Sources */,
+				65B3DAB01AE0C051008507FD /* ChatViewController.m in Sources */,
 				3638C1711ADF8079008246CF /* InviteCodeListController.m in Sources */,
 				3638C13D1ADF8079008246CF /* NSAutoExtendMutableArray.m in Sources */,
 				3638C1581ADF8079008246CF /* pinyin.c in Sources */,
@@ -3906,6 +4013,7 @@
 				3638C29A1ADF8079008246CF /* UserTimelineController.m in Sources */,
 				3638C2991ADF8079008246CF /* FeedService.m in Sources */,
 				3638C1681ADF8079008246CF /* BarrageError.m in Sources */,
+				65B3DABE1AE0C107008507FD /* NSString+Extension.m in Sources */,
 				3638C1541ADF8079008246CF /* LocaleUtils.m in Sources */,
 				3638C1481ADF8079008246CF /* mztools.c in Sources */,
 				3638C16B1ADF8079008246CF /* SearchUserResultController.m in Sources */,
@@ -3955,6 +4063,7 @@
 				3638C11D1ADF8079008246CF /* BarrageConfigManager.m in Sources */,
 				3638C2B21ADF8079008246CF /* EditingController.m in Sources */,
 				3638C2381ADF8079008246CF /* NewFeedNumView.m in Sources */,
+				65B3DABF1AE0C107008507FD /* UIImage+Extension.m in Sources */,
 				3638C2FB1ADF8079008246CF /* TTTAttributedLabel.m in Sources */,
 				3638C16C1ADF8079008246CF /* FriendDetailController.m in Sources */,
 				3638C1531ADF8079008246CF /* UILabel+Touchable.m in Sources */,
@@ -3990,11 +4099,13 @@
 				3638C2351ADF8079008246CF /* SelectUserController.m in Sources */,
 				3638C11B1ADF8079008246CF /* CreateJpegImageInfo.m in Sources */,
 				3638C1381ADF8079008246CF /* Reachability.m in Sources */,
+				65B3DAB21AE0C051008507FD /* ChatMessage.m in Sources */,
 				3638C1C41ADF8079008246CF /* PickFriendTableViewCell.m in Sources */,
 				3638C1781ADF8079008246CF /* TagInfoViewController.m in Sources */,
 				3638C2361ADF8079008246CF /* DemoViewController.m in Sources */,
 				3638C1251ADF8079008246CF /* LevelDBManager.m in Sources */,
 				3638C17A1ADF8079008246CF /* ShareToWhichFriendViewController.m in Sources */,
+				65B3DAB31AE0C051008507FD /* ChatCell.m in Sources */,
 				3638C1DE1ADF8079008246CF /* Common.pb.m in Sources */,
 				3638C1771ADF8079008246CF /* TagDetailViewController.m in Sources */,
 				3638C1341ADF8079008246CF /* ASINetworkQueue.m in Sources */,
@@ -4005,6 +4116,7 @@
 				3638C29D1ADF8079008246CF /* FeedBarrageView.m in Sources */,
 				3638C15D1ADF8079008246CF /* MessageCenter.m in Sources */,
 				3638BD2D1ADF7C53008246CF /* main.m in Sources */,
+				65B3DAC41AE0FB4B008507FD /* AudioManager.m in Sources */,
 				3638C2B91ADF8079008246CF /* StyleController.m in Sources */,
 				3638C2FC1ADF8079008246CF /* UserAvatarView.m in Sources */,
 				3638C10E1ADF8079008246CF /* BCTableViewController.m in Sources */,
@@ -4167,6 +4279,7 @@
 					"$(PROJECT_DIR)/Magic/3PP-SDK/SMS_SDK",
 				);
 				INFOPLIST_FILE = Magic/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4196,6 +4309,7 @@
 					"$(PROJECT_DIR)/Magic/3PP-SDK/SMS_SDK",
 				);
 				INFOPLIST_FILE = Magic/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -282,9 +282,7 @@
 //    }];
     
 }
-- (void)test{
-    [self customizeBlackNavigationBar];
-}
+
 - (void)customizeNavigationBar {
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
   

@@ -49,6 +49,6 @@ typedef void (^SwitchChangeBlock) ();
 
 
 @property (nonatomic, strong) UIColor *currentColor;
-@property (nonatomic, strong) ColorChangeBlock colorChangeBlock;
-@property (nonatomic,strong)  SwitchChangeBlock switchChangeBlock;
+@property (nonatomic, copy) ColorChangeBlock colorChangeBlock;
+@property (nonatomic,copy)  SwitchChangeBlock switchChangeBlock;
 @end

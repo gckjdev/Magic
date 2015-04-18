@@ -10,6 +10,6 @@
 typedef void (^VerifyPassBlock)();
 
 @interface RegisterByPhoneVerifyCotroller : BCUIViewController
-@property (nonatomic,strong) VerifyPassBlock   verifyPassBlock;
+@property (nonatomic,copy) VerifyPassBlock   verifyPassBlock;
 +(RegisterByPhoneVerifyCotroller*)initWithPhoneNum:(NSString*)phoneNum;
 @end

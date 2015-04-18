@@ -138,7 +138,9 @@ BOOL PBChatSourceIsValidValue(PBChatSource value);
 NSString *NSStringFromPBChatSource(PBChatSource value);
 
 typedef NS_ENUM(SInt32, PBChatType) {
-  PBChatTypeNormalChat = 0,
+  PBChatTypeTextChat = 0,
+  PBChatTypePictureChat = 1,
+  PBChatTypeVoiceChat = 2,
 };
 
 BOOL PBChatTypeIsValidValue(PBChatType value);

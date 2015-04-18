@@ -269,7 +269,9 @@ NSString *NSStringFromPBChatSource(PBChatSource value) {
 
 BOOL PBChatTypeIsValidValue(PBChatType value) {
   switch (value) {
-    case PBChatTypeNormalChat:
+    case PBChatTypeTextChat:
+    case PBChatTypePictureChat:
+    case PBChatTypeVoiceChat:
       return YES;
     default:
       return NO;
@@ -277,8 +279,12 @@ BOOL PBChatTypeIsValidValue(PBChatType value) {
 }
 NSString *NSStringFromPBChatType(PBChatType value) {
   switch (value) {
-    case PBChatTypeNormalChat:
-      return @"PBChatTypeNormalChat";
+    case PBChatTypeTextChat:
+      return @"PBChatTypeTextChat";
+    case PBChatTypePictureChat:
+      return @"PBChatTypePictureChat";
+    case PBChatTypeVoiceChat:
+      return @"PBChatTypeVoiceChat";
     default:
       return nil;
   }

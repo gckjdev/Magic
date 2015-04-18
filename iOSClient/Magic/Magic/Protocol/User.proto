@@ -224,7 +224,9 @@ enum PBChatSource
 
 enum PBChatType
 {
-    NORMAL_CHAT = 0;
+    TEXT_CHAT = 0;                            //文本消息
+    PICTURE_CHAT = 1;                           //图片消息
+    VOICE_CHAT = 2;                             //语音消息
 }
 
 enum PBChatStatus
