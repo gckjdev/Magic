@@ -224,7 +224,9 @@ enum PBChatSource
 
 enum PBChatType
 {
-    NORMAL_CHAT = 0;
+    NORMAL_CHAT = 0;                            //
+
+
 }
 
 enum PBChatStatus
