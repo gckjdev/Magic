@@ -63,7 +63,7 @@ typedef void (^WidthChangeBlock) (CGFloat width);
 @property (nonatomic, assign) BOOL      isBreakLine;
 @property (nonatomic, assign) double      viewMaxWidth;//这个View最大的宽度
 @property (nonatomic, assign) BOOL      isReversal;
-@property (nonatomic,strong) WidthChangeBlock   widthChangeBlock;
+@property (nonatomic,copy) WidthChangeBlock   widthChangeBlock;
 @property (nonatomic,strong) PBFeedActionBuilder   *action;
 
 @end

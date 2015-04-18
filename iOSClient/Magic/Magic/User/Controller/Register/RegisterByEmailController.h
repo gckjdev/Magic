@@ -10,5 +10,5 @@
 #import <UIKit/UIKit.h>
 typedef void (^VerifyPassBlock)();
 @interface RegisterByEmailController : UIViewController
-@property (nonatomic,strong) VerifyPassBlock   verifyPassBlock;
+@property (nonatomic,copy) VerifyPassBlock   verifyPassBlock;
 @end

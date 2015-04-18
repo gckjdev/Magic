@@ -22,7 +22,7 @@ typedef void (^KeyboardFinishBlock) ();
 @interface BarrageTextView : UIView
 
 @property (nonatomic, strong)       LongPressBlock longPressBlock;
-@property (nonatomic,strong)        KeyboardFinishBlock keyboardFinishBlock;
+@property (nonatomic,copy)        KeyboardFinishBlock keyboardFinishBlock;
 @property (nonatomic, strong)       PBFeedActionBuilder* textBuilder;
 @property (nonatomic,   copy)       NSString *editText;
 @property (nonatomic, strong)       BarrageTextFieldView* textFieldView;

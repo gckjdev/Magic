@@ -194,17 +194,8 @@
 
 -(void)dealloc{
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NOTIFICATION_TIMELINE_RELOAD_VISIABLE_ROWS
-                                                  object:nil];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NOTIFICATION_TIMELINE_RELOAD_FROM_NETWORK
-                                                  object:nil];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NOTIFICATION_TIMELINE_RELOAD_ALL_ROWS
-                                                  object:nil];
+     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)headerRefreshing
@@ -266,7 +257,7 @@
     [self showTabBar];
     
     // Q: what is this?
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryChanged:)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -297,7 +288,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+
 }
 
 -(void)judgeHaveFeedList{

@@ -8,8 +8,8 @@
 
 #import "ChatToolView.h"
 #import "Masonry.h"
+#import "AudioManager.h"
 @interface ChatToolView()
-
 @end
 
 @implementation ChatToolView
@@ -20,15 +20,21 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor] ;
         [self setupView];
+       
+       
     }
     return self;
 }
 -(void)setupView{
-    _leftBtn = [[UIButton alloc]init];
-    [_leftBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
-    [_leftBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_press"] forState:UIControlStateHighlighted];
-    [self addSubview:_leftBtn];
-    [_leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    _soundBtn = [[UIButton alloc]init];
+    [_soundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
+    [_soundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_press"] forState:UIControlStateHighlighted];
+    [self addSubview:_soundBtn];
+    [_soundBtn addTarget:self action:@selector(soundButtonTouchDownAciton) forControlEvents:UIControlEventTouchDown];
+    [_soundBtn addTarget:self action:@selector(soundButtonTouchUpInsideAciton) forControlEvents:UIControlEventTouchUpInside];
+    [_soundBtn addTarget:self action:@selector(soundButtonTouchTouchUpOutsideAction) forControlEvents:UIControlEventTouchUpOutside];
+    
+    [_soundBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(40, 40));
         make.left.equalTo(self);
         make.centerY.equalTo(self);
@@ -46,16 +52,7 @@
         make.height.mas_equalTo(@30);
     }];
     
-    _sendBtn = [[UIButton alloc]init];
-    _sendBtn.hidden = YES;
-    [_sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-    [self addSubview:_sendBtn];
-    [_sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(40, 40));
-        make.right.equalTo(self);
-        make.centerY.equalTo(self);
-    }];
-    
+
     
     _faceBtn = [[UIButton alloc]init];
     [_faceBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_nor"] forState:UIControlStateNormal];
@@ -82,17 +79,65 @@
     }];
     
     
+    _sendBtn = [[UIButton alloc]init];
+    [_sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [_sendBtn setTitleColor: [UIColor redColor] forState:UIControlStateNormal];
+    [_sendBtn setHidden:YES];
+    [_sendBtn addTarget:self action:@selector(sendButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_sendBtn];
+    [_sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+        make.right.equalTo(self);
+        make.centerY.equalTo(self);
+    }];
     
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showSendButton) name:@"MESSAGE_HAVE_TEXT" object:nil];
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hideSendButton) name:@"MESSAGE_HAVE_NO_TEXT" object:nil];
 }
--(void)plusBtnAction{
+-(void)sendButtonAction{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(sendMessageAction:)]) {
         [self.delegate sendMessageAction:_contentView.text];
+    }
+}
+-(void)showSendButton{
+    if (_sendBtn.isHidden) {
+        [_sendBtn setHidden:NO];
+        [_plusBtn setHidden:YES];
+    }
+    
+}
+-(void)hideSendButton{
+    if (!_sendBtn.isHidden) {
+        [_sendBtn setHidden:YES];
+        [_plusBtn setHidden:NO];
+    }
+}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)plusBtnAction{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(sendImageMessageAction:)]) {
+
+#pragma wait for image select
+        [self.delegate sendImageMessageAction:@""];
     }
 }
 -(void)faceBtnAction{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(sendImageMessageAction:)]) {
         ;
     }
+}
+-(void)soundButtonTouchDownAciton{
+    [[AudioManager sharedInstance] recorderStart];
+}
+-(void)soundButtonTouchUpInsideAciton{
+    [[AudioManager sharedInstance] recorderEnd];
+}
+-(void)soundButtonTouchTouchUpOutsideAction{
+    [[AudioManager sharedInstance] recorderEnd];
 }
 - (void)updateConstraints {
     [self mas_updateConstraints:^(MASConstraintMaker *make) {

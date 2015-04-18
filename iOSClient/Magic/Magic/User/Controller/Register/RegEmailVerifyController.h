@@ -12,6 +12,6 @@ typedef void (^VerifyPassBlock)();
 
 
 @interface RegEmailVerifyController : BCUIViewController
-@property (nonatomic,strong) VerifyPassBlock   verifyPassBlock;
+@property (nonatomic,copy) VerifyPassBlock   verifyPassBlock;
 +(instancetype)controllerWithEmail:(NSString*)destEmail;
 @end

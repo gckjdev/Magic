@@ -13,6 +13,6 @@
 typedef void (^PreViewButtonChangeBlock) ();
 typedef void (^GridsButtonChangeBlock) ();
 @interface CommentToolView : UIView
-@property (nonatomic,strong) GridsButtonChangeBlock     gridsButtonChangeBlock;
-@property (nonatomic,strong) PreViewButtonChangeBlock   preViewButtonChangeBlock;
+@property (nonatomic,copy) GridsButtonChangeBlock     gridsButtonChangeBlock;
+@property (nonatomic,copy) PreViewButtonChangeBlock   preViewButtonChangeBlock;
 @end

@@ -32,6 +32,9 @@
     
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.allowsSelection = NO;
+    
+    
+
 }
 
 
