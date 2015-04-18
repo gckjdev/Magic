@@ -13,6 +13,7 @@
 typedef void (^SendCommonChatMessageCallBackBlock)(NSError *error);
 typedef void (^SendTextChatMessageCallBackBlock)(NSError *error);
 typedef void (^SendImageChatMessageCallBackBlock)(NSError *error);
+typedef void (^GetChatListCallBackBlock)(NSArray *chatArray,NSError *error);
 
 @interface ChatService : CommonService
 DEF_SINGLETON_FOR_CLASS(UserService);
@@ -24,4 +25,6 @@ DEF_SINGLETON_FOR_CLASS(UserService);
 -(void)sendImageChatMessage:(UIImage*)image
                    toUserId:(NSString*)toUserId
                    callback:(SendImageChatMessageCallBackBlock)callback;
+
+-(void)getChatList:(GetChatListCallBackBlock)callback;
 @end
