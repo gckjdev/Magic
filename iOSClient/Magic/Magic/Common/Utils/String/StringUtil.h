@@ -19,6 +19,9 @@
 + (NSString *)GetUUID;
 - (NSNumber *)toNumber;
 
+// format : "yyyy-MM-dd HH:mm:ss"
++(NSString *)getCurrentTime;
+
 - (NSString *)phoneNumberFilter;
 - (NSString *)phoneNumberFilter2;
 

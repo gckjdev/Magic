@@ -17,6 +17,9 @@
 #import "BarrageConfigManager.h"
 #import "Error.pb.h"
 
+typedef void (^UploadImageCallbackBlock)(NSString *imageURL,NSError* error);
+typedef void (^UploadAudioCallbackBlock)(NSString *audioURL,NSError* error);
+
 @protocol CommonManagerProtocol <NSObject>
 
 + (id)defaultManager;
@@ -41,6 +44,15 @@
      requestBuilder:(PBDataRequestBuilder*)requestBuilder
            callback:(PBResponseResultBlock)callback
         isPostError:(BOOL)isPostError;
+
+
+-(void)uploadImage:(UIImage*)image
+            prefix:(NSString*)prefix
+          callback:(UploadImageCallbackBlock)callback;
+
+-(void)uploadAudio:(NSData*)audio
+            prefix:(NSString*)prefix
+          callback:(UploadAudioCallbackBlock)callback;
 
 - (NSError*)errorInput;
 

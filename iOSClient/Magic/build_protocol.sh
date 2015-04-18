@@ -2,12 +2,12 @@
 
 echo build Objective-C codes
 
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Common.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Constants.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Error.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Message.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/User.proto
-protoc --proto_path=./BarrageClient/Protocol/ --objc_out=./BarrageClient/Protocol/Gen ./BarrageClient/Protocol/Barrage.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Common.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Constants.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Error.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Message.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/User.proto
+protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Protocol/Barrage.proto
 
 
 
