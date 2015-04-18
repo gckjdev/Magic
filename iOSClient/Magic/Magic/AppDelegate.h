@@ -23,7 +23,6 @@
 + (AppDelegate*)sharedInstance;
 - (void)showNormalHome;
 - (void)showDemoController;
--(void)test;
 - (void)customizeBlackNavigationBar;
 - (void)customizeNavigationBar;
 

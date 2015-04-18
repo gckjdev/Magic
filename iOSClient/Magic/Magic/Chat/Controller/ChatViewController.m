@@ -9,8 +9,9 @@
 #import "ChatViewController.h"
 #import "ChatToolView.h"
 #import "Masonry.h"
-#import "ViewInfo.h"
+#import "UIViewUtils.h"
 #import "ChatCell.h"
+
 
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
@@ -23,13 +24,19 @@
 
 #define cellIdentifier @"cellIdentifier"
 
+
+#define MAX_HEIGHT_INPUTVIEW  60.0f
+#define CHATTOOLVIEW_HEIGHT  50.0f
+
+
+
 @implementation ChatViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:235/255.00 green:235/255.0 blue:235/255.0 alpha:1.0];
     self.title = @"聊天";
-    _toolViewHeight = 50;
+    _toolViewHeight = CHATTOOLVIEW_HEIGHT;
 
     [self setupTableView];
     [self setupToolView];
@@ -45,14 +52,17 @@
 }
 #pragma mark - setup
 -(void)setupTableView{
+    
+    CGFloat tableHeight = -kStatusBarHeight -_toolViewHeight;
     self.tableView = [[MessageTableView alloc]init];
     _tableView.messageFrames = [self.messageFrames copy];
     _tableView.viewHeight = _toolViewHeight;
+    
     [self.view addSubview:self.tableView];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.height.equalTo(self.view);
+        make.height.equalTo(self.view).offset(tableHeight);
         make.width.equalTo(self.view);
    
     }];
@@ -73,8 +83,11 @@
 }
 -(void)sendMessageAction:(NSString*)text
 {
-//    [self addMessage:text type:MESSAGETYPE_OTHER];
-     [self addMessageImage:@"test" type:MESSAGETYPE_OTHER];
+    [self addMessage:text type:MESSAGETYPE_ME];
+//     [self addMessageImage:@"test" type:MESSAGETYPE_OTHER];
+}
+-(void)sendImageMessageAction:(NSString *)image{
+    [self addMessageImage:@"test" type:MESSAGETYPE_OTHER];
 }
 - (NSMutableArray *)messageFrames
 {
@@ -107,40 +120,65 @@
     return _messageFrames;
 }
 
-- (void)keyboardWillChangeFrame:(NSNotification *)note
-{
-    // 设置窗口的颜色
-    self.view.window.backgroundColor = self.tableView.backgroundColor;
-    
-    // 0.取出键盘动画的时间
-    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    // 1.取得键盘最后的frame
-    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    // 2.计算控制器的view需要平移的距离
-    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height;
-    
-    // 3.执行动画
-    [UIView animateWithDuration:duration animations:^{
-        self.view.transform = CGAffineTransformMakeTranslation(0, transformY);
-    }];
-}
+//- (void)keyboardWillShow:(NSNotification *)note
+//{
+//    // 设置窗口的颜色
+//    self.view.window.backgroundColor = self.tableView.backgroundColor;
+//    
+//    // 0.取出键盘动画的时间
+//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    
+//    // 1.取得键盘最后的frame
+//    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    
+//    // 2.计算控制器的view需要平移的距离
+////    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height;
+//    
+//    CGFloat tmp =  keyboardFrame.size.height;
+//    // 3.执行动画
+//    [UIView animateWithDuration:duration animations:^{
+//        self.view.transform = CGAffineTransformMakeTranslation(0, -50);
+//    }];
+//}
+//- (void)keyboardWillHide:(NSNotification *)note
+//{
+//    // 设置窗口的颜色
+//    self.view.window.backgroundColor = self.tableView.backgroundColor;
+//    
+//    // 0.取出键盘动画的时间
+//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    
+//    
+//    
+//    // 1.取得键盘最后的frame
+//    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    
+//    CGFloat tmp =  keyboardFrame.size.height;
+//    
+//    // 2.计算控制器的view需要平移的距离
+////    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height;
+//    
+//    // 3.执行动画
+//    [UIView animateWithDuration:duration animations:^{
+//        self.view.transform = CGAffineTransformMakeTranslation(0, 0);
+//    }];
+//}
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-     [[NSNotificationCenter defaultCenter]removeObserver:self];
+//     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 #pragma mark - InputView
 - (void)textViewDidChange:(UITextView *)textView
 {
     CGSize size = textView.contentSize;
-    if (size.height<60) {
-        _toolViewHeight = 50 + (size.height - 30);
+    if (size.height<MAX_HEIGHT_INPUTVIEW) {
+        _toolViewHeight = CHATTOOLVIEW_HEIGHT + (size.height - MAX_HEIGHT_INPUTVIEW/2);
         _toolView.viewHeight = _toolViewHeight;
         [_toolView setNeedsUpdateConstraints];
         [_toolView updateConstraintsIfNeeded];
@@ -157,7 +195,14 @@
             [_tableView layoutIfNeeded];
         }];
     }
-    
+    if (textView.text.length>0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MESSAGE_HAVE_TEXT
+                                                            object:nil];
+    }
+    else{
+        [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_NO_TEXT object:nil];
+    }
+   
 }
 -(void)addMessageImage:(NSString*)image type:(MessageType)type{
     // 1.数据模型

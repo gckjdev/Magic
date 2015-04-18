@@ -24,6 +24,7 @@
 #import "RDVTabBarController.h"
 #import "AppDelegate.h"
 #import "UserAlbumViewController.h"
+#import "ChatViewController.h"
 
 #ifdef DEBUG
 
@@ -361,8 +362,10 @@ const float kHeaderHeight = 10;     //  除了首个Section外，每个header的
 }
 
 -(void)clickTestButton{
-    LoginHomeWithInviteCodeController *vc = [[LoginHomeWithInviteCodeController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self hideTabBar];
+    
+    ChatViewController *vc = [[ChatViewController alloc]init];
+  [self presentViewController:vc animated:NO completion:nil];
 }
 - (void)updateNick
 {
