@@ -141,17 +141,7 @@
     
     NSString *docDir = [FileUtil getAppDocumentDir];
     NSString *playname = [NSString stringWithFormat:@"%@/play.aac",docDir];
-    NSData * data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:playname]];
-    CommonService  *service =[[CommonService alloc]init];
-    [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
-        if (error == nil) {
-            
-        }
-        else
-        {
-            
-        }
-    }];
+
     
 }
 -(void)soundButtonTouchTouchUpOutsideAction{

@@ -45,6 +45,23 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
              } isPostError:YES];
     
 }
+
+-(void)sendAudioChatMessg:(NSString*)audio
+                 callback:(SendAudioChatMessageCallBackBlock)callback
+{
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:audio]];
+    CommonService  *service =[[CommonService alloc]init];
+    [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
+        if (error == nil) {
+            
+        }
+        else
+        {
+            
+        }
+    }];
+}
 -(void)sendTextChatMessage:(NSString*)text
                   toUserId:(NSString*)toUserId
                   callback:(SendTextChatMessageCallBackBlock)callback
