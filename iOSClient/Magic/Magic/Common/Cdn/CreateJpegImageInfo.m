@@ -39,6 +39,7 @@
 - (NSString*)createKey:(NSString*)keyPrefix
 {
     NSString* pathExt = [self getPathExtension];
+//    NSString* pathExt = @"aac";
     NSString* uuid = [NSString GetUUID];
     NSString* date = dateToStringByFormat([NSDate date], @"yyyyMMdd");
     NSString* key = [NSString stringWithFormat:@"%@/img/%@/%@.%@", keyPrefix, date, uuid, pathExt];

@@ -16,6 +16,35 @@
 
 @implementation ChatService
 IMPL_SINGLETON_FOR_CLASS(UserService)
+
+-(void)getChatList:(GetChatListCallBackBlock)callback
+{
+    PBDataRequestBuilder* builder = [PBDataRequest builder];
+    
+    PBGetChatListRequestBuilder* reqBuilder = [PBGetChatListRequest builder];
+    
+    PBGetChatListRequest *req = [reqBuilder build];
+    
+    [builder setGetChatListRequest:req];
+    
+    
+    [self sendRequest:PBMessageTypeMessageGetChatList
+       requestBuilder:builder
+             callback:^(PBDataResponse *response, NSError *error) {
+                 
+                 NSArray *array = [response.getChatListResponse.chat copy];
+                 if (error == nil) {
+                     PPDebug(@"getChatList  success");
+                     EXECUTE_BLOCK(callback,array,error);
+                 }else{
+                     PPDebug(@"getChatList  fail %@",error.description);
+                     EXECUTE_BLOCK(callback,nil,error);
+                 }
+                 
+                 
+             } isPostError:YES];
+    
+}
 -(void)sendTextChatMessage:(NSString*)text
                   toUserId:(NSString*)toUserId
                   callback:(SendTextChatMessageCallBackBlock)callback

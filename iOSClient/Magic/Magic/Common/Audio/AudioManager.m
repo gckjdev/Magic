@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 #import "PPDebug.h"
+#import "FileUtil.h"
 @interface AudioManager()
 @property (nonatomic,strong) AVAudioRecorder   *recorder;
 @property (nonatomic,strong) AVAudioPlayer   *player;
@@ -45,7 +46,7 @@
 #pragma recorder
 -(void)recorderStart
 {
-    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *docDir = [FileUtil getAppDocumentDir];
     _playName = [NSString stringWithFormat:@"%@/play.aac",docDir];
     
     _recorderSettingsDict =[[NSDictionary alloc] initWithObjectsAndKeys:
@@ -75,7 +76,7 @@
         } else
         {
 //            int errorCode = CFSwapInt32HostToBig ([error code]);
-//            NSLog(@"Error: %@ [%4.4s])" , [error localizedDescription], (char*)&errorCode);
+            NSLog(@"Error: %@ " , [error description]);
             
         }
     }
