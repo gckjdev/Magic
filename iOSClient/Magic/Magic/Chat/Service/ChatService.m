@@ -47,18 +47,33 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
 }
 
 -(void)sendAudioChatMessg:(NSString*)audio
+                 toUserId:(NSString*)toUserId
                  callback:(SendAudioChatMessageCallBackBlock)callback
 {
-    
+    PBChatBuilder *chatBuilder  = [PBChat builder];
+    [chatBuilder setType:PBChatTypeVoiceChat];
+    [chatBuilder setToUserId:toUserId];
     NSData * data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:audio]];
     CommonService  *service =[[CommonService alloc]init];
     [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
         if (error == nil) {
-            
+            [chatBuilder setVoice:audioURL];
+            [self sendCommonChatMessage:chatBuilder callback:^(NSError *error1) {
+                
+                if (error1 ==nil) {
+                    PPDebug(@"sendImageChatMessage  success");
+                }
+                else
+                {
+                    PPDebug(@"sendImageChatMessage  fail %@",error1.debugDescription);
+                }
+                EXECUTE_BLOCK(callback,error1);
+            }];
         }
         else
         {
-            
+            PPDebug(@"sendImageChatMessage  fail %@",error.debugDescription);
+            EXECUTE_BLOCK(callback,error);
         }
     }];
 }

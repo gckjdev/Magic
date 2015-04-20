@@ -26,6 +26,11 @@
 #import "UserAlbumViewController.h"
 #import "ChatViewController.h"
 
+
+#import "MMDrawerController.h"
+
+
+
 #ifdef DEBUG
 
 #import "LoginHomeWithInviteCodeController.h"
@@ -66,6 +71,7 @@ const float kHeaderHeight = 10;     //  除了首个Section外，每个header的
 
 @property (nonatomic,strong) ChangeAvatar* changeAvatar;
 @property (nonatomic,strong) NSArray *changeActionSheetTitleArray;
+@property (nonatomic,strong) MMDrawerController   *drawerController;
 
 @end
 
@@ -363,9 +369,28 @@ const float kHeaderHeight = 10;     //  除了首个Section外，每个header的
 
 -(void)clickTestButton{
     [self hideTabBar];
+
     
-    ChatViewController *vc = [[ChatViewController alloc]init];
-  [self presentViewController:vc animated:NO completion:nil];
+    ChatViewController *chat = [[ChatViewController alloc]init];
+    UINavigationController * chatControll = [[UINavigationController alloc] initWithRootViewController:chat];
+   
+    UIViewController *left = [[UIViewController alloc]init];
+    [left.view setBackgroundColor:[UIColor blackColor]];
+
+    
+    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:chatControll leftDrawerViewController:left];
+    
+    
+    
+    [self.drawerController setShowsShadow:NO];
+    [self.drawerController setRestorationIdentifier:@"MMDrawer"];
+    
+    [self.drawerController setMaximumLeftDrawerWidth:200];
+    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+
+  [self presentViewController:self.drawerController animated:NO completion:nil];
 }
 - (void)updateNick
 {

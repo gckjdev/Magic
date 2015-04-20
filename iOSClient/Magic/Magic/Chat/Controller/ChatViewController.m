@@ -11,7 +11,8 @@
 #import "Masonry.h"
 #import "UIViewUtils.h"
 #import "ChatCell.h"
-
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
 
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
@@ -44,11 +45,18 @@
     
     [self addMessage:@"haha" type:MESSAGETYPE_ME];
    
-   
+    [self addLeftMenuButton];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
+}
+-(void)addLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 #pragma mark - setup
 -(void)setupTableView{
