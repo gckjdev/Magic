@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C9241010B0A72D079301D22F"
+               BlueprintIdentifier = "D23F72E2C169A6AE64732F9E"
                BuildableName = "libPods-MHTextField.a"
                BlueprintName = "Pods-MHTextField"
                ReferencedContainer = "container:Pods.xcodeproj">

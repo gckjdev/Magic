@@ -70,6 +70,19 @@ PODS:
   - MBProgressHUD (0.9.1)
   - MHTextField (0.5)
   - MLPAutoCompleteTextField (1.5)
+  - MMDrawerController (0.5.7):
+    - MMDrawerController/Core
+    - MMDrawerController/MMDrawerBarButtonItem
+    - MMDrawerController/MMDrawerVisualStates
+    - MMDrawerController/Subclass
+  - MMDrawerController/Core (0.5.7)
+  - MMDrawerController/MMDrawerBarButtonItem (0.5.7):
+    - MMDrawerController/Core
+  - MMDrawerController/MMDrawerVisualStates (0.5.7):
+    - MMDrawerController/Core
+  - MMDrawerController/Subclass (0.5.7):
+    - MMDrawerController/Core
+  - MSDynamicsDrawerViewController (1.5.1)
   - MWPhotoBrowser (1.4.1):
     - DACircularProgress
     - MBProgressHUD (~> 0.8)
@@ -83,6 +96,7 @@ PODS:
   - RDVTabBarController (1.1.9)
   - REFormattedNumberField (1.1.5)
   - REMenu (1.10)
+  - RESideMenu (4.0.7)
   - RETableViewManager (1.5.14):
     - REFormattedNumberField (~> 1.1.5)
     - REValidation (~> 0.1.4)
@@ -93,12 +107,12 @@ PODS:
     - SDWebImage/Core
   - SDWebImage/Core (3.7.2)
   - SKSplashView (0.1.0)
-  - SKTagView (0.4):
+  - SKTagView (0.5):
     - Masonry
   - THLabel (1.4.6)
   - TMCache (1.2.4)
   - TWMessageBarManager (1.7.2)
-  - UITextField+Shake (0.4)
+  - UITextField+Shake (0.4.1)
   - UIView+draggable (0.4)
   - UMengFeedback (2.1)
   - UzysAssetsPickerController (0.9.7)
@@ -116,12 +130,15 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - MHTextField (~> 0.5)
   - MLPAutoCompleteTextField
+  - MMDrawerController (~> 0.5.7)
+  - MSDynamicsDrawerViewController
   - MWPhotoBrowser
   - pop (~> 1.0)
   - ProtocolBuffers (= 1.9.7)
   - Qiniu (~> 7.0)
   - RDVTabBarController
   - REMenu (~> 1.10)
+  - RESideMenu (~> 4.0.7)
   - RETableViewManager (~> 1.5.14)
   - RFKeyboardToolbar
   - SCLAlertView-Objective-C
@@ -151,6 +168,8 @@ SPEC CHECKSUMS:
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MHTextField: fa2236b7a9a9ec8968ef869b0afad1ec606825b3
   MLPAutoCompleteTextField: ba4d507bbff2bd4f139d4197814fc8dd39caf77e
+  MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
+  MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
   MWPhotoBrowser: 2531e682860d62b8a7ba8659de02eb9040e431e5
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
   ProtocolBuffers: 0682a66dec85e5a45bd53a2f44b8b987a0ba845f
@@ -159,17 +178,18 @@ SPEC CHECKSUMS:
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
+  RESideMenu: f24c508404b49c667344c54aba7e590883533958
   RETableViewManager: 317f43f31c0a5818c6257cb7544167819a8ae170
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
   RFKeyboardToolbar: c96a7d9458564d1fedc8ef6844b6c467934aade2
   SCLAlertView-Objective-C: 0491ea966dba9b3713178e2ffbcd0a148dc5b271
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SKSplashView: 8cdb1bfccb5857cb141751d01b03cf132b110168
-  SKTagView: ffe311a17eeead969e8e8a917054e1559b0741e1
+  SKTagView: 810834c82a7a90bb513519fd206701a2dda3fb3b
   THLabel: 27890d10123514ffe74b6e023b57b2ece55304af
   TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
   TWMessageBarManager: e7adc066ee425174f5dee79473fce913b1cd1662
-  UITextField+Shake: e38282f58bd783745b2a0e076d4714693f93b7f8
+  UITextField+Shake: 95dc39a000d8d02901280cb5d24b064b6794c975
   UIView+draggable: 203f7443f91e06a34c7a675d5c8e2b571ebf868c
   UMengFeedback: 0e04794921d5daca7abdc12d4761cd831492c192
   UzysAssetsPickerController: eae7c24955501a80df34286b1797a2ec6f6b1ab9

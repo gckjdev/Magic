@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A08337D17516FEF3BC29C3B3"
+               BlueprintIdentifier = "42C0C6BC68FDA6160D6A5A53"
                BuildableName = "libPods-RFKeyboardToolbar.a"
                BlueprintName = "Pods-RFKeyboardToolbar"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -132,6 +132,42 @@
 #define COCOAPODS_VERSION_MINOR_MLPAutoCompleteTextField 5
 #define COCOAPODS_VERSION_PATCH_MLPAutoCompleteTextField 0
 
+// MMDrawerController
+#define COCOAPODS_POD_AVAILABLE_MMDrawerController
+#define COCOAPODS_VERSION_MAJOR_MMDrawerController 0
+#define COCOAPODS_VERSION_MINOR_MMDrawerController 5
+#define COCOAPODS_VERSION_PATCH_MMDrawerController 7
+
+// MMDrawerController/Core
+#define COCOAPODS_POD_AVAILABLE_MMDrawerController_Core
+#define COCOAPODS_VERSION_MAJOR_MMDrawerController_Core 0
+#define COCOAPODS_VERSION_MINOR_MMDrawerController_Core 5
+#define COCOAPODS_VERSION_PATCH_MMDrawerController_Core 7
+
+// MMDrawerController/MMDrawerBarButtonItem
+#define COCOAPODS_POD_AVAILABLE_MMDrawerController_MMDrawerBarButtonItem
+#define COCOAPODS_VERSION_MAJOR_MMDrawerController_MMDrawerBarButtonItem 0
+#define COCOAPODS_VERSION_MINOR_MMDrawerController_MMDrawerBarButtonItem 5
+#define COCOAPODS_VERSION_PATCH_MMDrawerController_MMDrawerBarButtonItem 7
+
+// MMDrawerController/MMDrawerVisualStates
+#define COCOAPODS_POD_AVAILABLE_MMDrawerController_MMDrawerVisualStates
+#define COCOAPODS_VERSION_MAJOR_MMDrawerController_MMDrawerVisualStates 0
+#define COCOAPODS_VERSION_MINOR_MMDrawerController_MMDrawerVisualStates 5
+#define COCOAPODS_VERSION_PATCH_MMDrawerController_MMDrawerVisualStates 7
+
+// MMDrawerController/Subclass
+#define COCOAPODS_POD_AVAILABLE_MMDrawerController_Subclass
+#define COCOAPODS_VERSION_MAJOR_MMDrawerController_Subclass 0
+#define COCOAPODS_VERSION_MINOR_MMDrawerController_Subclass 5
+#define COCOAPODS_VERSION_PATCH_MMDrawerController_Subclass 7
+
+// MSDynamicsDrawerViewController
+#define COCOAPODS_POD_AVAILABLE_MSDynamicsDrawerViewController
+#define COCOAPODS_VERSION_MAJOR_MSDynamicsDrawerViewController 1
+#define COCOAPODS_VERSION_MINOR_MSDynamicsDrawerViewController 5
+#define COCOAPODS_VERSION_PATCH_MSDynamicsDrawerViewController 1
+
 // MWPhotoBrowser
 #define COCOAPODS_POD_AVAILABLE_MWPhotoBrowser
 #define COCOAPODS_VERSION_MAJOR_MWPhotoBrowser 1
@@ -181,6 +217,12 @@
 #define COCOAPODS_VERSION_MINOR_REMenu 10
 #define COCOAPODS_VERSION_PATCH_REMenu 0
 
+// RESideMenu
+#define COCOAPODS_POD_AVAILABLE_RESideMenu
+#define COCOAPODS_VERSION_MAJOR_RESideMenu 4
+#define COCOAPODS_VERSION_MINOR_RESideMenu 0
+#define COCOAPODS_VERSION_PATCH_RESideMenu 7
+
 // RETableViewManager
 #define COCOAPODS_POD_AVAILABLE_RETableViewManager
 #define COCOAPODS_VERSION_MAJOR_RETableViewManager 1
@@ -226,7 +268,7 @@
 // SKTagView
 #define COCOAPODS_POD_AVAILABLE_SKTagView
 #define COCOAPODS_VERSION_MAJOR_SKTagView 0
-#define COCOAPODS_VERSION_MINOR_SKTagView 4
+#define COCOAPODS_VERSION_MINOR_SKTagView 5
 #define COCOAPODS_VERSION_PATCH_SKTagView 0
 
 // THLabel
@@ -251,7 +293,7 @@
 #define COCOAPODS_POD_AVAILABLE_UITextField_Shake
 #define COCOAPODS_VERSION_MAJOR_UITextField_Shake 0
 #define COCOAPODS_VERSION_MINOR_UITextField_Shake 4
-#define COCOAPODS_VERSION_PATCH_UITextField_Shake 0
+#define COCOAPODS_VERSION_PATCH_UITextField_Shake 1
 
 // UIView+draggable
 #define COCOAPODS_POD_AVAILABLE_UIView_draggable
