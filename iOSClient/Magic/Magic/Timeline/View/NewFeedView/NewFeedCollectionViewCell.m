@@ -73,7 +73,7 @@
     _myNewFeed = myNewFeed;
     //TODO
     NSString *smallImage = [QNImageToolURL GetSmallSizeImageUrl:_myNewFeed.image];
-    PPDebug(@"neng smallImage : %@",smallImage);
+//    PPDebug(@"neng smallImage : %@",smallImage);
     NSURL* url = [NSURL URLWithString:smallImage];
     [_imageView sd_setImageWithURL:url
                         placeholderImage:nil

@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface CreateFileInfo : NSObject
-
++(NSString*)audioCreateKey:(NSString*)keyPrefix;
 @end

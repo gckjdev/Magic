@@ -9,6 +9,8 @@
 #import "ChatToolView.h"
 #import "Masonry.h"
 #import "AudioManager.h"
+#import "FileUtil.h"
+#import "CommonService.h"
 @interface ChatToolView()
 @end
 
@@ -121,7 +123,7 @@
 -(void)plusBtnAction{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(sendImageMessageAction:)]) {
 
-#pragma wait for image select
+#warning -wait for image select
         [self.delegate sendImageMessageAction:@""];
     }
 }
@@ -135,6 +137,22 @@
 }
 -(void)soundButtonTouchUpInsideAciton{
     [[AudioManager sharedInstance] recorderEnd];
+#warning - todo
+    
+    NSString *docDir = [FileUtil getAppDocumentDir];
+    NSString *playname = [NSString stringWithFormat:@"%@/play.aac",docDir];
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:playname]];
+    CommonService  *service =[[CommonService alloc]init];
+    [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
+        if (error == nil) {
+            
+        }
+        else
+        {
+            
+        }
+    }];
+    
 }
 -(void)soundButtonTouchTouchUpOutsideAction{
     [[AudioManager sharedInstance] recorderEnd];

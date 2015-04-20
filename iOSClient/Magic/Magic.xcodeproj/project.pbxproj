@@ -550,6 +550,7 @@
 		3638C31B1AE0B070008246CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31A1AE0B070008246CF /* MobileCoreServices.framework */; };
 		3638C31D1AE0B07D008246CF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31C1AE0B07D008246CF /* CFNetwork.framework */; };
 		3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */; };
+		652CA84F1AE4A3DA00DB1013 /* CreateFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */; };
 		6567FA141AE20CDD0043FF64 /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6567FA131AE20CDD0043FF64 /* ChatService.m */; };
 		65B3DAB01AE0C051008507FD /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA51AE0C051008507FD /* ChatViewController.m */; };
 		65B3DAB11AE0C051008507FD /* ChatCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA81AE0C051008507FD /* ChatCellFrame.m */; };
@@ -1380,6 +1381,8 @@
 		3638C3201AE0B0D1008246CF /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		3D127CDED7A3722734306BED /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62E987D56EAB81CEF90C80AA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		652CA84D1AE4A3DA00DB1013 /* CreateFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateFileInfo.h; sourceTree = "<group>"; };
+		652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateFileInfo.m; sourceTree = "<group>"; };
 		6567FA121AE20CDD0043FF64 /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
 		6567FA131AE20CDD0043FF64 /* ChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatService.m; sourceTree = "<group>"; };
 		65B3DAA41AE0C051008507FD /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -1764,6 +1767,8 @@
 				3638BDAC1ADF8076008246CF /* CreateJpegImageInfo.m */,
 				3638BDAD1ADF8076008246CF /* QNImageToolURL.h */,
 				3638BDAE1ADF8076008246CF /* QNImageToolURL.m */,
+				652CA84D1AE4A3DA00DB1013 /* CreateFileInfo.h */,
+				652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */,
 			);
 			path = Cdn;
 			sourceTree = "<group>";
@@ -4006,6 +4011,7 @@
 				3638C17B1ADF8079008246CF /* AutoTagManager.m in Sources */,
 				3638C15B1ADF8079008246CF /* ChangeAvatar.m in Sources */,
 				3638C1591ADF8079008246CF /* StringUtil.m in Sources */,
+				652CA84F1AE4A3DA00DB1013 /* CreateFileInfo.m in Sources */,
 				3638C1691ADF8079008246CF /* SnsService.m in Sources */,
 				3638C2FA1ADF8079008246CF /* PhoneRegisterView.m in Sources */,
 				3638C1111ADF8079008246CF /* CommonService.m in Sources */,

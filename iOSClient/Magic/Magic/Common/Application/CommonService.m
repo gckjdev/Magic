@@ -12,7 +12,7 @@
 #import "CreateJpegImageInfo.h"
 #import "CdnManager.h"
 
-
+#import "CreateFileInfo.h"
 
 
 @implementation CommonService
@@ -161,7 +161,55 @@
               } option:opt];
     
 }
-
+-(void)uploadAudio:(NSData*)audio
+            prefix:(NSString*)prefix
+          callback:(UploadAudioCallbackBlock)callback
+{
+    NSString* token = [[CdnManager sharedInstance] getUserDataToken];
+    
+    NSString* key = [CreateFileInfo audioCreateKey:prefix];
+    NSData *data = audio;
+  
+    if (data == nil){
+        NSError* error = nil;
+        error = [NSError errorWithDomain:@"Error Create audio Data" code:PBErrorErrorCreateImage userInfo:nil];
+        EXECUTE_BLOCK(callback, nil, error);
+        return;
+    }
+    
+    QNUploadManager *upManager = [[QNUploadManager alloc] init];
+    QNUploadOption *opt = [[QNUploadOption alloc] initWithMime:nil
+                                               progressHandler:^(NSString *key, float percent) {
+                                                   // TODO post image upload notification
+                                                   PPDebug(@"<uploadUserAvatar> upload image key(%@) percent(%.2f)", key, percent);
+                                               }
+                                                        params:nil
+                                                      checkCrc:YES
+                                            cancellationSignal:nil];
+    
+    [upManager putData:data key:key token:token
+              complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                  
+                  PPDebug(@"upload image info = %@, resp=%@", info, resp);
+                  if (info.error == nil && info.statusCode == 200){
+                      
+                      // success
+                      NSString* cdnKey = [resp objectForKey:@"key"];
+                      
+                      // avatar url
+                      NSString* url = [[CdnManager sharedInstance] getUserDataUrl:cdnKey];
+                      
+                      // now can send request to server
+                      //                      [self updateUserAvatar:url callback:callback];
+                      EXECUTE_BLOCK(callback,url ,nil);
+                  }
+                  else{
+                      // failure
+                      NSError* error = [NSError errorWithDomain:@"Error Upload Image to Server" code:PBErrorErrorUploadImage userInfo:nil];
+                      EXECUTE_BLOCK(callback,nil ,error);
+                  }
+              } option:opt];
+}
 - (NSError*)errorInput
 {
     NSError* error = [NSError errorWithDomain:@"Error Input Data!!!! Data Is Nil or Empty"
