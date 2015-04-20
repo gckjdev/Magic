@@ -145,7 +145,7 @@ const CGFloat kBorderWidth = 0.5f;
 -(void)clickReleaseBtn:(id)sender
 {
     //  TODO
-    PPDebug(@"neng : message %@ contactInfo %@",self.textView.text,self.contactInfoTextField.text);
+//    PPDebug(@"neng : message %@ contactInfo %@",self.textView.text,self.contactInfoTextField.text);
     [[UserService sharedInstance]sendUserFeedBack:self.textView.text
                                       contactInfo:self.contactInfoTextField.text
                                          callback:^(NSError *error) {
