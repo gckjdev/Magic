@@ -79,7 +79,7 @@
     self.timeView.frame = messageFrame.timeF;
     
     // 2.头像
-    NSString *icon = (message.type == MESSAGETYPE_ME) ? @"me" : @"other";
+    NSString *icon = (message.fromType == MESSAGEFROMTYPE_ME) ? @"me" : @"other";
     self.iconView.image = [UIImage imageNamed:icon];
     self.iconView.frame = messageFrame.iconF;
     
@@ -88,14 +88,14 @@
     self.textView.frame = messageFrame.textF;
     
     // 4.正文的背景
-    if (message.type == MESSAGETYPE_ME) { // 自己发的,蓝色
+    if (message.fromType == MESSAGEFROMTYPE_ME) { // 自己发的,蓝色
         [self.textView setBackgroundImage:[UIImage resizableImage:@"chat_send_nor"] forState:UIControlStateNormal];
     } else { // 别人发的,白色
         [self.textView setBackgroundImage:[UIImage resizableImage:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
     
     //5
-    if (message.hasImage) {
+    if (message.type == MESSAGETYPE_IMAGE) {
         _showImageView.frame =  messageFrame.imageF;
         _showImageView.image = message.myImage;
         _showImageView.hidden = NO;

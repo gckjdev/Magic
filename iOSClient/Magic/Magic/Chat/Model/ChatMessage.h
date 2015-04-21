@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "User.pb.h"
 typedef enum{
-    MESSAGETYPE_ME = 0,
-    MESSAGETYPE_OTHER
+    MESSAGEFROMTYPE_ME = 0,
+    MESSAGEFROMTYPE_OTHER
+}MessageFromType;
+
+typedef enum{
+    MESSAGETYPE_TEXT = 0,
+    MESSAGETYPE_IMAGE ,
+    MESSAGETYPE_VOICE
 }MessageType;
 @interface ChatMessage : NSObject
 
@@ -20,12 +27,16 @@ typedef enum{
 @property (nonatomic,copy)      NSString        *image;
 @property (nonatomic,copy)      NSString        *voice;
 
-@property(nonatomic,assign)     MessageType      type;
-@property(nonatomic,assign)     BOOL             hideTime;
-@property(nonatomic, assign)    BOOL             hasImage;
-@property (nonatomic, assign)   BOOL             hasVoice;
-@property (nonatomic, assign)   BOOL             hasText;
+@property (nonatomic,copy)      NSString        *fromUserId;
+@property (nonatomic,copy)      NSString        *fromUser_Ava;
 
+@property(nonatomic,assign)     MessageType      type;
+@property (nonatomic, assign)   MessageFromType  fromType;
+@property(nonatomic,assign)     BOOL             hideTime;
+
+
+
+@property (nonatomic,strong) PBChat*   pbChat;
 
 @property (nonatomic,strong) UIImage   *myImage;
 @end

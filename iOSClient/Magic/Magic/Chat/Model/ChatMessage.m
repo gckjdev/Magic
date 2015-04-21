@@ -20,12 +20,32 @@
         _content = dict[@"content"];
         _time = dict[@"time"];
         if ([dict[@"type"] integerValue] == 0) {
-            _type = MESSAGETYPE_OTHER;
+            _fromType = MESSAGEFROMTYPE_OTHER;
         }else{
-            _type = MESSAGETYPE_ME;
+            _fromType = MESSAGEFROMTYPE_ME;
         }
-        _hasText = true;
+        
     }
     return self;
+}
+-(void)setPbChat:(PBChat *)pbChat{
+    _pbChat = [pbChat copy];
+//    _time = pbChat.createDate;
+    _content = _pbChat.text;
+    _image = _pbChat.image;
+    _voice = _pbChat.voice;
+    
+    _fromUserId = _pbChat.fromUserId;
+    _fromUser_Ava = _pbChat.fromUser.avatar;
+    
+    if (_pbChat.type == PBChatTypeTextChat) {
+        _type = MESSAGETYPE_TEXT;
+    }
+    else if(_pbChat.type == PBChatTypePictureChat){
+        _type = MESSAGETYPE_IMAGE;
+    }
+    else if(_pbChat.type == PBChatTypeVoiceChat){
+        _type = MESSAGETYPE_VOICE;
+    }
 }
 @end

@@ -562,6 +562,8 @@
 		65B3DABF1AE0C107008507FD /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DABD1AE0C107008507FD /* UIImage+Extension.m */; };
 		65B3DAC11AE0C3DC008507FD /* messages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65B3DAC01AE0C3DC008507FD /* messages.plist */; };
 		65B3DAC41AE0FB4B008507FD /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAC31AE0FB4B008507FD /* AudioManager.m */; };
+		65B6C9391AE5EABA00CA3FCB /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 65B6C9371AE5EABA00CA3FCB /* WebViewJavascriptBridge.js.txt */; };
+		65B6C93A1AE5EABA00CA3FCB /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B6C9381AE5EABA00CA3FCB /* WebViewJavascriptBridge.m */; };
 		93FD21456C5B9ADF108E75CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E987D56EAB81CEF90C80AA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1404,6 +1406,9 @@
 		65B3DAC01AE0C3DC008507FD /* messages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = messages.plist; sourceTree = "<group>"; };
 		65B3DAC21AE0FB4B008507FD /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		65B3DAC31AE0FB4B008507FD /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
+		65B6C9361AE5EABA00CA3FCB /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		65B6C9371AE5EABA00CA3FCB /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		65B6C9381AE5EABA00CA3FCB /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		AA0282C8927B1D9A94CDA328 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2172,6 +2177,7 @@
 		3638BE631ADF8076008246CF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				65B6C9351AE5EABA00CA3FCB /* WebViewJavascriptBridge */,
 				3638BE641ADF8076008246CF /* ChangeAvatar */,
 				3638BE671ADF8076008246CF /* Emitter */,
 				3638BE6A1ADF8076008246CF /* MessageCenter */,
@@ -3466,6 +3472,17 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		65B6C9351AE5EABA00CA3FCB /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				65B6C9361AE5EABA00CA3FCB /* WebViewJavascriptBridge.h */,
+				65B6C9371AE5EABA00CA3FCB /* WebViewJavascriptBridge.js.txt */,
+				65B6C9381AE5EABA00CA3FCB /* WebViewJavascriptBridge.m */,
+			);
+			name = WebViewJavascriptBridge;
+			path = ../../../../../../../WebViewJavascriptBridge/WebViewJavascriptBridge;
+			sourceTree = "<group>";
+		};
 		E38F6A87C15D3155CD5DABB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3783,6 +3800,7 @@
 				3638C2871ADF8079008246CF /* slider_circle@2x.png in Resources */,
 				3638C2DF1ADF8079008246CF /* location_white@3x.png in Resources */,
 				3638C2061ADF8079008246CF /* camera_normal@2x.png in Resources */,
+				65B6C9391AE5EABA00CA3FCB /* WebViewJavascriptBridge.js.txt in Resources */,
 				3638C1B21ADF8079008246CF /* addfriend_2dcode@2x.png in Resources */,
 				3638C25E1ADF8079008246CF /* tag_selected@2x.png in Resources */,
 				65B3DAC11AE0C3DC008507FD /* messages.plist in Resources */,
@@ -4077,6 +4095,7 @@
 				3638C1291ADF8079008246CF /* UIImage+Scale.m in Sources */,
 				3638C1C31ADF8079008246CF /* FriendListTableViewCell.m in Sources */,
 				3638C1311ADF8079008246CF /* ASIFormDataRequest.m in Sources */,
+				65B6C93A1AE5EABA00CA3FCB /* WebViewJavascriptBridge.m in Sources */,
 				3638C2461ADF8079008246CF /* Feed.m in Sources */,
 				3638C12C1ADF8079008246CF /* UIImageUtil.m in Sources */,
 				3638C2A61ADF8079008246CF /* LoginByPhoneController.m in Sources */,

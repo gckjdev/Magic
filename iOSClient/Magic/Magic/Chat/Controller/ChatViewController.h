@@ -10,5 +10,5 @@
 #import "ChatMessage.h"
 
 @interface ChatViewController : UIViewController
--(void)addMessage:(NSString*)text type:(MessageType)type;
+-(void)addMessage:(NSString*)text type:(MessageFromType)fromType;
 @end

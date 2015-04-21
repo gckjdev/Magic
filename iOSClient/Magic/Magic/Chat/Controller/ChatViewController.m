@@ -42,8 +42,6 @@
     [self setupTableView];
     [self setupToolView];
     
-    
-    [self addMessage:@"haha" type:MESSAGETYPE_ME];
    
     [self addLeftMenuButton];
 }
@@ -91,11 +89,11 @@
 }
 -(void)sendMessageAction:(NSString*)text
 {
-    [self addMessage:text type:MESSAGETYPE_ME];
-//     [self addMessageImage:@"test" type:MESSAGETYPE_OTHER];
+    [self addMessage:text type:MESSAGEFROMTYPE_ME];
+
 }
 -(void)sendImageMessageAction:(NSString *)image{
-    [self addMessageImage:@"test" type:MESSAGETYPE_OTHER];
+    [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
 }
 - (NSMutableArray *)messageFrames
 {
@@ -128,57 +126,14 @@
     return _messageFrames;
 }
 
-//- (void)keyboardWillShow:(NSNotification *)note
-//{
-//    // 设置窗口的颜色
-//    self.view.window.backgroundColor = self.tableView.backgroundColor;
-//    
-//    // 0.取出键盘动画的时间
-//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//    
-//    // 1.取得键盘最后的frame
-//    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    
-//    // 2.计算控制器的view需要平移的距离
-////    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height;
-//    
-//    CGFloat tmp =  keyboardFrame.size.height;
-//    // 3.执行动画
-//    [UIView animateWithDuration:duration animations:^{
-//        self.view.transform = CGAffineTransformMakeTranslation(0, -50);
-//    }];
-//}
-//- (void)keyboardWillHide:(NSNotification *)note
-//{
-//    // 设置窗口的颜色
-//    self.view.window.backgroundColor = self.tableView.backgroundColor;
-//    
-//    // 0.取出键盘动画的时间
-//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//    
-//    
-//    
-//    // 1.取得键盘最后的frame
-//    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    
-//    CGFloat tmp =  keyboardFrame.size.height;
-//    
-//    // 2.计算控制器的view需要平移的距离
-////    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height;
-//    
-//    // 3.执行动画
-//    [UIView animateWithDuration:duration animations:^{
-//        self.view.transform = CGAffineTransformMakeTranslation(0, 0);
-//    }];
-//}
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-//     [[NSNotificationCenter defaultCenter]removeObserver:self];
+
 }
 
 #pragma mark - InputView
@@ -212,11 +167,11 @@
     }
    
 }
--(void)addMessageImage:(NSString*)image type:(MessageType)type{
+-(void)addMessageImage:(NSString*)image type:(MessageFromType)fromType{
     // 1.数据模型
     ChatMessage *msg = [[ChatMessage alloc] init];
-    msg.type = type;
-    msg.hasText = NO;
+    msg.fromType = fromType;
+    msg.type = MESSAGETYPE_IMAGE;
     
     // 设置数据模型的时间
     NSDate *now = [NSDate date];
@@ -233,7 +188,6 @@
     ChatCellFrame *lastMf = [self.messageFrames lastObject];
     ChatMessage *lastMsg = lastMf.message;
     msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-    msg.hasImage =YES;
     msg.myImage = [UIImage imageNamed:image];
     
     // 2.frame模型
@@ -248,13 +202,14 @@
     NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
     [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
--(void)addMessage:(NSString*)text type:(MessageType)type
+-(void)addMessage:(NSString*)text type:(MessageFromType)fromType
 {
     // 1.数据模型
     ChatMessage *msg = [[ChatMessage alloc] init];
-    msg.type = type;
+    msg.fromType = fromType;
     msg.content  = text;
-    msg.hasText = YES;
+    msg.type = MESSAGETYPE_TEXT;
+    
     // 设置数据模型的时间
     NSDate *now = [NSDate date];
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];

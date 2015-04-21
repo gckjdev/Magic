@@ -10,6 +10,8 @@
 	<string>Magic</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>B5A3CDA855FF6BFCCD6E5A5765DE9F78BE640C7A</key>
+		<string>https://github.com/marcuswestin/WebViewJavascriptBridge.git</string>
 		<key>E61253AB62ED1B068B11E14C76F4F87E03F58C3D</key>
 		<string>github.com:gckjdev/Magic.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>iOSClient/Magic/Magic.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>B5A3CDA855FF6BFCCD6E5A5765DE9F78BE640C7A</key>
+		<string>../../../../../WebViewJavascriptBridge</string>
 		<key>E61253AB62ED1B068B11E14C76F4F87E03F58C3D</key>
 		<string>../../..</string>
 	</dict>
@@ -35,6 +39,14 @@
 			<string>E61253AB62ED1B068B11E14C76F4F87E03F58C3D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Magic</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B5A3CDA855FF6BFCCD6E5A5765DE9F78BE640C7A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WebViewJavascriptBridge</string>
 		</dict>
 	</array>
 </dict>

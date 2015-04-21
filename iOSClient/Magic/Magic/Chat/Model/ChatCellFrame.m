@@ -29,7 +29,7 @@
     CGFloat iconW = 40;
     CGFloat iconH = 40;
     CGFloat iconX;
-    if (message.type == MESSAGETYPE_OTHER) {
+    if (message.fromType == MESSAGEFROMTYPE_OTHER) {
         iconX = padding;
     }else{
         iconX = screenW - padding - iconW;
@@ -39,12 +39,12 @@
     CGFloat textX;
     CGFloat textY = iconY;
     CGSize showSize;
-    if (_message.hasImage) {
+    if (_message.type == MESSAGETYPE_IMAGE) {
         CGSize imageMaxSize = CGSizeMake(150, 150);
         showSize = imageMaxSize;
         
     }
-    else if(_message.hasText){
+    else if(_message.type == MESSAGETYPE_TEXT){
         CGSize textMaxSize = CGSizeMake(200, MAXFLOAT);
         CGSize textRealSize = [message.content sizeWithFont:MJTextFont maxSize:textMaxSize];
         CGSize textBtnSize = CGSizeMake(textRealSize.width + MJTextPadding*2, textRealSize.height + MJTextPadding*2);
@@ -53,7 +53,7 @@
     
     
     
-    if (message.type == MESSAGETYPE_OTHER) {
+    if (message.fromType == MESSAGEFROMTYPE_OTHER) {
         textX = CGRectGetMaxX(_iconF) + padding;
     }else{
         textX = iconX - padding - showSize.width;
