@@ -20,7 +20,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>B5A3CDA855FF6BFCCD6E5A5765DE9F78BE640C7A</key>
-		<string>../../../../../WebViewJavascriptBridge</string>
+		<string>../../../../WebViewJavascriptBridge</string>
 		<key>E61253AB62ED1B068B11E14C76F4F87E03F58C3D</key>
 		<string>../../..</string>
 	</dict>
