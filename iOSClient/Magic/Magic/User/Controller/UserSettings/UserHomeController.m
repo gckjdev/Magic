@@ -25,7 +25,7 @@
 #import "AppDelegate.h"
 #import "UserAlbumViewController.h"
 #import "ChatViewController.h"
-
+#import "ChatSideMenuController.h"
 
 #import "MMDrawerController.h"
 
@@ -374,14 +374,14 @@ const float kHeaderHeight = 10;     //  除了首个Section外，每个header的
     ChatViewController *chat = [[ChatViewController alloc]init];
     UINavigationController * chatControll = [[UINavigationController alloc] initWithRootViewController:chat];
    
-    UIViewController *left = [[UIViewController alloc]init];
-    [left.view setBackgroundColor:[UIColor blackColor]];
+    ChatSideMenuController *left = [[ChatSideMenuController alloc]init];
+    
 
     
     self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:chatControll leftDrawerViewController:left];
     
     
-    
+    [self.drawerController setShouldStretchDrawer:NO];
     [self.drawerController setShowsShadow:NO];
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];
     

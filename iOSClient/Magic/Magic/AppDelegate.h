@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "NSLayoutConstraint+MASDebugAdditions.h"
 #import "MiPushSDK.h"
-
+#import "RDVTabBarController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, MiPushSDKDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UIViewController *viewController;
+@property (strong, nonatomic) RDVTabBarController *viewController;
 
 - (UINavigationController*)currentNavigationController;
 

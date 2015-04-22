@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define CHATSIDEMENUVIEW_WIDTH 200.0f
+
 @interface ChatSideMenuController : UIViewController
 
 @end

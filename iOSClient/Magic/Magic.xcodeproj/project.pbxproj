@@ -552,6 +552,12 @@
 		3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */; };
 		652CA84F1AE4A3DA00DB1013 /* CreateFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */; };
 		6567FA141AE20CDD0043FF64 /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6567FA131AE20CDD0043FF64 /* ChatService.m */; };
+		656FCF811AE7649800823DBA /* ChatSideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 656FCF801AE7649800823DBA /* ChatSideMenuView.m */; };
+		656FCF841AE7661F00823DBA /* ChatSideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656FCF831AE7661F00823DBA /* ChatSideMenuController.m */; };
+		656FCF8A1AE76A2D00823DBA /* IconCalendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF861AE76A2D00823DBA /* IconCalendar@2x.png */; };
+		656FCF8B1AE76A2D00823DBA /* IconHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF871AE76A2D00823DBA /* IconHome@2x.png */; };
+		656FCF8C1AE76A2D00823DBA /* IconProfile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF881AE76A2D00823DBA /* IconProfile@2x.png */; };
+		656FCF8D1AE76A2D00823DBA /* IconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF891AE76A2D00823DBA /* IconSettings@2x.png */; };
 		65B3DAB01AE0C051008507FD /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA51AE0C051008507FD /* ChatViewController.m */; };
 		65B3DAB11AE0C051008507FD /* ChatCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA81AE0C051008507FD /* ChatCellFrame.m */; };
 		65B3DAB21AE0C051008507FD /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAAA1AE0C051008507FD /* ChatMessage.m */; };
@@ -1387,6 +1393,14 @@
 		652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateFileInfo.m; sourceTree = "<group>"; };
 		6567FA121AE20CDD0043FF64 /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
 		6567FA131AE20CDD0043FF64 /* ChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatService.m; sourceTree = "<group>"; };
+		656FCF7F1AE7649800823DBA /* ChatSideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSideMenuView.h; sourceTree = "<group>"; };
+		656FCF801AE7649800823DBA /* ChatSideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSideMenuView.m; sourceTree = "<group>"; };
+		656FCF821AE7661F00823DBA /* ChatSideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSideMenuController.h; sourceTree = "<group>"; };
+		656FCF831AE7661F00823DBA /* ChatSideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSideMenuController.m; sourceTree = "<group>"; };
+		656FCF861AE76A2D00823DBA /* IconCalendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconCalendar@2x.png"; path = "../../../../../../../../tmp/icon/IconCalendar@2x.png"; sourceTree = "<group>"; };
+		656FCF871AE76A2D00823DBA /* IconHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconHome@2x.png"; path = "../../../../../../../../tmp/icon/IconHome@2x.png"; sourceTree = "<group>"; };
+		656FCF881AE76A2D00823DBA /* IconProfile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconProfile@2x.png"; path = "../../../../../../../../tmp/icon/IconProfile@2x.png"; sourceTree = "<group>"; };
+		656FCF891AE76A2D00823DBA /* IconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconSettings@2x.png"; path = "../../../../../../../../tmp/icon/IconSettings@2x.png"; sourceTree = "<group>"; };
 		65B3DAA41AE0C051008507FD /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		65B3DAA51AE0C051008507FD /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		65B3DAA71AE0C051008507FD /* ChatCellFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCellFrame.h; sourceTree = "<group>"; };
@@ -3415,9 +3429,21 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		656FCF851AE76A2000823DBA /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				656FCF861AE76A2D00823DBA /* IconCalendar@2x.png */,
+				656FCF871AE76A2D00823DBA /* IconHome@2x.png */,
+				656FCF881AE76A2D00823DBA /* IconProfile@2x.png */,
+				656FCF891AE76A2D00823DBA /* IconSettings@2x.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		65B3DAA21AE0C051008507FD /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				656FCF851AE76A2000823DBA /* Resource */,
 				6567FA111AE20CA90043FF64 /* Service */,
 				65B3DAB91AE0C107008507FD /* Common */,
 				65B3DAA31AE0C051008507FD /* Controller */,
@@ -3456,6 +3482,10 @@
 				65B3DAB61AE0C0A8008507FD /* MessageTableView.m */,
 				65B3DAAE1AE0C051008507FD /* ChatToolView.h */,
 				65B3DAAF1AE0C051008507FD /* ChatToolView.m */,
+				656FCF821AE7661F00823DBA /* ChatSideMenuController.h */,
+				656FCF831AE7661F00823DBA /* ChatSideMenuController.m */,
+				656FCF7F1AE7649800823DBA /* ChatSideMenuView.h */,
+				656FCF801AE7649800823DBA /* ChatSideMenuView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3659,6 +3689,7 @@
 				3638C1FD1ADF8079008246CF /* backarrow@2x.png in Resources */,
 				3638C1051ADF8079008246CF /* ShareSDKiPadDefaultShareViewUI.bundle in Resources */,
 				3638C2DC1ADF8079008246CF /* location_black@2x.png in Resources */,
+				656FCF8B1AE76A2D00823DBA /* IconHome@2x.png in Resources */,
 				3638C2511ADF8079008246CF /* graffiti_normal@3x.png in Resources */,
 				3638C28F1ADF8079008246CF /* share_sina_pressed@2x.png in Resources */,
 				3638C1851ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3682,6 +3713,7 @@
 				3638C28C1ADF8079008246CF /* share_qq_space_pressed@3x.png in Resources */,
 				3638C1B71ADF8079008246CF /* addfriend_qqlogo@3x.png in Resources */,
 				3638C1941ADF8079008246CF /* invite_with_code@2x.png in Resources */,
+				656FCF8C1AE76A2D00823DBA /* IconProfile@2x.png in Resources */,
 				3638C2DB1ADF8079008246CF /* invite@3x.png in Resources */,
 				3638C2961ADF8079008246CF /* share_wechat_timeline@3x.png in Resources */,
 				3638C1B61ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3730,6 +3762,7 @@
 				3638C2D21ADF8079008246CF /* default_user_avatar@3x.png in Resources */,
 				3638C22A1ADF8079008246CF /* CommentFeedController.xib in Resources */,
 				3638C28D1ADF8079008246CF /* share_sina@2x.png in Resources */,
+				656FCF8A1AE76A2D00823DBA /* IconCalendar@2x.png in Resources */,
 				3638C1F11ADF8079008246CF /* demo7.dat in Resources */,
 				3638C1DC1ADF8079008246CF /* Error.proto in Resources */,
 				3638C2F11ADF8079008246CF /* sina_selected@3x.png in Resources */,
@@ -3806,6 +3839,7 @@
 				3638C2D41ADF8079008246CF /* email@2x.png in Resources */,
 				3638C18F1ADF8079008246CF /* delete_friend_pressed@3x.png in Resources */,
 				3638C2931ADF8079008246CF /* share_wechat_section_pressed@2x.png in Resources */,
+				656FCF8D1AE76A2D00823DBA /* IconSettings@2x.png in Resources */,
 				3638C2731ADF8079008246CF /* share_qq_space@2x.png in Resources */,
 				3638C2E91ADF8079008246CF /* qq@3x.png in Resources */,
 				3638C1D11ADF8079008246CF /* plus_menu_add_friend.png in Resources */,
@@ -4003,6 +4037,7 @@
 				3638C1401ADF8079008246CF /* UIColor+UIColorExt.m in Sources */,
 				3638C2A91ADF8079008246CF /* LoginHomeWithInviteCodeController.m in Sources */,
 				3638C1D01ADF8079008246CF /* PlusMenuTableViewController.m in Sources */,
+				656FCF811AE7649800823DBA /* ChatSideMenuView.m in Sources */,
 				3638C1E21ADF8079008246CF /* User.pb.m in Sources */,
 				3638C1421ADF8079008246CF /* DeviceDetection.m in Sources */,
 				3638C1671ADF8079008246CF /* StrokeLabel.m in Sources */,
@@ -4065,6 +4100,7 @@
 				3638C3001ADF8079008246CF /* UserInfoAvatarCell.m in Sources */,
 				3638C1491ADF8079008246CF /* unzip.c in Sources */,
 				3638C2301ADF8079008246CF /* EditImageController.m in Sources */,
+				656FCF841AE7661F00823DBA /* ChatSideMenuController.m in Sources */,
 				3638C1451ADF8079008246CF /* GTMBase64.m in Sources */,
 				3638C1BD1ADF8079008246CF /* FooterCollectionReusableView.m in Sources */,
 				3638C12A1ADF8079008246CF /* UIImage+fixOrientation.m in Sources */,

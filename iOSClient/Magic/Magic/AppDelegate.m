@@ -20,7 +20,7 @@
 #import "UserTimelineFeedController.h"
 #import "NewFeedController.h"
 
-#import "RDVTabBarController.h"
+
 #import "RDVTabBarItem.h"
 
 #import "FriendListController.h"
@@ -154,6 +154,8 @@
 -(void)showHomePage
 {
      [self.window setRootViewController:self.viewController];
+    self.viewController.selectedIndex = 0;
+    [self.viewController showTabBar];
 }
 #pragma mark - ShowMessage
 
