@@ -554,10 +554,6 @@
 		6567FA141AE20CDD0043FF64 /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6567FA131AE20CDD0043FF64 /* ChatService.m */; };
 		656FCF811AE7649800823DBA /* ChatSideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 656FCF801AE7649800823DBA /* ChatSideMenuView.m */; };
 		656FCF841AE7661F00823DBA /* ChatSideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656FCF831AE7661F00823DBA /* ChatSideMenuController.m */; };
-		656FCF8A1AE76A2D00823DBA /* IconCalendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF861AE76A2D00823DBA /* IconCalendar@2x.png */; };
-		656FCF8B1AE76A2D00823DBA /* IconHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF871AE76A2D00823DBA /* IconHome@2x.png */; };
-		656FCF8C1AE76A2D00823DBA /* IconProfile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF881AE76A2D00823DBA /* IconProfile@2x.png */; };
-		656FCF8D1AE76A2D00823DBA /* IconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 656FCF891AE76A2D00823DBA /* IconSettings@2x.png */; };
 		65B3DAB01AE0C051008507FD /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA51AE0C051008507FD /* ChatViewController.m */; };
 		65B3DAB11AE0C051008507FD /* ChatCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAA81AE0C051008507FD /* ChatCellFrame.m */; };
 		65B3DAB21AE0C051008507FD /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAAA1AE0C051008507FD /* ChatMessage.m */; };
@@ -570,6 +566,10 @@
 		65B3DAC41AE0FB4B008507FD /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAC31AE0FB4B008507FD /* AudioManager.m */; };
 		65CDB3FD1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 65CDB3FB1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt */; };
 		65CDB3FE1AE7429900C7FD3E /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CDB3FC1AE7429900C7FD3E /* WebViewJavascriptBridge.m */; };
+		65E123131AE8E87B0039327C /* IconCalendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E1230F1AE8E87B0039327C /* IconCalendar@2x.png */; };
+		65E123141AE8E87B0039327C /* IconHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E123101AE8E87B0039327C /* IconHome@2x.png */; };
+		65E123151AE8E87B0039327C /* IconProfile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E123111AE8E87B0039327C /* IconProfile@2x.png */; };
+		65E123161AE8E87B0039327C /* IconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E123121AE8E87B0039327C /* IconSettings@2x.png */; };
 		93FD21456C5B9ADF108E75CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E987D56EAB81CEF90C80AA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1397,10 +1397,6 @@
 		656FCF801AE7649800823DBA /* ChatSideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSideMenuView.m; sourceTree = "<group>"; };
 		656FCF821AE7661F00823DBA /* ChatSideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSideMenuController.h; sourceTree = "<group>"; };
 		656FCF831AE7661F00823DBA /* ChatSideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSideMenuController.m; sourceTree = "<group>"; };
-		656FCF861AE76A2D00823DBA /* IconCalendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconCalendar@2x.png"; path = "../../../../../../../../tmp/icon/IconCalendar@2x.png"; sourceTree = "<group>"; };
-		656FCF871AE76A2D00823DBA /* IconHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconHome@2x.png"; path = "../../../../../../../../tmp/icon/IconHome@2x.png"; sourceTree = "<group>"; };
-		656FCF881AE76A2D00823DBA /* IconProfile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconProfile@2x.png"; path = "../../../../../../../../tmp/icon/IconProfile@2x.png"; sourceTree = "<group>"; };
-		656FCF891AE76A2D00823DBA /* IconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IconSettings@2x.png"; path = "../../../../../../../../tmp/icon/IconSettings@2x.png"; sourceTree = "<group>"; };
 		65B3DAA41AE0C051008507FD /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		65B3DAA51AE0C051008507FD /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		65B3DAA71AE0C051008507FD /* ChatCellFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCellFrame.h; sourceTree = "<group>"; };
@@ -1423,6 +1419,10 @@
 		65CDB3FA1AE7429900C7FD3E /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
 		65CDB3FB1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		65CDB3FC1AE7429900C7FD3E /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		65E1230F1AE8E87B0039327C /* IconCalendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendar@2x.png"; sourceTree = "<group>"; };
+		65E123101AE8E87B0039327C /* IconHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHome@2x.png"; sourceTree = "<group>"; };
+		65E123111AE8E87B0039327C /* IconProfile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconProfile@2x.png"; sourceTree = "<group>"; };
+		65E123121AE8E87B0039327C /* IconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconSettings@2x.png"; sourceTree = "<group>"; };
 		AA0282C8927B1D9A94CDA328 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3432,10 +3432,10 @@
 		656FCF851AE76A2000823DBA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				656FCF861AE76A2D00823DBA /* IconCalendar@2x.png */,
-				656FCF871AE76A2D00823DBA /* IconHome@2x.png */,
-				656FCF881AE76A2D00823DBA /* IconProfile@2x.png */,
-				656FCF891AE76A2D00823DBA /* IconSettings@2x.png */,
+				65E1230F1AE8E87B0039327C /* IconCalendar@2x.png */,
+				65E123101AE8E87B0039327C /* IconHome@2x.png */,
+				65E123111AE8E87B0039327C /* IconProfile@2x.png */,
+				65E123121AE8E87B0039327C /* IconSettings@2x.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -3689,7 +3689,7 @@
 				3638C1FD1ADF8079008246CF /* backarrow@2x.png in Resources */,
 				3638C1051ADF8079008246CF /* ShareSDKiPadDefaultShareViewUI.bundle in Resources */,
 				3638C2DC1ADF8079008246CF /* location_black@2x.png in Resources */,
-				656FCF8B1AE76A2D00823DBA /* IconHome@2x.png in Resources */,
+				65E123141AE8E87B0039327C /* IconHome@2x.png in Resources */,
 				3638C2511ADF8079008246CF /* graffiti_normal@3x.png in Resources */,
 				3638C28F1ADF8079008246CF /* share_sina_pressed@2x.png in Resources */,
 				3638C1851ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3713,7 +3713,7 @@
 				3638C28C1ADF8079008246CF /* share_qq_space_pressed@3x.png in Resources */,
 				3638C1B71ADF8079008246CF /* addfriend_qqlogo@3x.png in Resources */,
 				3638C1941ADF8079008246CF /* invite_with_code@2x.png in Resources */,
-				656FCF8C1AE76A2D00823DBA /* IconProfile@2x.png in Resources */,
+				65E123151AE8E87B0039327C /* IconProfile@2x.png in Resources */,
 				3638C2DB1ADF8079008246CF /* invite@3x.png in Resources */,
 				3638C2961ADF8079008246CF /* share_wechat_timeline@3x.png in Resources */,
 				3638C1B61ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3762,7 +3762,7 @@
 				3638C2D21ADF8079008246CF /* default_user_avatar@3x.png in Resources */,
 				3638C22A1ADF8079008246CF /* CommentFeedController.xib in Resources */,
 				3638C28D1ADF8079008246CF /* share_sina@2x.png in Resources */,
-				656FCF8A1AE76A2D00823DBA /* IconCalendar@2x.png in Resources */,
+				65E123131AE8E87B0039327C /* IconCalendar@2x.png in Resources */,
 				3638C1F11ADF8079008246CF /* demo7.dat in Resources */,
 				3638C1DC1ADF8079008246CF /* Error.proto in Resources */,
 				3638C2F11ADF8079008246CF /* sina_selected@3x.png in Resources */,
@@ -3839,7 +3839,7 @@
 				3638C2D41ADF8079008246CF /* email@2x.png in Resources */,
 				3638C18F1ADF8079008246CF /* delete_friend_pressed@3x.png in Resources */,
 				3638C2931ADF8079008246CF /* share_wechat_section_pressed@2x.png in Resources */,
-				656FCF8D1AE76A2D00823DBA /* IconSettings@2x.png in Resources */,
+				65E123161AE8E87B0039327C /* IconSettings@2x.png in Resources */,
 				3638C2731ADF8079008246CF /* share_qq_space@2x.png in Resources */,
 				3638C2E91ADF8079008246CF /* qq@3x.png in Resources */,
 				3638C1D11ADF8079008246CF /* plus_menu_add_friend.png in Resources */,
