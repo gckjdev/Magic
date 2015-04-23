@@ -135,18 +135,15 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     
     PBSendChatRequestBuilder* reqBuilder = [PBSendChatRequest builder];
     
-
     [pbChatBuilder setChatId:@""];
-    [pbChatBuilder setSessionId:@""];
     
     [pbChatBuilder setFromUserId: [[UserManager sharedInstance] userId]];
+    [pbChatBuilder setFromUser:[[UserManager sharedInstance] miniPbUser]];
     
     [pbChatBuilder setCreateDate:(int)time(0)];
- 
-    
+    [pbChatBuilder setSource:PBChatSourceFromApp];
     
     [reqBuilder setChat:[pbChatBuilder build]];
-    
     
     // set request
     PBSendChatRequest* req = [reqBuilder build];
