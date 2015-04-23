@@ -1292,6 +1292,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 
 @interface PBChat : PBGeneratedMessage<GeneratedMessageProtocol> {
 @private
+  BOOL hasFromAgent_:1;
   BOOL hasCreateDate_:1;
   BOOL hasStatus_:1;
   BOOL hasType_:1;
@@ -1307,6 +1308,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
   BOOL hasFromUser_:1;
   BOOL hasFromDevice_:1;
   BOOL hasToUser_:1;
+  BOOL fromAgent_:1;
   SInt32 createDate;
   SInt32 status;
   SInt32 type;
@@ -1330,6 +1332,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 - (BOOL) hasFromDevice;
 - (BOOL) hasToUser;
 - (BOOL) hasToUserId;
+- (BOOL) hasFromAgent;
 - (BOOL) hasText;
 - (BOOL) hasImage;
 - (BOOL) hasThumb;
@@ -1345,6 +1348,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 @property (readonly, strong) PBDevice* fromDevice;
 @property (readonly, strong) PBUser* toUser;
 @property (readonly, strong) NSString* toUserId;
+- (BOOL) fromAgent;
 @property (readonly, strong) NSString* text;
 @property (readonly, strong) NSString* image;
 @property (readonly, strong) NSString* thumb;
@@ -1429,6 +1433,11 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 - (NSString*) toUserId;
 - (PBChatBuilder*) setToUserId:(NSString*) value;
 - (PBChatBuilder*) clearToUserId;
+
+- (BOOL) hasFromAgent;
+- (BOOL) fromAgent;
+- (PBChatBuilder*) setFromAgent:(BOOL) value;
+- (PBChatBuilder*) clearFromAgent;
 
 - (BOOL) hasText;
 - (NSString*) text;

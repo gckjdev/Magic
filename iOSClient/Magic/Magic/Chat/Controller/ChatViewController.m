@@ -92,14 +92,14 @@
 -(void)sendMessageAction:(NSString*)text
 {
     [self addMessage:text type:MESSAGEFROMTYPE_ME];
-    [[ChatService sharedInstance]sendChatWithText:text toUserId:[[UserManager sharedInstance]userId] callback:^(NSError *error) {
+    [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
         
     }];
 
 }
 -(void)sendImageMessageAction:(NSString *)image{
     [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
-    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:[[UserManager sharedInstance]userId] callback:^(NSError *error) {
+    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
         
     }];
 }

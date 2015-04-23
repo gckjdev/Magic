@@ -253,6 +253,7 @@ message PBChat
     optional PBDevice fromDevice = 5;           // 发送方设备信息
     optional PBUser toUser = 6;                 // 接受方用户信息
     optional string toUserId = 7;               // 接受方用户ID
+    optional bool fromAgent = 8;                // 是否来自客服
 
     optional string text = 10;                  // 消息文本
     optional string image = 11;                 // 消息图片

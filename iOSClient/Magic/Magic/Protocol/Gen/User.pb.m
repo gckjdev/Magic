@@ -5899,6 +5899,7 @@ static PBUserGroupList* defaultPBUserGroupListInstance = nil;
 @property (strong) PBDevice* fromDevice;
 @property (strong) PBUser* toUser;
 @property (strong) NSString* toUserId;
+@property BOOL fromAgent;
 @property (strong) NSString* text;
 @property (strong) NSString* image;
 @property (strong) NSString* thumb;
@@ -5960,6 +5961,18 @@ static PBUserGroupList* defaultPBUserGroupListInstance = nil;
   hasToUserId_ = !!_value_;
 }
 @synthesize toUserId;
+- (BOOL) hasFromAgent {
+  return !!hasFromAgent_;
+}
+- (void) setHasFromAgent:(BOOL) _value_ {
+  hasFromAgent_ = !!_value_;
+}
+- (BOOL) fromAgent {
+  return !!fromAgent_;
+}
+- (void) setFromAgent:(BOOL) _value_ {
+  fromAgent_ = !!_value_;
+}
 - (BOOL) hasText {
   return !!hasText_;
 }
@@ -6025,6 +6038,7 @@ static PBUserGroupList* defaultPBUserGroupListInstance = nil;
     self.fromDevice = [PBDevice defaultInstance];
     self.toUser = [PBUser defaultInstance];
     self.toUserId = @"";
+    self.fromAgent = NO;
     self.text = @"";
     self.image = @"";
     self.thumb = @"";
@@ -6091,6 +6105,9 @@ static PBChat* defaultPBChatInstance = nil;
   if (self.hasToUserId) {
     [output writeString:7 value:self.toUserId];
   }
+  if (self.hasFromAgent) {
+    [output writeBool:8 value:self.fromAgent];
+  }
   if (self.hasText) {
     [output writeString:10 value:self.text];
   }
@@ -6144,6 +6161,9 @@ static PBChat* defaultPBChatInstance = nil;
   }
   if (self.hasToUserId) {
     size_ += computeStringSize(7, self.toUserId);
+  }
+  if (self.hasFromAgent) {
+    size_ += computeBoolSize(8, self.fromAgent);
   }
   if (self.hasText) {
     size_ += computeStringSize(10, self.text);
@@ -6234,6 +6254,9 @@ static PBChat* defaultPBChatInstance = nil;
   if (self.hasToUserId) {
     [output appendFormat:@"%@%@: %@\n", indent, @"toUserId", self.toUserId];
   }
+  if (self.hasFromAgent) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"fromAgent", [NSNumber numberWithBool:self.fromAgent]];
+  }
   if (self.hasText) {
     [output appendFormat:@"%@%@: %@\n", indent, @"text", self.text];
   }
@@ -6283,6 +6306,8 @@ static PBChat* defaultPBChatInstance = nil;
       (!self.hasToUser || [self.toUser isEqual:otherMessage.toUser]) &&
       self.hasToUserId == otherMessage.hasToUserId &&
       (!self.hasToUserId || [self.toUserId isEqual:otherMessage.toUserId]) &&
+      self.hasFromAgent == otherMessage.hasFromAgent &&
+      (!self.hasFromAgent || self.fromAgent == otherMessage.fromAgent) &&
       self.hasText == otherMessage.hasText &&
       (!self.hasText || [self.text isEqual:otherMessage.text]) &&
       self.hasImage == otherMessage.hasImage &&
@@ -6323,6 +6348,9 @@ static PBChat* defaultPBChatInstance = nil;
   }
   if (self.hasToUserId) {
     hashCode = hashCode * 31 + [self.toUserId hash];
+  }
+  if (self.hasFromAgent) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithBool:self.fromAgent] hash];
   }
   if (self.hasText) {
     hashCode = hashCode * 31 + [self.text hash];
@@ -6412,6 +6440,9 @@ static PBChat* defaultPBChatInstance = nil;
   if (other.hasToUserId) {
     [self setToUserId:other.toUserId];
   }
+  if (other.hasFromAgent) {
+    [self setFromAgent:other.fromAgent];
+  }
   if (other.hasText) {
     [self setText:other.text];
   }
@@ -6498,6 +6529,10 @@ static PBChat* defaultPBChatInstance = nil;
       }
       case 58: {
         [self setToUserId:[input readString]];
+        break;
+      }
+      case 64: {
+        [self setFromAgent:[input readBool]];
         break;
       }
       case 82: {
@@ -6687,6 +6722,22 @@ static PBChat* defaultPBChatInstance = nil;
 - (PBChatBuilder*) clearToUserId {
   resultPbchat.hasToUserId = NO;
   resultPbchat.toUserId = @"";
+  return self;
+}
+- (BOOL) hasFromAgent {
+  return resultPbchat.hasFromAgent;
+}
+- (BOOL) fromAgent {
+  return resultPbchat.fromAgent;
+}
+- (PBChatBuilder*) setFromAgent:(BOOL) value {
+  resultPbchat.hasFromAgent = YES;
+  resultPbchat.fromAgent = value;
+  return self;
+}
+- (PBChatBuilder*) clearFromAgent {
+  resultPbchat.hasFromAgent = NO;
+  resultPbchat.fromAgent = NO;
   return self;
 }
 - (BOOL) hasText {
