@@ -10,25 +10,26 @@
 #import "CommonService.h"
 
 
-typedef void (^SendCommonChatMessageCallBackBlock)(NSError *error);
-typedef void (^SendTextChatMessageCallBackBlock)(NSError *error);
-typedef void (^SendImageChatMessageCallBackBlock)(NSError *error);
-typedef void (^SendAudioChatMessageCallBackBlock)(NSError *error);
+typedef void (^SendChatCommonCallBackBlock)(NSError *error);
+typedef void (^SendChatWithTextCallBackBlock)(NSError *error);
+typedef void (^SendChatWithImageCallBackBlock)(NSError *error);
+typedef void (^SendChatWithAudioCallBackBlock)(NSError *error);
 typedef void (^GetChatListCallBackBlock)(NSArray *chatArray,NSError *error);
 
 @interface ChatService : CommonService
 DEF_SINGLETON_FOR_CLASS(UserService);
 
 
--(void)sendTextChatMessage:(NSString*)text
+-(void)sendChatWithText:(NSString*)text
                   toUserId:(NSString*)toUserId
-                  callback:(SendTextChatMessageCallBackBlock)callback;
--(void)sendImageChatMessage:(UIImage*)image
+                  callback:(SendChatWithTextCallBackBlock)callback;
+-(void)sendChatWithImage:(UIImage*)image
                    toUserId:(NSString*)toUserId
-                   callback:(SendImageChatMessageCallBackBlock)callback;
+                   callback:(SendChatWithImageCallBackBlock)callback;
 
--(void)sendAudioChatMessg:(NSString*)audio
-                 callback:(SendAudioChatMessageCallBackBlock)callback;
+-(void)sendChatWithAudio:(NSString*)audio
+                   toUserId:(NSString*)toUserId
+                   callback:(SendChatWithAudioCallBackBlock)callback;
 
 -(void)getChatList:(GetChatListCallBackBlock)callback;
 @end

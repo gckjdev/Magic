@@ -46,9 +46,9 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     
 }
 
--(void)sendAudioChatMessg:(NSString*)audio
-                 toUserId:(NSString*)toUserId
-                 callback:(SendAudioChatMessageCallBackBlock)callback
+-(void)sendChatWithAudio:(NSString*)audio
+                toUserId:(NSString*)toUserId
+                callback:(SendChatWithAudioCallBackBlock)callback
 {
     PBChatBuilder *chatBuilder  = [PBChat builder];
     [chatBuilder setType:PBChatTypeVoiceChat];
@@ -58,7 +58,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
         if (error == nil) {
             [chatBuilder setVoice:audioURL];
-            [self sendCommonChatMessage:chatBuilder callback:^(NSError *error1) {
+            [self sendChatCommonMessage:chatBuilder callback:^(NSError *error1) {
                 
                 if (error1 ==nil) {
                     PPDebug(@"sendImageChatMessage  success");
@@ -77,15 +77,15 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
         }
     }];
 }
--(void)sendTextChatMessage:(NSString*)text
-                  toUserId:(NSString*)toUserId
-                  callback:(SendTextChatMessageCallBackBlock)callback
+-(void)sendChatWithText:(NSString*)text
+               toUserId:(NSString*)toUserId
+               callback:(SendChatWithTextCallBackBlock)callback
 {
     PBChatBuilder *chatBuilder  = [PBChat builder];
     [chatBuilder setText:text];
     [chatBuilder setToUserId:toUserId];
     [chatBuilder setType:PBChatTypeTextChat];
-    [self sendCommonChatMessage:chatBuilder callback:^(NSError *error) {
+    [self sendChatCommonMessage:chatBuilder callback:^(NSError *error) {
         if (error == nil) {
             PPDebug(@"sendTextChatMessage  success");
         }else{
@@ -95,18 +95,19 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     }];
     
 }
--(void)sendImageChatMessage:(UIImage*)image
-                   toUserId:(NSString*)toUserId
-                   callback:(SendImageChatMessageCallBackBlock)callback
+-(void)sendChatWithImage:(UIImage*)image
+                toUserId:(NSString*)toUserId
+                callback:(SendChatWithImageCallBackBlock)callback
 {
     PBChatBuilder *chatBuilder  = [PBChat builder];
     [chatBuilder setType:PBChatTypePictureChat];
     [chatBuilder setToUserId:toUserId];
     
+#warning prefix is nil
     [self uploadImage:image prefix:@"" callback:^(NSString *imageURL, NSError *error) {
         if (error == nil) {
             [chatBuilder setImage:imageURL];
-            [self sendCommonChatMessage:chatBuilder callback:^(NSError *error1) {
+            [self sendChatCommonMessage:chatBuilder callback:^(NSError *error1) {
                 
                 if (error1 ==nil) {
                     PPDebug(@"sendImageChatMessage  success");
@@ -126,8 +127,8 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     }];
 }
 
--(void)sendCommonChatMessage:(PBChatBuilder*)pbChatBuilder
-                    callback:(SendCommonChatMessageCallBackBlock)callback
+-(void)sendChatCommonMessage:(PBChatBuilder*)pbChatBuilder
+                    callback:(SendChatCommonCallBackBlock)callback
 
 {
     PBDataRequestBuilder* builder = [PBDataRequest builder];
