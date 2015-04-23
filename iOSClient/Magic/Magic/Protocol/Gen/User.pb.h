@@ -157,6 +157,14 @@ typedef NS_ENUM(SInt32, PBChatStatus) {
 BOOL PBChatStatusIsValidValue(PBChatStatus value);
 NSString *NSStringFromPBChatStatus(PBChatStatus value);
 
+typedef NS_ENUM(SInt32, PBAgentStatus) {
+  PBAgentStatusAgentOffline = 0,
+  PBAgentStatusAgentOnline = 1,
+};
+
+BOOL PBAgentStatusIsValidValue(PBAgentStatus value);
+NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
+
 
 @interface UserRoot : NSObject {
 }
@@ -287,10 +295,12 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value);
 
 @interface PBUser : PBGeneratedMessage<GeneratedMessageProtocol> {
 @private
+  BOOL hasIsAgent_:1;
   BOOL hasGender_:1;
   BOOL hasLatitude_:1;
   BOOL hasLongitude_:1;
   BOOL hasExperience_:1;
+  BOOL hasAgentStatus_:1;
   BOOL hasBSpeed_:1;
   BOOL hasBStyle_:1;
   BOOL hasAddStatus_:1;
@@ -300,39 +310,42 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value);
   BOOL hasAddConfig_:1;
   BOOL hasMobileVerifyStatus_:1;
   BOOL hasEmailVerifyStatus_:1;
-  BOOL hasLevel_:1;
   BOOL hasZodiac_:1;
+  BOOL hasLevel_:1;
   BOOL hasRegDate_:1;
   BOOL hasRegFrom_:1;
   BOOL hasVisitDate_:1;
   BOOL hasSDate_:1;
-  BOOL hasAvatarBg_:1;
-  BOOL hasSignature_:1;
   BOOL hasAvatars_:1;
-  BOOL hasUserId_:1;
+  BOOL hasBAvatars_:1;
   BOOL hasLocation_:1;
-  BOOL hasCountryCode_:1;
+  BOOL hasUserId_:1;
   BOOL hasLanguage_:1;
+  BOOL hasSignature_:1;
+  BOOL hasAvatarBg_:1;
   BOOL hasBloodGroup_:1;
   BOOL hasBirthday_:1;
   BOOL hasWeixinId_:1;
+  BOOL hasEmailVerifyCode_:1;
   BOOL hasSinaId_:1;
   BOOL hasQqOpenId_:1;
-  BOOL hasEmailVerifyCode_:1;
+  BOOL hasMemo_:1;
   BOOL hasMobile_:1;
   BOOL hasPassword_:1;
-  BOOL hasMemo_:1;
   BOOL hasEmail_:1;
-  BOOL hasXiaojiNumber_:1;
   BOOL hasReplyMemo_:1;
+  BOOL hasXiaojiNumber_:1;
   BOOL hasAvatar_:1;
   BOOL hasNick_:1;
-  BOOL hasBAvatars_:1;
+  BOOL hasAgentAccount_:1;
+  BOOL hasCountryCode_:1;
   BOOL hasCurrentDevice_:1;
+  BOOL isAgent_:1;
   BOOL gender_:1;
   Float32 latitude;
   Float32 longitude;
   SInt64 experience;
+  SInt32 agentStatus;
   SInt32 bSpeed;
   SInt32 bStyle;
   SInt32 addStatus;
@@ -342,34 +355,35 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value);
   SInt32 addConfig;
   SInt32 mobileVerifyStatus;
   SInt32 emailVerifyStatus;
-  SInt32 level;
   SInt32 zodiac;
+  SInt32 level;
   SInt32 regDate;
   SInt32 regFrom;
   SInt32 visitDate;
   SInt32 sDate;
-  NSString* avatarBg;
-  NSString* signature;
   NSString* avatars;
-  NSString* userId;
+  NSString* bAvatars;
   NSString* location;
-  NSString* countryCode;
+  NSString* userId;
   NSString* language;
+  NSString* signature;
+  NSString* avatarBg;
   NSString* bloodGroup;
   NSString* birthday;
   NSString* weixinId;
+  NSString* emailVerifyCode;
   NSString* sinaId;
   NSString* qqOpenId;
-  NSString* emailVerifyCode;
+  NSString* memo;
   NSString* mobile;
   NSString* password;
-  NSString* memo;
   NSString* email;
-  NSString* xiaojiNumber;
   NSString* replyMemo;
+  NSString* xiaojiNumber;
   NSString* avatar;
   NSString* nick;
-  NSString* bAvatars;
+  NSString* agentAccount;
+  NSString* countryCode;
   PBDevice* currentDevice;
   NSMutableArray * devicesArray;
   NSMutableArray * tagsArray;
@@ -417,6 +431,9 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value);
 - (BOOL) hasAddStatus;
 - (BOOL) hasBStyle;
 - (BOOL) hasBSpeed;
+- (BOOL) hasIsAgent;
+- (BOOL) hasAgentAccount;
+- (BOOL) hasAgentStatus;
 @property (readonly, strong) NSString* userId;
 @property (readonly, strong) NSString* nick;
 @property (readonly, strong) NSString* avatar;
@@ -462,6 +479,9 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value);
 @property (readonly) SInt32 addStatus;
 @property (readonly) SInt32 bStyle;
 @property (readonly) SInt32 bSpeed;
+- (BOOL) isAgent;
+@property (readonly, strong) NSString* agentAccount;
+@property (readonly) SInt32 agentStatus;
 - (PBSNSUser*)snsUsersAtIndex:(NSUInteger)index;
 - (PBDevice*)devicesAtIndex:(NSUInteger)index;
 - (PBUserTag*)tagsAtIndex:(NSUInteger)index;
@@ -730,6 +750,21 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value);
 - (SInt32) bSpeed;
 - (PBUserBuilder*) setBSpeed:(SInt32) value;
 - (PBUserBuilder*) clearBSpeed;
+
+- (BOOL) hasIsAgent;
+- (BOOL) isAgent;
+- (PBUserBuilder*) setIsAgent:(BOOL) value;
+- (PBUserBuilder*) clearIsAgent;
+
+- (BOOL) hasAgentAccount;
+- (NSString*) agentAccount;
+- (PBUserBuilder*) setAgentAccount:(NSString*) value;
+- (PBUserBuilder*) clearAgentAccount;
+
+- (BOOL) hasAgentStatus;
+- (SInt32) agentStatus;
+- (PBUserBuilder*) setAgentStatus:(SInt32) value;
+- (PBUserBuilder*) clearAgentStatus;
 @end
 
 @interface PBUserTag : PBGeneratedMessage<GeneratedMessageProtocol> {

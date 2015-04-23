@@ -142,6 +142,12 @@ message PBUser {
 
     optional int32 bStyle = 200;                      // 用户本地弹幕风格
     optional int32 bSpeed = 201;                      // 用户本地弹幕速度
+
+
+    optional bool isAgent = 210;
+    optional string agentAccount = 211;
+    optional int32 agentStatus = 212;                  // 参考PBAgentStatus
+
 }
 
 message PBUserTag
@@ -258,3 +264,11 @@ message PBChat
     optional int32 type = 22;                   // 类型，参考PBChatType
     optional int32 source = 23;                 // 来源，参考PBChatSource
 }
+
+enum PBAgentStatus
+{
+    AGENT_OFFLINE = 0;
+    AGENT_ONLINE = 1;
+}
+
+

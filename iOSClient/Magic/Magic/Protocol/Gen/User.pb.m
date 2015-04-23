@@ -319,6 +319,26 @@ NSString *NSStringFromPBChatStatus(PBChatStatus value) {
   }
 }
 
+BOOL PBAgentStatusIsValidValue(PBAgentStatus value) {
+  switch (value) {
+    case PBAgentStatusAgentOffline:
+    case PBAgentStatusAgentOnline:
+      return YES;
+    default:
+      return NO;
+  }
+}
+NSString *NSStringFromPBAgentStatus(PBAgentStatus value) {
+  switch (value) {
+    case PBAgentStatusAgentOffline:
+      return @"PBAgentStatusAgentOffline";
+    case PBAgentStatusAgentOnline:
+      return @"PBAgentStatusAgentOnline";
+    default:
+      return nil;
+  }
+}
+
 @interface PBSNSUser ()
 @property SInt32 type;
 @property (strong) NSString* userId;
@@ -936,6 +956,9 @@ static PBSNSUser* defaultPBSNSUserInstance = nil;
 @property SInt32 addStatus;
 @property SInt32 bStyle;
 @property SInt32 bSpeed;
+@property BOOL isAgent;
+@property (strong) NSString* agentAccount;
+@property SInt32 agentStatus;
 @end
 
 @implementation PBUser
@@ -1245,6 +1268,32 @@ static PBSNSUser* defaultPBSNSUserInstance = nil;
   hasBSpeed_ = !!_value_;
 }
 @synthesize bSpeed;
+- (BOOL) hasIsAgent {
+  return !!hasIsAgent_;
+}
+- (void) setHasIsAgent:(BOOL) _value_ {
+  hasIsAgent_ = !!_value_;
+}
+- (BOOL) isAgent {
+  return !!isAgent_;
+}
+- (void) setIsAgent:(BOOL) _value_ {
+  isAgent_ = !!_value_;
+}
+- (BOOL) hasAgentAccount {
+  return !!hasAgentAccount_;
+}
+- (void) setHasAgentAccount:(BOOL) _value_ {
+  hasAgentAccount_ = !!_value_;
+}
+@synthesize agentAccount;
+- (BOOL) hasAgentStatus {
+  return !!hasAgentStatus_;
+}
+- (void) setHasAgentStatus:(BOOL) _value_ {
+  hasAgentStatus_ = !!_value_;
+}
+@synthesize agentStatus;
 - (instancetype) init {
   if ((self = [super init])) {
     self.userId = @"";
@@ -1289,6 +1338,9 @@ static PBSNSUser* defaultPBSNSUserInstance = nil;
     self.addStatus = 7;
     self.bStyle = 0;
     self.bSpeed = 0;
+    self.isAgent = NO;
+    self.agentAccount = @"";
+    self.agentStatus = 0;
   }
   return self;
 }
@@ -1493,6 +1545,15 @@ static PBUser* defaultPBUserInstance = nil;
   if (self.hasBSpeed) {
     [output writeInt32:201 value:self.bSpeed];
   }
+  if (self.hasIsAgent) {
+    [output writeBool:210 value:self.isAgent];
+  }
+  if (self.hasAgentAccount) {
+    [output writeString:211 value:self.agentAccount];
+  }
+  if (self.hasAgentStatus) {
+    [output writeInt32:212 value:self.agentStatus];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (SInt32) serializedSize {
@@ -1636,6 +1697,15 @@ static PBUser* defaultPBUserInstance = nil;
   }
   if (self.hasBSpeed) {
     size_ += computeInt32Size(201, self.bSpeed);
+  }
+  if (self.hasIsAgent) {
+    size_ += computeBoolSize(210, self.isAgent);
+  }
+  if (self.hasAgentAccount) {
+    size_ += computeStringSize(211, self.agentAccount);
+  }
+  if (self.hasAgentStatus) {
+    size_ += computeInt32Size(212, self.agentStatus);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -1819,6 +1889,15 @@ static PBUser* defaultPBUserInstance = nil;
   if (self.hasBSpeed) {
     [output appendFormat:@"%@%@: %@\n", indent, @"bSpeed", [NSNumber numberWithInteger:self.bSpeed]];
   }
+  if (self.hasIsAgent) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"isAgent", [NSNumber numberWithBool:self.isAgent]];
+  }
+  if (self.hasAgentAccount) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"agentAccount", self.agentAccount];
+  }
+  if (self.hasAgentStatus) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"agentStatus", [NSNumber numberWithInteger:self.agentStatus]];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -1917,6 +1996,12 @@ static PBUser* defaultPBUserInstance = nil;
       (!self.hasBStyle || self.bStyle == otherMessage.bStyle) &&
       self.hasBSpeed == otherMessage.hasBSpeed &&
       (!self.hasBSpeed || self.bSpeed == otherMessage.bSpeed) &&
+      self.hasIsAgent == otherMessage.hasIsAgent &&
+      (!self.hasIsAgent || self.isAgent == otherMessage.isAgent) &&
+      self.hasAgentAccount == otherMessage.hasAgentAccount &&
+      (!self.hasAgentAccount || [self.agentAccount isEqual:otherMessage.agentAccount]) &&
+      self.hasAgentStatus == otherMessage.hasAgentStatus &&
+      (!self.hasAgentStatus || self.agentStatus == otherMessage.agentStatus) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -2055,6 +2140,15 @@ static PBUser* defaultPBUserInstance = nil;
   }
   if (self.hasBSpeed) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.bSpeed] hash];
+  }
+  if (self.hasIsAgent) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithBool:self.isAgent] hash];
+  }
+  if (self.hasAgentAccount) {
+    hashCode = hashCode * 31 + [self.agentAccount hash];
+  }
+  if (self.hasAgentStatus) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.agentStatus] hash];
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
@@ -2245,6 +2339,15 @@ static PBUser* defaultPBUserInstance = nil;
   }
   if (other.hasBSpeed) {
     [self setBSpeed:other.bSpeed];
+  }
+  if (other.hasIsAgent) {
+    [self setIsAgent:other.isAgent];
+  }
+  if (other.hasAgentAccount) {
+    [self setAgentAccount:other.agentAccount];
+  }
+  if (other.hasAgentStatus) {
+    [self setAgentStatus:other.agentStatus];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -2456,6 +2559,18 @@ static PBUser* defaultPBUserInstance = nil;
       }
       case 1608: {
         [self setBSpeed:[input readInt32]];
+        break;
+      }
+      case 1680: {
+        [self setIsAgent:[input readBool]];
+        break;
+      }
+      case 1690: {
+        [self setAgentAccount:[input readString]];
+        break;
+      }
+      case 1696: {
+        [self setAgentStatus:[input readInt32]];
         break;
       }
     }
@@ -3208,6 +3323,54 @@ static PBUser* defaultPBUserInstance = nil;
 - (PBUserBuilder*) clearBSpeed {
   resultPbuser.hasBSpeed = NO;
   resultPbuser.bSpeed = 0;
+  return self;
+}
+- (BOOL) hasIsAgent {
+  return resultPbuser.hasIsAgent;
+}
+- (BOOL) isAgent {
+  return resultPbuser.isAgent;
+}
+- (PBUserBuilder*) setIsAgent:(BOOL) value {
+  resultPbuser.hasIsAgent = YES;
+  resultPbuser.isAgent = value;
+  return self;
+}
+- (PBUserBuilder*) clearIsAgent {
+  resultPbuser.hasIsAgent = NO;
+  resultPbuser.isAgent = NO;
+  return self;
+}
+- (BOOL) hasAgentAccount {
+  return resultPbuser.hasAgentAccount;
+}
+- (NSString*) agentAccount {
+  return resultPbuser.agentAccount;
+}
+- (PBUserBuilder*) setAgentAccount:(NSString*) value {
+  resultPbuser.hasAgentAccount = YES;
+  resultPbuser.agentAccount = value;
+  return self;
+}
+- (PBUserBuilder*) clearAgentAccount {
+  resultPbuser.hasAgentAccount = NO;
+  resultPbuser.agentAccount = @"";
+  return self;
+}
+- (BOOL) hasAgentStatus {
+  return resultPbuser.hasAgentStatus;
+}
+- (SInt32) agentStatus {
+  return resultPbuser.agentStatus;
+}
+- (PBUserBuilder*) setAgentStatus:(SInt32) value {
+  resultPbuser.hasAgentStatus = YES;
+  resultPbuser.agentStatus = value;
+  return self;
+}
+- (PBUserBuilder*) clearAgentStatus {
+  resultPbuser.hasAgentStatus = NO;
+  resultPbuser.agentStatus = 0;
   return self;
 }
 @end
