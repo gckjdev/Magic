@@ -13,6 +13,8 @@
 #import "ChatCell.h"
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
+#import "ChatService.h"
+#import "UserManager.h"
 
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
@@ -90,10 +92,16 @@
 -(void)sendMessageAction:(NSString*)text
 {
     [self addMessage:text type:MESSAGEFROMTYPE_ME];
+    [[ChatService sharedInstance]sendChatWithText:text toUserId:[[UserManager sharedInstance]userId] callback:^(NSError *error) {
+        
+    }];
 
 }
 -(void)sendImageMessageAction:(NSString *)image{
     [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
+    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:[[UserManager sharedInstance]userId] callback:^(NSError *error) {
+        
+    }];
 }
 - (NSMutableArray *)messageFrames
 {
