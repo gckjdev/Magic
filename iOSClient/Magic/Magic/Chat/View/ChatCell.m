@@ -12,6 +12,8 @@
 #import "UIImage+Extension.h"
 #import "UIImageView+WebCache.h"
 #import "UserAvatarView.h"
+#import "StringUtil.h"
+#import "PPDebug.h"
 
 
 @interface ChatCell()
@@ -51,10 +53,7 @@
         _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
         [self.contentView addSubview:_avatarView];
         
-        
     
-        
-        
         // 3.正文
         UIButton *textView = [[UIButton alloc] init];
         textView.titleLabel.numberOfLines = 0; // 自动换行
@@ -83,18 +82,27 @@
     ChatMessage *message = messageFrame.message;
     
     // 1.时间
-    self.timeView.text = message.time;
+    self.timeView.text = [NSString getCurrentTime] ;
     self.timeView.frame = messageFrame.timeF;
     
     // 2.头像
 
     PBUser *avatarUser = _messageFrame.message.pbChat.fromUser;
-    [_avatarView updateUser:avatarUser];
     _avatarView.frame = messageFrame.iconF;
+    [_avatarView updateUser:avatarUser];
+  
     
     // 3.正文
+     self.textView.frame = messageFrame.contentF;
+    
     [self.textView setTitle:message.content forState:UIControlStateNormal];
-    self.textView.frame = messageFrame.textF;
+    if (message.fromType == MESSAGEFROMTYPE_ME) {
+        [self.textView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    } else {
+        [self.textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
+   
+    
     
     // 4.正文的背景
     if (message.fromType == MESSAGEFROMTYPE_ME) { // 自己发的,蓝色
@@ -106,7 +114,10 @@
     //5
     if (message.type == MESSAGETYPE_IMAGE) {
         _showImageView.frame =  messageFrame.imageF;
-        _showImageView.image = message.myImage;
+        
+        [_showImageView sd_setImageWithURL:[NSURL URLWithString:message.image]];
+//        [_showImageView setBackgroundColor:[UIColor clearColor]];
+        PPDebug(@"neng : url %@",[NSURL URLWithString:message.image]);
         _showImageView.hidden = NO;
     }else{
         _showImageView.hidden = YES;

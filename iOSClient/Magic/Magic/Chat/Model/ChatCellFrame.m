@@ -15,9 +15,9 @@
 
 #define ICONSIZE 40.0f
 
-#define CELLPADDING 5.0f
+#define CELLPADDING 0.0f
 
-#define COMMON_SPACE 10.0f
+#define COMMON_SPACE 6.0f
 
 #define IMAGE_MAX_SIZE 150.0f
 
@@ -31,7 +31,7 @@
    
     if (message.hideTime == NO) {
         CGFloat timeX = 0;
-        CGFloat timeY = 0;
+        CGFloat timeY = CELLPADDING;
         CGFloat timeW = kScreenWidth;
         CGFloat timeH = ICONSIZE;
         _timeF = CGRectMake(timeX, timeY, timeW, timeH);
@@ -39,7 +39,7 @@
     else{
         _timeF = CGRectZero;
     }
-    CGFloat iconY = CGRectGetMaxY(_timeF)+CELLPADDING;
+    CGFloat iconY = CGRectGetMaxY(_timeF)+COMMON_SPACE;
     CGFloat iconW = ICONSIZE;
     CGFloat iconH = ICONSIZE;
     CGFloat iconX;
@@ -51,35 +51,46 @@
     }
     _iconF = CGRectMake(iconX, iconY, iconW, iconH);
     
-    CGFloat textX;
-    CGFloat textY = iconY;
+    CGFloat contentX;
+    CGFloat contentY = iconY;
     CGSize showSize;
+    
+    
+    
     if (_message.type == MESSAGETYPE_IMAGE) {
         CGSize imageMaxSize = CGSizeMake(IMAGE_MAX_SIZE, IMAGE_MAX_SIZE);
         showSize = imageMaxSize;
-        
     }
     else if(_message.type == MESSAGETYPE_TEXT){
         CGSize textMaxSize = CGSizeMake(TEXT_MAX_WIDTH, MAXFLOAT);
         CGSize textRealSize = [message.content sizeWithFont:MJTextFont maxSize:textMaxSize];
         CGSize textBtnSize = CGSizeMake(textRealSize.width + MJTextPadding*2, textRealSize.height + MJTextPadding*2);
         showSize = textBtnSize;
+        
+       
+     
     }
-    
     
     
     if (message.fromType == MESSAGEFROMTYPE_OTHER) {
-        textX = CGRectGetMaxX(_iconF) + COMMON_SPACE;
+        contentX = CGRectGetMaxX(_iconF) + COMMON_SPACE;
     }else{
-        textX = iconX - COMMON_SPACE - showSize.width;
+        contentX = iconX - COMMON_SPACE - showSize.width;
     }
     
-    _textF = (CGRect){{textX,textY},showSize};
-    CGFloat textMaxY = CGRectGetMaxY(_textF);
+  
+    if (_message.type == MESSAGETYPE_IMAGE) {
+        _imageF = (CGRect){{contentX,contentY},showSize};
+        _contentF = CGRectMake(contentX, contentY, IMAGE_MAX_SIZE, IMAGE_MAX_SIZE);
+    }
+    else if(_message.type == MESSAGETYPE_TEXT){
+        _textF = (CGRect){{contentX,contentY},showSize};
+        _contentF = (CGRect){{contentX,contentY},showSize};
+    }
+    
+    
+    CGFloat contentMaxY = CGRectGetMaxY(_contentF);
     CGFloat iconMaxY = CGRectGetMaxY(_iconF);
-    _cellHeight = MAX(textMaxY,iconMaxY)+CELLPADDING;
-    
-    _imageF = (CGRect){{textX,textY},showSize};
-    
+    _cellHeight = MAX(contentMaxY,iconMaxY)+CELLPADDING;
 }
 @end

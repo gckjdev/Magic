@@ -10,6 +10,7 @@
 #import "ChatCell.h"
 #import "ChatCellFrame.h"
 #import "Masonry.h"
+#import "ChatService.h"
 @interface MessageTableView()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -34,6 +35,52 @@
     self.allowsSelection = NO;
     
     
+
+}
+
+-(void)RefreshData{
+    
+    [[ChatService sharedInstance]getChatList:^(NSArray *chatArray, NSError *error) {
+        if (error == nil) {
+            NSMutableArray *mfArray = [NSMutableArray array];
+            NSInteger len = [chatArray count];
+            for (int i = 0; i< len;i++) {
+                PBChat * tmpChat = chatArray[len - i - 1];
+                ChatMessage *msg = [ChatMessage messageWithPBChat:tmpChat];
+                ChatCellFrame *lastMf = [mfArray lastObject];
+                ChatMessage *lastMsg = lastMf.message;
+                //                msg.hideTime = [msg.time isEqualToString:lastMsg.time];
+                NSTimeInterval secondsInterval = [msg.time timeIntervalSinceDate:lastMsg.time];
+                if (secondsInterval>30) {
+                    msg.hideTime = NO;
+                }
+                else{
+                    msg.hideTime = YES;
+                }
+                //                [self isHideTime:msg.time lastTime:lastMsg.time];
+                ChatCellFrame *mf = [[ChatCellFrame alloc] init];
+                mf.message = msg;
+                [mfArray addObject:mf];
+            }
+            
+            _messageFrames = mfArray;
+            
+            [self reloadData];
+            
+            
+            NSInteger s = [self numberOfSections];
+            if (s<1) return;
+            NSInteger r = [self numberOfRowsInSection:s-1];
+            if (r<1) return;
+            
+            NSIndexPath *ip = [NSIndexPath indexPathForRow:r-1 inSection:s-1];
+            [self scrollToRowAtIndexPath:ip
+                                  atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }
+        else{
+            POST_ERROR(@"加载数据失败");
+        }
+    }];
 
 }
 

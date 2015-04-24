@@ -13,11 +13,15 @@
 #define MJTextFont [UIFont systemFontOfSize:15]
 // 正文的内边距
 #define MJTextPadding 20
+
+
+
 @interface ChatCellFrame : NSObject
 @property (nonatomic,assign,readonly) CGRect        iconF;
 @property (nonatomic,assign,readonly) CGRect        timeF;
 @property (nonatomic,assign,readonly) CGRect        textF;
 @property (nonatomic, assign,readonly) CGRect       imageF;
+@property (nonatomic, assign,readonly) CGRect       contentF;
 @property (nonatomic,assign,readonly) CGFloat       cellHeight;
 @property (nonatomic,strong) ChatMessage *message;
 @end

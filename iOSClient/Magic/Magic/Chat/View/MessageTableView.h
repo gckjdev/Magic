@@ -11,4 +11,5 @@
 @interface MessageTableView : UITableView
 @property (nonatomic,strong) NSArray   *messageFrames;
 @property (nonatomic, assign) CGFloat      viewHeight;
+-(void)RefreshData;
 @end

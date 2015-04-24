@@ -30,6 +30,7 @@ typedef void (^ClickOnAvatarBlock)(void);
 - (void)setAsRound;
 - (void)setBackgroundImage:(UIImage *)image;
 - (void)updateUser:(PBUser*)user;
+
 + (UIImage*)avatarImageByGender:(BOOL)gender;
 - (void)setBorderWidth:(CGFloat)width;
 

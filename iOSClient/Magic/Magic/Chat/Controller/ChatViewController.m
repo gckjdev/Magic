@@ -75,7 +75,7 @@
    
     }];
  
-    [self loadTableViewData];
+    [_tableView RefreshData];
 }
 -(void)setupToolView{
     _toolView = [[ChatToolView alloc]init];
@@ -93,74 +93,18 @@
 {
 //    [self addMessage:text type:MESSAGEFROMTYPE_ME];
     [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
-        
+        [_tableView RefreshData];
     }];
 
 }
 -(void)sendImageMessageAction:(NSString *)image{
-    [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
+//    [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
     [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
-        
+        [_tableView RefreshData];
     }];
 }
--(void)loadTableViewData{
-    [[ChatService sharedInstance]getChatList:^(NSArray *chatArray, NSError *error) {
-        if (error == nil) {
-            NSMutableArray *mfArray = [NSMutableArray array];
-            for (PBChat *tmpChat in chatArray) {
-                ChatMessage *msg = [ChatMessage messageWithPBChat:tmpChat];
-                ChatCellFrame *lastMf = [mfArray lastObject];
-                ChatMessage *lastMsg = lastMf.message;
-//                msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-                msg.hideTime = YES;
-                ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-                mf.message = msg;
-                [mfArray addObject:mf];
-            }
-            
-            _messageFrames = mfArray;
-            _tableView.messageFrames = mfArray;
-            [_tableView reloadData];
-        }
-        else{
-            POST_ERROR(@"加载数据失败");
-            
-        }
-    }];
 
-}
-- (NSMutableArray *)messageFrames
-{
-    if (_messageFrames == nil) {
-//        NSArray *dictArray = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"messages.plist" ofType:nil]];
-//        
-//        NSMutableArray *mfArray = [NSMutableArray array];
-//        
-//        for (NSDictionary *dict in dictArray) {
-//            // 消息模型
-//            ChatMessage *msg = [ChatMessage messageWithDict:dict];
-//            
-//            // 取出上一个模型
-//            ChatCellFrame *lastMf = [mfArray lastObject];
-//            ChatMessage *lastMsg = lastMf.message;
-//            
-//            // 判断两个消息的时间是否一致
-//            msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-//            
-//            // frame模型
-//            ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-//            mf.message = msg;
-//            
-//            // 添加模型
-//            [mfArray addObject:mf];
-//        }
-//        
-//        _messageFrames = mfArray;
-        
-        
-            }
-    return _messageFrames;
-}
+
 
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -203,76 +147,76 @@
     }
    
 }
--(void)addMessageImage:(NSString*)image type:(MessageFromType)fromType{
-    // 1.数据模型
-    ChatMessage *msg = [[ChatMessage alloc] init];
-    msg.fromType = fromType;
-    msg.type = MESSAGETYPE_IMAGE;
-    
-    // 设置数据模型的时间
-    NSDate *now = [NSDate date];
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateFormat = @"HH:mm";
-    // NSDate  --->  NSString
-    // NSString ---> NSDate
-    //    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    //  2014-08-09 15:45:56
-    // 09/08/2014  15:45:56
-    msg.time = [fmt stringFromDate:now];
-    
-    // 看是否需要隐藏时间
-    ChatCellFrame *lastMf = [self.messageFrames lastObject];
-    ChatMessage *lastMsg = lastMf.message;
-    msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-    msg.myImage = [UIImage imageNamed:image];
-    
-    // 2.frame模型
-    ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-    mf.message = msg;
-    [self.messageFrames addObject:mf];
-    _tableView.messageFrames = [self.messageFrames copy];
-    // 3.刷新表格
-    [self.tableView reloadData];
-    
-    // 4.自动滚动表格到最后一行
-    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-}
--(void)addMessage:(NSString*)text type:(MessageFromType)fromType
-{
-    // 1.数据模型
-    ChatMessage *msg = [[ChatMessage alloc] init];
-    msg.fromType = fromType;
-    msg.content  = text;
-    msg.type = MESSAGETYPE_TEXT;
-    
-    // 设置数据模型的时间
-    NSDate *now = [NSDate date];
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateFormat = @"HH:mm";
-    // NSDate  --->  NSString
-    // NSString ---> NSDate
-    //    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    //  2014-08-09 15:45:56
-    // 09/08/2014  15:45:56
-    msg.time = [fmt stringFromDate:now];
-    
-    // 看是否需要隐藏时间
-    ChatCellFrame *lastMf = [self.messageFrames lastObject];
-    ChatMessage *lastMsg = lastMf.message;
-    msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-  
-    
-    // 2.frame模型
-    ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-    mf.message = msg;
-    [self.messageFrames addObject:mf];
-    _tableView.messageFrames = [self.messageFrames copy];
-    // 3.刷新表格
-    [self.tableView reloadData];
-    
-    // 4.自动滚动表格到最后一行
-    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-}
+//-(void)addMessageImage:(NSString*)image type:(MessageFromType)fromType{
+//    // 1.数据模型
+//    ChatMessage *msg = [[ChatMessage alloc] init];
+//    msg.fromType = fromType;
+//    msg.type = MESSAGETYPE_IMAGE;
+//    
+//    // 设置数据模型的时间
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+//    fmt.dateFormat = @"HH:mm";
+//    // NSDate  --->  NSString
+//    // NSString ---> NSDate
+//    //    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+//    //  2014-08-09 15:45:56
+//    // 09/08/2014  15:45:56
+//    msg.time = [fmt stringFromDate:now];
+//    
+//    // 看是否需要隐藏时间
+//    ChatCellFrame *lastMf = [self.messageFrames lastObject];
+//    ChatMessage *lastMsg = lastMf.message;
+//    msg.hideTime = [msg.time isEqualToString:lastMsg.time];
+//    msg.myImage = [UIImage imageNamed:image];
+//    
+//    // 2.frame模型
+//    ChatCellFrame *mf = [[ChatCellFrame alloc] init];
+//    mf.message = msg;
+//    [self.messageFrames addObject:mf];
+//    _tableView.messageFrames = [self.messageFrames copy];
+//    // 3.刷新表格
+//    [self.tableView reloadData];
+//    
+//    // 4.自动滚动表格到最后一行
+//    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
+//    [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//}
+//-(void)addMessage:(NSString*)text type:(MessageFromType)fromType
+//{
+//    // 1.数据模型
+//    ChatMessage *msg = [[ChatMessage alloc] init];
+//    msg.fromType = fromType;
+//    msg.content  = text;
+//    msg.type = MESSAGETYPE_TEXT;
+//    
+//    // 设置数据模型的时间
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+//    fmt.dateFormat = @"HH:mm";
+//    // NSDate  --->  NSString
+//    // NSString ---> NSDate
+//    //    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+//    //  2014-08-09 15:45:56
+//    // 09/08/2014  15:45:56
+//    msg.time = [fmt stringFromDate:now];
+//    
+//    // 看是否需要隐藏时间
+//    ChatCellFrame *lastMf = [self.messageFrames lastObject];
+//    ChatMessage *lastMsg = lastMf.message;
+//    msg.hideTime = [msg.time isEqualToString:lastMsg.time];
+//  
+//    
+//    // 2.frame模型
+//    ChatCellFrame *mf = [[ChatCellFrame alloc] init];
+//    mf.message = msg;
+//    [self.messageFrames addObject:mf];
+//    _tableView.messageFrames = [self.messageFrames copy];
+//    // 3.刷新表格
+//    [self.tableView reloadData];
+//    
+//    // 4.自动滚动表格到最后一行
+//    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
+//    [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//}
 @end

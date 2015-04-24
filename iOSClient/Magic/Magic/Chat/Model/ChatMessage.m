@@ -10,25 +10,7 @@
 #import "UserManager.h"
 
 @implementation ChatMessage
-+(instancetype)messageWithDict:(NSDictionary *)dict
-{
-    return [[self alloc]initWithDict:dict];
-}
--(instancetype)initWithDict:(NSDictionary *)dict
-{
-    if (self = [super init]) {
-        
-        _content = dict[@"content"];
-        _time = dict[@"time"];
-        if ([dict[@"type"] integerValue] == 0) {
-            _fromType = MESSAGEFROMTYPE_OTHER;
-        }else{
-            _fromType = MESSAGEFROMTYPE_ME;
-        }
-        
-    }
-    return self;
-}
+
 +(instancetype)messageWithPBChat:(PBChat*)chat
 {
     return [[self alloc]initWithPBChat:chat];
@@ -41,6 +23,7 @@
         _content = _pbChat.text;
         _image = _pbChat.image;
         _voice = _pbChat.voice;
+        _time = [NSDate dateWithTimeIntervalSince1970:_pbChat.createDate];
         
         _fromUserId = _pbChat.fromUserId;
         _fromUser_Ava = _pbChat.fromUser.avatar;
@@ -65,7 +48,7 @@
 }
 -(void)setPbChat:(PBChat *)pbChat{
     _pbChat = pbChat;
-//    _time = pbChat.createDate;
+    _time = [NSDate dateWithTimeIntervalSince1970:_pbChat.createDate];
     _content = _pbChat.text;
     _image = _pbChat.image;
     _voice = _pbChat.voice;
