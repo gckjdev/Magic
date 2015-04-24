@@ -32,9 +32,14 @@ DEF_SINGLETON_FOR_CLASS(UserManager)
 - (PBBarrageSpeed)barrageSpeed;
 - (PBBarrageStyle)barrageStyle;
 + (NSString*)encryptPassword:(NSString*)rawPassword;
--(PBDevice*)getCurrentDevice;
+- (PBDevice*)getCurrentDevice;
 
--(void)setUserBSpeed:(int)bSpeed;
--(void)setUserBtyle:(int)bStyle;
+- (void)setUserBSpeed:(int)bSpeed;
+- (void)setUserBtyle:(int)bStyle;
+
+- (void)setupMiPushAlias;    // 设置别名
+- (void)saveDeviceToken:(NSData*)deviceToken;
+- (NSString*)getDeviceToken;
+
 
 @end

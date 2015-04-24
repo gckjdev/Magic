@@ -32,4 +32,7 @@ DEF_SINGLETON_FOR_CLASS(UserService);
                    callback:(SendChatWithAudioCallBackBlock)callback;
 
 -(void)getChatList:(GetChatListCallBackBlock)callback;
+
+-(void)reloadLatest;
+
 @end

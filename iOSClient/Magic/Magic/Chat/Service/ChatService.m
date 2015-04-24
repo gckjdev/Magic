@@ -142,7 +142,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     [pbChatBuilder setFromUser:[[UserManager sharedInstance] pbUser]];
     
     [pbChatBuilder setCreateDate:(int)time(0)];
-    [pbChatBuilder setSource:PBChatSourceFromApp];
+    [pbChatBuilder setSource:PBChatSourceFromAppIos];
     
     [reqBuilder setChat:[pbChatBuilder build]];
     
@@ -159,4 +159,10 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
                 
              } isPostError:YES];
 }
+
+-(void)reloadLatest
+{
+    // TODO reload chat list and post notification to UI to reload
+}
+
 @end

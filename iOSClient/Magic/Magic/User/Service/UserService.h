@@ -107,4 +107,7 @@ DEF_SINGLETON_FOR_CLASS(UserService);
 -(void) veriftyUserEmail:(NSString*)destEmail
                     code:(NSString*)code
                 callback:(VeriftyUserEmailCallbackBlock)callback;
+
+- (void)updateUserDeviceToken:(NSData*)deviceToken;
+
 @end

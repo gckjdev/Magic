@@ -126,12 +126,13 @@ NSString *NSStringFromPBInviteCodeStatus(PBInviteCodeStatus value);
 
 typedef NS_ENUM(SInt32, PBChatSource) {
   PBChatSourceFromWechat = 1,
-  PBChatSourceFromApp = 2,
-  PBChatSourceFromWeb = 3,
-  PBChatSourceFromMobileWeb = 4,
-  PBChatSourceFromAgent = 5,
-  PBChatSourceFromAgentAuto = 6,
-  PBChatSourceFromSystem = 7,
+  PBChatSourceFromAppIos = 2,
+  PBChatSourceFromAppAndroid = 3,
+  PBChatSourceFromWeb = 5,
+  PBChatSourceFromMobileWeb = 6,
+  PBChatSourceFromAgent = 7,
+  PBChatSourceFromAgentAuto = 8,
+  PBChatSourceFromSystem = 9,
 };
 
 BOOL PBChatSourceIsValidValue(PBChatSource value);

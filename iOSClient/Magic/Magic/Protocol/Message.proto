@@ -390,14 +390,13 @@ message PBGetChatListRequest
 {
     optional string chatOffsetId = 1;       // 从哪个消息ID开始
     optional int32 limit = 2;               // 返回记录数
+    optional bool forward = 3;              // 往chatOffsetId之前获取还是往chatOffsetId之后获取数据
 }
 
 message PBGetChatListResponse
 {
     repeated PBChat chat = 1;
 }
-
-
 
 message PBDataRequest
 {
