@@ -63,7 +63,7 @@
     
     CGFloat tableHeight = -kStatusBarHeight -_toolViewHeight;
     self.tableView = [[MessageTableView alloc]init];
-    _tableView.messageFrames = [self.messageFrames copy];
+   
     _tableView.viewHeight = _toolViewHeight;
     
     [self.view addSubview:self.tableView];
@@ -75,7 +75,7 @@
    
     }];
  
-    
+    [self loadTableViewData];
 }
 -(void)setupToolView{
     _toolView = [[ChatToolView alloc]init];
@@ -91,7 +91,7 @@
 }
 -(void)sendMessageAction:(NSString*)text
 {
-    [self addMessage:text type:MESSAGEFROMTYPE_ME];
+//    [self addMessage:text type:MESSAGEFROMTYPE_ME];
     [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
         
     }];
@@ -103,34 +103,62 @@
         
     }];
 }
+-(void)loadTableViewData{
+    [[ChatService sharedInstance]getChatList:^(NSArray *chatArray, NSError *error) {
+        if (error == nil) {
+            NSMutableArray *mfArray = [NSMutableArray array];
+            for (PBChat *tmpChat in chatArray) {
+                ChatMessage *msg = [ChatMessage messageWithPBChat:tmpChat];
+                ChatCellFrame *lastMf = [mfArray lastObject];
+                ChatMessage *lastMsg = lastMf.message;
+//                msg.hideTime = [msg.time isEqualToString:lastMsg.time];
+                msg.hideTime = YES;
+                ChatCellFrame *mf = [[ChatCellFrame alloc] init];
+                mf.message = msg;
+                [mfArray addObject:mf];
+            }
+            
+            _messageFrames = mfArray;
+            _tableView.messageFrames = mfArray;
+            [_tableView reloadData];
+        }
+        else{
+            POST_ERROR(@"加载数据失败");
+            
+        }
+    }];
+
+}
 - (NSMutableArray *)messageFrames
 {
     if (_messageFrames == nil) {
-        NSArray *dictArray = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"messages.plist" ofType:nil]];
+//        NSArray *dictArray = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"messages.plist" ofType:nil]];
+//        
+//        NSMutableArray *mfArray = [NSMutableArray array];
+//        
+//        for (NSDictionary *dict in dictArray) {
+//            // 消息模型
+//            ChatMessage *msg = [ChatMessage messageWithDict:dict];
+//            
+//            // 取出上一个模型
+//            ChatCellFrame *lastMf = [mfArray lastObject];
+//            ChatMessage *lastMsg = lastMf.message;
+//            
+//            // 判断两个消息的时间是否一致
+//            msg.hideTime = [msg.time isEqualToString:lastMsg.time];
+//            
+//            // frame模型
+//            ChatCellFrame *mf = [[ChatCellFrame alloc] init];
+//            mf.message = msg;
+//            
+//            // 添加模型
+//            [mfArray addObject:mf];
+//        }
+//        
+//        _messageFrames = mfArray;
         
-        NSMutableArray *mfArray = [NSMutableArray array];
         
-        for (NSDictionary *dict in dictArray) {
-            // 消息模型
-            ChatMessage *msg = [ChatMessage messageWithDict:dict];
-            
-            // 取出上一个模型
-            ChatCellFrame *lastMf = [mfArray lastObject];
-            ChatMessage *lastMsg = lastMf.message;
-            
-            // 判断两个消息的时间是否一致
-            msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-            
-            // frame模型
-            ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-            mf.message = msg;
-            
-            // 添加模型
-            [mfArray addObject:mf];
-        }
-        
-        _messageFrames = mfArray;
-    }
+            }
     return _messageFrames;
 }
 

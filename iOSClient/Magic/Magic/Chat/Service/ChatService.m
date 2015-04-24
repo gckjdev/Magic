@@ -22,7 +22,8 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     PBDataRequestBuilder* builder = [PBDataRequest builder];
     
     PBGetChatListRequestBuilder* reqBuilder = [PBGetChatListRequest builder];
-    
+//    [reqBuilder setChatOffsetId:@""];
+    [reqBuilder setLimit:30];
     PBGetChatListRequest *req = [reqBuilder build];
     
     [builder setGetChatListRequest:req];
@@ -32,7 +33,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
        requestBuilder:builder
              callback:^(PBDataResponse *response, NSError *error) {
                  
-                 NSArray *array = [response.getChatListResponse.chat copy];
+                 NSArray *array = response.getChatListResponse.chat ;
                  if (error == nil) {
                      PPDebug(@"getChatList  success");
                      EXECUTE_BLOCK(callback,array,error);
@@ -138,7 +139,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     [pbChatBuilder setChatId:@""];
     
     [pbChatBuilder setFromUserId: [[UserManager sharedInstance] userId]];
-    [pbChatBuilder setFromUser:[[UserManager sharedInstance] miniPbUser]];
+    [pbChatBuilder setFromUser:[[UserManager sharedInstance] pbUser]];
     
     [pbChatBuilder setCreateDate:(int)time(0)];
     [pbChatBuilder setSource:PBChatSourceFromApp];

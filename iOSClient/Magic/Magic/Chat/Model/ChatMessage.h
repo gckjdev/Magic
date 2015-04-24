@@ -22,6 +22,7 @@ typedef enum{
 @interface ChatMessage : NSObject
 
 +(instancetype)messageWithDict:(NSDictionary *)dict;
++(instancetype)messageWithPBChat:(PBChat*)chat;
 @property(nonatomic,copy)       NSString        *content;
 @property(nonatomic,copy)       NSString        *time;
 @property (nonatomic,copy)      NSString        *image;

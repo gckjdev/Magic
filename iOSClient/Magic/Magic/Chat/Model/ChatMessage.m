@@ -7,6 +7,7 @@
 //
 
 #import "ChatMessage.h"
+#import "UserManager.h"
 
 @implementation ChatMessage
 +(instancetype)messageWithDict:(NSDictionary *)dict
@@ -28,8 +29,42 @@
     }
     return self;
 }
++(instancetype)messageWithPBChat:(PBChat*)chat
+{
+    return [[self alloc]initWithPBChat:chat];
+}
+-(instancetype)initWithPBChat:(PBChat*)chat{
+    
+    if (self = [super init]) {
+        _pbChat = chat;
+        //    _time = pbChat.createDate;
+        _content = _pbChat.text;
+        _image = _pbChat.image;
+        _voice = _pbChat.voice;
+        
+        _fromUserId = _pbChat.fromUserId;
+        _fromUser_Ava = _pbChat.fromUser.avatar;
+        
+        if (_pbChat.type == PBChatTypeTextChat) {
+            _type = MESSAGETYPE_TEXT;
+        }
+        else if(_pbChat.type == PBChatTypePictureChat){
+            _type = MESSAGETYPE_IMAGE;
+        }
+        else if(_pbChat.type == PBChatTypeVoiceChat){
+            _type = MESSAGETYPE_VOICE;
+        }
+        NSString *tmpStr = [[UserManager sharedInstance]userId];
+        if ([_pbChat.fromUserId isEqualToString:tmpStr]) {
+            _fromType = MESSAGEFROMTYPE_ME;
+        }else{
+            _fromType = MESSAGEFROMTYPE_OTHER;
+        }
+    }
+    return self;
+}
 -(void)setPbChat:(PBChat *)pbChat{
-    _pbChat = [pbChat copy];
+    _pbChat = pbChat;
 //    _time = pbChat.createDate;
     _content = _pbChat.text;
     _image = _pbChat.image;
@@ -46,6 +81,12 @@
     }
     else if(_pbChat.type == PBChatTypeVoiceChat){
         _type = MESSAGETYPE_VOICE;
+    }
+    NSString *tmpStr = [[UserManager sharedInstance]userId];
+    if ([_pbChat.fromUserId isEqualToString:tmpStr]) {
+        _fromType = MESSAGEFROMTYPE_ME;
+    }else{
+        _fromType = MESSAGEFROMTYPE_OTHER;
     }
 }
 @end

@@ -10,12 +10,16 @@
 #import "ChatMessage.h"
 #import "ChatCellFrame.h"
 #import "UIImage+Extension.h"
+#import "UIImageView+WebCache.h"
+#import "UserAvatarView.h"
+
 
 @interface ChatCell()
 @property (nonatomic,strong)UILabel         *timeView;
 @property (nonatomic,strong)UIImageView     *iconView;
 @property (nonatomic,strong)UIButton        *textView;
 @property (nonatomic,strong)UIImageView     *showImageView;
+@property (nonatomic,strong) UserAvatarView   *avatarView;
 @end
 
 @implementation ChatCell
@@ -43,9 +47,13 @@
         self.timeView = timeView;
         
         // 2.头像
-        UIImageView *iconView = [[UIImageView alloc] init];
-        [self.contentView addSubview:iconView];
-        self.iconView = iconView;
+       
+        _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
+        [self.contentView addSubview:_avatarView];
+        
+        
+    
+        
         
         // 3.正文
         UIButton *textView = [[UIButton alloc] init];
@@ -79,9 +87,10 @@
     self.timeView.frame = messageFrame.timeF;
     
     // 2.头像
-    NSString *icon = (message.fromType == MESSAGEFROMTYPE_ME) ? @"me" : @"other";
-    self.iconView.image = [UIImage imageNamed:icon];
-    self.iconView.frame = messageFrame.iconF;
+
+    PBUser *avatarUser = _messageFrame.message.pbChat.fromUser;
+    [_avatarView updateUser:avatarUser];
+    _avatarView.frame = messageFrame.iconF;
     
     // 3.正文
     [self.textView setTitle:message.content forState:UIControlStateNormal];
