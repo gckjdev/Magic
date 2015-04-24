@@ -17,9 +17,9 @@
 #endif
 
 typedef NS_ENUM(SInt32, PBDeviceType) {
-  PBDeviceTypeDeviceTypeIphone = 1,
-  PBDeviceTypeDeviceTypeAndroid = 2,
-  PBDeviceTypeDeviceTypeWindow = 3,
+  PBDeviceTypeDeviceTypeIphone = 0,
+  PBDeviceTypeDeviceTypeAndroid = 1,
+  PBDeviceTypeDeviceTypeWindow = 2,
 };
 
 BOOL PBDeviceTypeIsValidValue(PBDeviceType value);

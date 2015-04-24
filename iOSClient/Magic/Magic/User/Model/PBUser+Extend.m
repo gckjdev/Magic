@@ -35,6 +35,12 @@
     if ([[self avatarBg] length] > 0){
         [builder setAvatarBg:[self avatarBg]];
     }
+
+    if ([[self pushRegId] length] > 0){
+        [builder setPushRegId:[self pushRegId]];
+    }
+
+    [builder setDeviceType:[self deviceType]];
     
     return [builder build];
 }

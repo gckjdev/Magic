@@ -10,9 +10,9 @@
 #import "MobClickUtils.h"
 #import <ShareSDK/ShareSDK.h>
 
-#define DEFAULT_SERVER_URL      @"http://localhost:8100/?"
+//#define DEFAULT_SERVER_URL      @"http://localhost:8100/?"
 //#define DEFAULT_SERVER_URL      @"http://192.168.36.200:8100/?"
-//#define DEFAULT_SERVER_URL       UMENG_STRVALUE(@"TRAFFIC_SERVER_URL", @"http://112.74.107.152:8100/?")
+#define DEFAULT_SERVER_URL       UMENG_STRVALUE(@"TRAFFIC_SERVER_URL", @"http://112.74.107.152:8100/?")
 
 
 #define QIUNIU_FEED_TOKEN        UMENG_STRVALUE(@"QINIU_TOKEN", @"PGXicdkeGqQHXTBCV-qKbMaQj6aFWwM3yS1qcKKF:AeIaOS9MyyZv7Rq1i2lQ32UGMZc=:eyJzY29wZSI6Imdja2pkZXYiLCJkZWFkbGluZSI6Mjg2NzcyMzQ2Nn0=")

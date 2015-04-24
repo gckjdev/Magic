@@ -959,6 +959,8 @@ static PBSNSUser* defaultPBSNSUserInstance = nil;
 @property BOOL isAgent;
 @property (strong) NSString* agentAccount;
 @property SInt32 agentStatus;
+@property SInt32 deviceType;
+@property (strong) NSString* pushRegId;
 @end
 
 @implementation PBUser
@@ -1294,6 +1296,20 @@ static PBSNSUser* defaultPBSNSUserInstance = nil;
   hasAgentStatus_ = !!_value_;
 }
 @synthesize agentStatus;
+- (BOOL) hasDeviceType {
+  return !!hasDeviceType_;
+}
+- (void) setHasDeviceType:(BOOL) _value_ {
+  hasDeviceType_ = !!_value_;
+}
+@synthesize deviceType;
+- (BOOL) hasPushRegId {
+  return !!hasPushRegId_;
+}
+- (void) setHasPushRegId:(BOOL) _value_ {
+  hasPushRegId_ = !!_value_;
+}
+@synthesize pushRegId;
 - (instancetype) init {
   if ((self = [super init])) {
     self.userId = @"";
@@ -1341,6 +1357,8 @@ static PBSNSUser* defaultPBSNSUserInstance = nil;
     self.isAgent = NO;
     self.agentAccount = @"";
     self.agentStatus = 0;
+    self.deviceType = 0;
+    self.pushRegId = @"";
   }
   return self;
 }
@@ -1554,6 +1572,12 @@ static PBUser* defaultPBUserInstance = nil;
   if (self.hasAgentStatus) {
     [output writeInt32:212 value:self.agentStatus];
   }
+  if (self.hasDeviceType) {
+    [output writeInt32:213 value:self.deviceType];
+  }
+  if (self.hasPushRegId) {
+    [output writeString:214 value:self.pushRegId];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (SInt32) serializedSize {
@@ -1706,6 +1730,12 @@ static PBUser* defaultPBUserInstance = nil;
   }
   if (self.hasAgentStatus) {
     size_ += computeInt32Size(212, self.agentStatus);
+  }
+  if (self.hasDeviceType) {
+    size_ += computeInt32Size(213, self.deviceType);
+  }
+  if (self.hasPushRegId) {
+    size_ += computeStringSize(214, self.pushRegId);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -1898,6 +1928,12 @@ static PBUser* defaultPBUserInstance = nil;
   if (self.hasAgentStatus) {
     [output appendFormat:@"%@%@: %@\n", indent, @"agentStatus", [NSNumber numberWithInteger:self.agentStatus]];
   }
+  if (self.hasDeviceType) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"deviceType", [NSNumber numberWithInteger:self.deviceType]];
+  }
+  if (self.hasPushRegId) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"pushRegId", self.pushRegId];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -2002,6 +2038,10 @@ static PBUser* defaultPBUserInstance = nil;
       (!self.hasAgentAccount || [self.agentAccount isEqual:otherMessage.agentAccount]) &&
       self.hasAgentStatus == otherMessage.hasAgentStatus &&
       (!self.hasAgentStatus || self.agentStatus == otherMessage.agentStatus) &&
+      self.hasDeviceType == otherMessage.hasDeviceType &&
+      (!self.hasDeviceType || self.deviceType == otherMessage.deviceType) &&
+      self.hasPushRegId == otherMessage.hasPushRegId &&
+      (!self.hasPushRegId || [self.pushRegId isEqual:otherMessage.pushRegId]) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -2149,6 +2189,12 @@ static PBUser* defaultPBUserInstance = nil;
   }
   if (self.hasAgentStatus) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.agentStatus] hash];
+  }
+  if (self.hasDeviceType) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.deviceType] hash];
+  }
+  if (self.hasPushRegId) {
+    hashCode = hashCode * 31 + [self.pushRegId hash];
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
@@ -2348,6 +2394,12 @@ static PBUser* defaultPBUserInstance = nil;
   }
   if (other.hasAgentStatus) {
     [self setAgentStatus:other.agentStatus];
+  }
+  if (other.hasDeviceType) {
+    [self setDeviceType:other.deviceType];
+  }
+  if (other.hasPushRegId) {
+    [self setPushRegId:other.pushRegId];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -2571,6 +2623,14 @@ static PBUser* defaultPBUserInstance = nil;
       }
       case 1696: {
         [self setAgentStatus:[input readInt32]];
+        break;
+      }
+      case 1704: {
+        [self setDeviceType:[input readInt32]];
+        break;
+      }
+      case 1714: {
+        [self setPushRegId:[input readString]];
         break;
       }
     }
@@ -3371,6 +3431,38 @@ static PBUser* defaultPBUserInstance = nil;
 - (PBUserBuilder*) clearAgentStatus {
   resultPbuser.hasAgentStatus = NO;
   resultPbuser.agentStatus = 0;
+  return self;
+}
+- (BOOL) hasDeviceType {
+  return resultPbuser.hasDeviceType;
+}
+- (SInt32) deviceType {
+  return resultPbuser.deviceType;
+}
+- (PBUserBuilder*) setDeviceType:(SInt32) value {
+  resultPbuser.hasDeviceType = YES;
+  resultPbuser.deviceType = value;
+  return self;
+}
+- (PBUserBuilder*) clearDeviceType {
+  resultPbuser.hasDeviceType = NO;
+  resultPbuser.deviceType = 0;
+  return self;
+}
+- (BOOL) hasPushRegId {
+  return resultPbuser.hasPushRegId;
+}
+- (NSString*) pushRegId {
+  return resultPbuser.pushRegId;
+}
+- (PBUserBuilder*) setPushRegId:(NSString*) value {
+  resultPbuser.hasPushRegId = YES;
+  resultPbuser.pushRegId = value;
+  return self;
+}
+- (PBUserBuilder*) clearPushRegId {
+  resultPbuser.hasPushRegId = NO;
+  resultPbuser.pushRegId = @"";
   return self;
 }
 @end

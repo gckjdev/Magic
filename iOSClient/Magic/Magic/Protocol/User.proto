@@ -147,6 +147,8 @@ message PBUser {
     optional bool isAgent = 210;
     optional string agentAccount = 211;
     optional int32 agentStatus = 212;                  // 参考PBAgentStatus
+    optional int32 deviceType = 213;                   // 设备类型，参见PBDeviceType
+    optional string pushRegId = 214;                   // 推送注册ID
 
 }
 
