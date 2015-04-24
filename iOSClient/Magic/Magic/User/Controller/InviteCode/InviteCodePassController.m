@@ -369,8 +369,8 @@
                                                
                                            }
                                            else{
-                                               // failure, TODO
-                                               POST_SUCCESS_MSG(@"注册失败，这个消息不太友好，待完善");
+//                                               // failure, TODO
+//                                               POST_SUCCESS_MSG(@"注册失败，这个消息不太友好，待完善");
                                            }
                                        }];
     
@@ -447,7 +447,7 @@
                                                            [[AppDelegate sharedInstance] showNormalHome];
                                                        }
                                                        else{
-                                                           POST_ERROR(@"注册失败，请稍后再试");
+//                                                           POST_ERROR(@"注册失败，请稍后再试");
                                                        }
                                                    }];
 }

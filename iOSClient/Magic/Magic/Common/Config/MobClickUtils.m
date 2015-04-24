@@ -16,7 +16,7 @@
     if (value == nil || [value length] == 0){
         return defaultValue;
     }
-    
+        
     return [value intValue];
 }
 

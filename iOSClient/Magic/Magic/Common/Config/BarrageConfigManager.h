@@ -11,7 +11,7 @@
 #import <ShareSDK/ShareSDK.h>
 
 //#define DEFAULT_SERVER_URL      @"http://localhost:8100/?"
-//#define DEFAULT_SERVER_URL      @"http://192.168.36.200:8100/?"
+//#define DEFAULT_SERVER_URL      @"http://192.168.36.201:8100/?"
 #define DEFAULT_SERVER_URL       UMENG_STRVALUE(@"TRAFFIC_SERVER_URL", @"http://112.74.107.152:8100/?")
 
 

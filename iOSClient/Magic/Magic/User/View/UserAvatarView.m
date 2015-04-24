@@ -237,10 +237,10 @@
     UIImage *placeHolderImage = [UIImage imageNamed:@"default_user_avatar"];
     int width = self.frame.size.width*3;    //按像素的大小
     int height = self.frame.size.height*3;
-    NSString* imageUrl = [QNImageToolURL GetThumbnailSizeImageUrl:user.avatar width: width height:height];
+    NSString* imageUrl = user.avatar; //[QNImageToolURL GetThumbnailSizeImageUrl:user.avatar width: width height:height];
 
     NSURL* url = [NSURL URLWithString:imageUrl];
-    if (url){
+    if (url && [imageUrl length] > 0){
         [self.imageView sd_setImageWithURL:url
                           placeholderImage:placeHolderImage
                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

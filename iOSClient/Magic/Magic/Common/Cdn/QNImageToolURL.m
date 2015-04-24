@@ -23,27 +23,42 @@
 +(NSString*)GetNormalSizeImageUrl:(NSString*)url
 {
     NSMutableString *resultUrl = [url mutableCopy];
-    
     return resultUrl;
 }
+
 +(NSString*)GetMiddleSizeImageUrl:(NSString*)url
 {
+    if ([url length] == 0){
+        return url;
+    }
+
     NSMutableString *resultUrl = [url mutableCopy];
     NSString* paraStr = @"?imageMogr2/thumbnail/!%dp";
     [resultUrl appendFormat:paraStr,MIDDLESIZE_IMAGE_PERCENT];
     return resultUrl;
 }
+
 +(NSString*)GetSmallSizeImageUrl:(NSString*)url
 {
+    if ([url length] == 0){
+        return url;
+    }
+
     NSMutableString *resultUrl = [url mutableCopy];
     NSString* paraStr = @"?imageMogr2/thumbnail/!%dp";
     [resultUrl appendFormat:paraStr,SMALLSIZE_IMAGE_PERCENT];
     return resultUrl;
 }
+
 +(NSString*)GetThumbnailSizeImageUrl:(NSString*)url width:(int)width height:(int)height;
 {
+    if ([url length] == 0){
+        return url;
+    }
+    
     NSMutableString *resultUrl = [url mutableCopy];
     [resultUrl appendFormat:@"?imageMogr2/thumbnail/%dx%d",width,height];
     return resultUrl;
 }
+
 @end
