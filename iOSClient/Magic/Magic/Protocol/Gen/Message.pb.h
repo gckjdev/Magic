@@ -3226,15 +3226,19 @@ NSString *NSStringFromPBGetUserFriendListType(PBGetUserFriendListType value);
 
 @interface PBGetChatListRequest : PBGeneratedMessage<GeneratedMessageProtocol> {
 @private
+  BOOL hasForward_:1;
   BOOL hasLimit_:1;
   BOOL hasChatOffsetId_:1;
+  BOOL forward_:1;
   SInt32 limit;
   NSString* chatOffsetId;
 }
 - (BOOL) hasChatOffsetId;
 - (BOOL) hasLimit;
+- (BOOL) hasForward;
 @property (readonly, strong) NSString* chatOffsetId;
 @property (readonly) SInt32 limit;
+- (BOOL) forward;
 
 + (instancetype) defaultInstance;
 - (instancetype) defaultInstance;
@@ -3280,6 +3284,11 @@ NSString *NSStringFromPBGetUserFriendListType(PBGetUserFriendListType value);
 - (SInt32) limit;
 - (PBGetChatListRequestBuilder*) setLimit:(SInt32) value;
 - (PBGetChatListRequestBuilder*) clearLimit;
+
+- (BOOL) hasForward;
+- (BOOL) forward;
+- (PBGetChatListRequestBuilder*) setForward:(BOOL) value;
+- (PBGetChatListRequestBuilder*) clearForward;
 @end
 
 @interface PBGetChatListResponse : PBGeneratedMessage<GeneratedMessageProtocol> {

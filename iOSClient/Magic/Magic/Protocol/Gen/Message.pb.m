@@ -13314,6 +13314,7 @@ static PBSendChatResponse* defaultPBSendChatResponseInstance = nil;
 @interface PBGetChatListRequest ()
 @property (strong) NSString* chatOffsetId;
 @property SInt32 limit;
+@property BOOL forward;
 @end
 
 @implementation PBGetChatListRequest
@@ -13332,10 +13333,23 @@ static PBSendChatResponse* defaultPBSendChatResponseInstance = nil;
   hasLimit_ = !!_value_;
 }
 @synthesize limit;
+- (BOOL) hasForward {
+  return !!hasForward_;
+}
+- (void) setHasForward:(BOOL) _value_ {
+  hasForward_ = !!_value_;
+}
+- (BOOL) forward {
+  return !!forward_;
+}
+- (void) setForward:(BOOL) _value_ {
+  forward_ = !!_value_;
+}
 - (instancetype) init {
   if ((self = [super init])) {
     self.chatOffsetId = @"";
     self.limit = 0;
+    self.forward = NO;
   }
   return self;
 }
@@ -13361,6 +13375,9 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
   if (self.hasLimit) {
     [output writeInt32:2 value:self.limit];
   }
+  if (self.hasForward) {
+    [output writeBool:3 value:self.forward];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (SInt32) serializedSize {
@@ -13375,6 +13392,9 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
   }
   if (self.hasLimit) {
     size_ += computeInt32Size(2, self.limit);
+  }
+  if (self.hasForward) {
+    size_ += computeBoolSize(3, self.forward);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -13417,6 +13437,9 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
   if (self.hasLimit) {
     [output appendFormat:@"%@%@: %@\n", indent, @"limit", [NSNumber numberWithInteger:self.limit]];
   }
+  if (self.hasForward) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"forward", [NSNumber numberWithBool:self.forward]];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -13432,6 +13455,8 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
       (!self.hasChatOffsetId || [self.chatOffsetId isEqual:otherMessage.chatOffsetId]) &&
       self.hasLimit == otherMessage.hasLimit &&
       (!self.hasLimit || self.limit == otherMessage.limit) &&
+      self.hasForward == otherMessage.hasForward &&
+      (!self.hasForward || self.forward == otherMessage.forward) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -13441,6 +13466,9 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
   }
   if (self.hasLimit) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.limit] hash];
+  }
+  if (self.hasForward) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithBool:self.forward] hash];
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
@@ -13491,6 +13519,9 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
   if (other.hasLimit) {
     [self setLimit:other.limit];
   }
+  if (other.hasForward) {
+    [self setForward:other.forward];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -13518,6 +13549,10 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
       }
       case 16: {
         [self setLimit:[input readInt32]];
+        break;
+      }
+      case 24: {
+        [self setForward:[input readBool]];
         break;
       }
     }
@@ -13553,6 +13588,22 @@ static PBGetChatListRequest* defaultPBGetChatListRequestInstance = nil;
 - (PBGetChatListRequestBuilder*) clearLimit {
   resultPbgetChatListRequest.hasLimit = NO;
   resultPbgetChatListRequest.limit = 0;
+  return self;
+}
+- (BOOL) hasForward {
+  return resultPbgetChatListRequest.hasForward;
+}
+- (BOOL) forward {
+  return resultPbgetChatListRequest.forward;
+}
+- (PBGetChatListRequestBuilder*) setForward:(BOOL) value {
+  resultPbgetChatListRequest.hasForward = YES;
+  resultPbgetChatListRequest.forward = value;
+  return self;
+}
+- (PBGetChatListRequestBuilder*) clearForward {
+  resultPbgetChatListRequest.hasForward = NO;
+  resultPbgetChatListRequest.forward = NO;
   return self;
 }
 @end

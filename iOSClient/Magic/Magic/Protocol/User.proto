@@ -222,12 +222,13 @@ message PBUserGroupList
 enum PBChatSource
 {
     FROM_WECHAT = 1;            // 微信公众号
-    FROM_APP = 2;               // APP客户端
-    FROM_WEB = 3;               // Web网站
-    FROM_MOBILE_WEB = 4;        // 手机网站
-    FROM_AGENT = 5;             // 客服人工
-    FROM_AGENT_AUTO = 6;        // 客服自动
-    FROM_SYSTEM = 7;            // 系统群发
+    FROM_APP_IOS = 2;           // iOS APP客户端
+    FROM_APP_ANDROID = 3;       // ANDROID APP客户端
+    FROM_WEB = 5;               // Web网站
+    FROM_MOBILE_WEB = 6;        // 手机网站
+    FROM_AGENT = 7;             // 客服人工
+    FROM_AGENT_AUTO = 8;        // 客服自动
+    FROM_SYSTEM = 9;            // 系统群发
 }
 
 enum PBChatType

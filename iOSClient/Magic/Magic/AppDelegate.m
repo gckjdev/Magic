@@ -19,7 +19,7 @@
 #import "UserHomeController.h"
 #import "UserTimelineFeedController.h"
 #import "NewFeedController.h"
-
+#import "ChatService.h"
 
 #import "RDVTabBarItem.h"
 
@@ -442,6 +442,7 @@
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     PPDebug(@"<didRegisterForRemoteNotificationsWithDeviceToken> deviceToken=%@", deviceToken);
+    [[UserService sharedInstance] updateUserDeviceToken:deviceToken];
     
     // 注册APNS成功, 注册deviceToken
     [MiPushSDK bindDeviceToken:deviceToken];
@@ -457,13 +458,15 @@
 // iOS8
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self setupMiPushStatistic:userInfo];
+    PPDebug(@"<didReceiveRemoteNotification> %@", userInfo);
+    [self handleRemoteNotification:userInfo];
 }
 
 // iOS7
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [self setupMiPushStatistic:userInfo];
+    PPDebug(@"<didReceiveRemoteNotification> %@", userInfo);
+    [self handleRemoteNotification:userInfo];
 }
 
 #pragma mark MiPushSDKDelegate
@@ -471,9 +474,11 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
-    PPDebug(@"<MiPush> success, data=%@", data);
+    PPDebug(@"<MiPush> success miPushRequestSuccWithSelector, selector=%@, data=%@", selector, data);
     
     if ([selector isEqualToString:@"bindDeviceToken:"]) {
+        
+        [self setupMiPushAlias];
         
         UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
         action.identifier = @"action1"; //按钮的标示
@@ -506,9 +511,8 @@
 #pragma mark MiPush
 
 - (void)setupMiPushAlias
-{
-    // 设置别名
-//    [MiPushSDK setAlias:@“alias”]
+{    
+    [[UserManager sharedInstance] setupMiPushAlias];
     
     // 订阅内容
 //    [MiPushSDK subscribe:@“topic”]
@@ -520,7 +524,11 @@
     [MiPushSDK openAppNotify:messageId];
 }
 
-
+- (void)handleRemoteNotification:(NSDictionary*)userInfo
+{
+    [self setupMiPushStatistic:userInfo];
+    [[ChatService sharedInstance] reloadLatest];
+}
 
 
 

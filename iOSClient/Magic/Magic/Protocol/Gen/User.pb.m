@@ -235,7 +235,8 @@ NSString *NSStringFromPBInviteCodeStatus(PBInviteCodeStatus value) {
 BOOL PBChatSourceIsValidValue(PBChatSource value) {
   switch (value) {
     case PBChatSourceFromWechat:
-    case PBChatSourceFromApp:
+    case PBChatSourceFromAppIos:
+    case PBChatSourceFromAppAndroid:
     case PBChatSourceFromWeb:
     case PBChatSourceFromMobileWeb:
     case PBChatSourceFromAgent:
@@ -250,8 +251,10 @@ NSString *NSStringFromPBChatSource(PBChatSource value) {
   switch (value) {
     case PBChatSourceFromWechat:
       return @"PBChatSourceFromWechat";
-    case PBChatSourceFromApp:
-      return @"PBChatSourceFromApp";
+    case PBChatSourceFromAppIos:
+      return @"PBChatSourceFromAppIos";
+    case PBChatSourceFromAppAndroid:
+      return @"PBChatSourceFromAppAndroid";
     case PBChatSourceFromWeb:
       return @"PBChatSourceFromWeb";
     case PBChatSourceFromMobileWeb:

@@ -1050,4 +1050,31 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
         EXECUTE_BLOCK(callback, error);
     } isPostError:YES];
 }
+
+- (void)updateUserDeviceToken:(NSData*)deviceToken
+{
+    [[UserManager sharedInstance] saveDeviceToken:deviceToken];
+    NSString* deviceTokenString = [[UserManager sharedInstance] getDeviceToken];
+    
+    PBUser* user = [[UserManager sharedInstance] pbUser];
+    if ([user.currentDevice.deviceToken isEqualToString:deviceTokenString]){
+        // the same, no need to do anything
+        return;
+    }
+    
+    PBUser* pbUser = [[UserManager sharedInstance] pbUser];
+    PBDevice* pbDevice = [[UserManager sharedInstance] getCurrentDevice];
+    if (pbUser == nil || pbDevice == nil){
+        return;
+    }
+    
+    // build nick here
+    PBUserBuilder* pbUserBuilder = [PBUser builder];
+    [pbUserBuilder setUserId:pbUser.userId];
+    [pbUserBuilder setCurrentDevice:pbDevice];
+    
+    [self updateUser:[pbUserBuilder build] callback:nil];
+}
+
+
 @end

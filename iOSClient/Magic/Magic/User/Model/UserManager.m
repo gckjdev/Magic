@@ -12,10 +12,12 @@
 #import "StringUtil.h"
 #import "Constants.pb.h" 
 #import "BarrageConfigManager.h"
+#import "MiPushSDK.h"
 
 #define KEY_USER_DATA           @"KEY_USER_DATA_1"
 #define KEY_USER_NAME_FIRST     @"KEY_USER_NAME_FIRST"
 #define KEY_USER_AVATAR         @"KEY_USER_AVATAR"
+#define KEY_DEVICE_TOKEN        @"KEY_DEVICE_TOKEN"
 
 @implementation UserManager
 
@@ -32,6 +34,8 @@ IMPL_SINGLETON_FOR_CLASS(UserManager)
 
     // save ShareSDK info
     [[SnsService sharedInstance] saveSNSInfoIntoShareSDK:pbUser.snsUsers];
+    
+    [self setupMiPushAlias];
     
     [self reloadUserIntoMemory];
 }
@@ -204,14 +208,27 @@ IMPL_SINGLETON_FOR_CLASS(UserManager)
     PPDebug(@"user name: %@ password: %@", [[[UserManager sharedInstance] pbUser]mobile], [[[UserManager sharedInstance]pbUser]password]);
     return password;
 }
+
 -(PBDevice*)getCurrentDevice{
     PBDeviceBuilder *devBuilder = [PBDevice builder];
     [devBuilder setType:PBDeviceTypeDeviceTypeIphone];
     [devBuilder setModel:[[UIDevice currentDevice] model]];
     [devBuilder setOs:[DeviceDetection deviceOS]];
     [devBuilder setIsJailBroken:[MobClick isJailbroken]];
+    [devBuilder setDeviceToken:[self getDeviceToken]];
     PBDevice *device = [devBuilder build];
     return device;
+}
+
+- (void)updateCurrentDevice
+{
+    PBDevice* device = [self getCurrentDevice];
+    
+    PBUserBuilder *userBuilder = [PBUser builder];
+    
+    [userBuilder setCurrentDevice:device];
+    [userBuilder mergeFrom:_pbUser];
+    _pbUser = [userBuilder build];
 }
 
 -(void)setUserBSpeed:(int)bSpeed
@@ -222,6 +239,7 @@ IMPL_SINGLETON_FOR_CLASS(UserManager)
     [userBuilder mergeFrom:_pbUser];
     _pbUser = [userBuilder build];
 }
+
 -(void)setUserBtyle:(int)bStyle
 {
     PBUserBuilder *userBuilder = [PBUser builder];
@@ -234,4 +252,31 @@ IMPL_SINGLETON_FOR_CLASS(UserManager)
 {
     [self storeUser:_pbUser];
 }
+
+
+-(void)setupMiPushAlias
+{
+    if ([self hasUser]){
+        PPDebug(@"set push alias to %@", [self userId]);
+        [MiPushSDK setAlias:[self userId]];
+    }
+}
+
+- (void)saveDeviceToken:(NSData*)deviceToken
+{
+    
+    NSString *_deviceToken = [deviceToken description];
+    _deviceToken = [_deviceToken stringByReplacingOccurrencesOfString: @"<" withString: @""];
+    _deviceToken = [_deviceToken stringByReplacingOccurrencesOfString: @">" withString: @""];
+    _deviceToken = [_deviceToken stringByReplacingOccurrencesOfString: @" " withString: @""];
+    [[NSUserDefaults standardUserDefaults] setObject:_deviceToken forKey:KEY_DEVICE_TOKEN];
+    
+    PPDebug(@"<saveDeviceToken> %@", _deviceToken);
+}
+
+- (NSString*)getDeviceToken
+{
+    return UD_GET(KEY_DEVICE_TOKEN);
+}
+
 @end
