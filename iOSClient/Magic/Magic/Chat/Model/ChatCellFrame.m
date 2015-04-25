@@ -9,6 +9,7 @@
 #import "ChatCellFrame.h"
 #import "NSString+Extension.h"
 #import "UIViewUtils.h"
+#import "UIImageView+WebCache.h"
 
 #define kIconMarginX 5
 #define kIconMarginY 5
@@ -19,7 +20,7 @@
 
 #define COMMON_SPACE 6.0f
 
-#define IMAGE_MAX_SIZE 150.0f
+#define IMAGE_MAX_SIZE (150.0f)
 
 #define TEXT_MAX_WIDTH 200.0f
 
@@ -58,6 +59,8 @@
     
     
     if (_message.type == MESSAGETYPE_IMAGE) {
+        
+  
         CGSize imageMaxSize = CGSizeMake(IMAGE_MAX_SIZE, IMAGE_MAX_SIZE);
         showSize = imageMaxSize;
     }

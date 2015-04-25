@@ -40,6 +40,11 @@
 
 #import "CHAudioPlayer.h"
 
+
+#import "ChatViewController.h"
+#import "ChatSideMenuController.h"
+#import "MMDrawerController.h"
+
 #define UMENG_APP_KEY   @"5493c5ccfd98c57620000cf4"
 
 
@@ -47,6 +52,7 @@
 
 @property (nonatomic, strong) UINavigationController* loginNavigationController;
 
+@property (nonatomic,strong) MMDrawerController   *drawerController;
 @end
 
 @implementation AppDelegate
@@ -153,7 +159,7 @@
 }
 -(void)showHomePage
 {
-     [self.window setRootViewController:self.viewController];
+     [self.window setRootViewController:self.drawerController ];
     self.viewController.selectedIndex = 0;
     [self.viewController showTabBar];
 }
@@ -172,29 +178,48 @@
 #pragma mark - Tab Bar Controller Methods
 
 - (void)setupViewControllers {
-    UIViewController *firstViewController = [[UserTimelineFeedController alloc] init];
-    firstViewController.title = @"首页";
+//    UIViewController *firstViewController = [[UserTimelineFeedController alloc] init];
+//    firstViewController.title = @"首页";
+//    
+//    UIViewController *firstNavigationController = [[UINavigationController alloc]
+//                                                   initWithRootViewController:firstViewController];
+//    
+//    UIViewController *secondViewController = [[NewFeedController alloc] init];
+//    secondViewController.title = @"";
+//    UIViewController *secondNavigationController = [[UINavigationController alloc]
+//                                                    initWithRootViewController:secondViewController];
+//    
+//    UIViewController *thirdViewController = [[FriendListController alloc] init];
+//    thirdViewController.title = @"好友";
+//    UIViewController *thirdNavigationController = [[UINavigationController alloc]
+//                                                   initWithRootViewController:thirdViewController];
+//    
+//    RDVTabBarController *tabBarController = [[RDVTabBarController alloc] init];
+//    //    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+//    [tabBarController setViewControllers:@[firstNavigationController, secondNavigationController,
+//                                           thirdNavigationController]];
+//    self.viewController = tabBarController;
+//    
+//    [self customizeTabBarForController:tabBarController];
     
-    UIViewController *firstNavigationController = [[UINavigationController alloc]
-                                                   initWithRootViewController:firstViewController];
+    ChatViewController *chat = [[ChatViewController alloc]init];
+    UINavigationController * chatControll = [[UINavigationController alloc] initWithRootViewController:chat];
     
-    UIViewController *secondViewController = [[NewFeedController alloc] init];
-    secondViewController.title = @"";
-    UIViewController *secondNavigationController = [[UINavigationController alloc]
-                                                    initWithRootViewController:secondViewController];
+    ChatSideMenuController *left = [[ChatSideMenuController alloc]init];
     
-    UIViewController *thirdViewController = [[FriendListController alloc] init];
-    thirdViewController.title = @"好友";
-    UIViewController *thirdNavigationController = [[UINavigationController alloc]
-                                                   initWithRootViewController:thirdViewController];
     
-    RDVTabBarController *tabBarController = [[RDVTabBarController alloc] init];
-    //    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    [tabBarController setViewControllers:@[firstNavigationController, secondNavigationController,
-                                           thirdNavigationController]];
-    self.viewController = tabBarController;
     
-    [self customizeTabBarForController:tabBarController];
+    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:chatControll leftDrawerViewController:left];
+    
+    
+    [self.drawerController setShouldStretchDrawer:NO];
+    [self.drawerController setShowsShadow:NO];
+    [self.drawerController setRestorationIdentifier:@"MMDrawer"];
+    
+    [self.drawerController setMaximumLeftDrawerWidth:200];
+    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+//    [self.window setRootViewController:self.loginNavigationController];
 }
 
 #define CENTER_TAB_BAR_BUTTON_INDEX 1       // the second tab item is CENTER button

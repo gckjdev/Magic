@@ -15,7 +15,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "ChatService.h"
 #import "UserManager.h"
-
+#import "ChangeAvatar.h"
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
 @interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate>
@@ -23,6 +23,7 @@
 @property (nonatomic,strong) MessageTableView *tableView;
 @property (nonatomic,strong) NSMutableArray*   messageFrames;
 @property (nonatomic, assign) CGFloat      toolViewHeight;
+@property (nonatomic,strong) ChangeAvatar   *changeAvatar;
 @end
 
 #define cellIdentifier @"cellIdentifier"
@@ -61,7 +62,7 @@
 #pragma mark - setup
 -(void)setupTableView{
     
-    CGFloat tableHeight = -kStatusBarHeight -_toolViewHeight;
+    CGFloat tableHeight =  -_toolViewHeight;
     self.tableView = [[MessageTableView alloc]init];
    
     _tableView.viewHeight = _toolViewHeight;
@@ -72,6 +73,7 @@
         make.centerX.equalTo(self.view);
         make.height.equalTo(self.view).offset(tableHeight);
         make.width.equalTo(self.view);
+        make.top.equalTo(self.view);
    
     }];
  
@@ -80,7 +82,7 @@
 -(void)setupToolView{
     _toolView = [[ChatToolView alloc]init];
     _toolView.contentView.delegate = self;
-    _toolView.viewHeight = 50;
+    _toolView.viewHeight = _toolViewHeight;
     _toolView.delegate = self;
     [self.view addSubview:_toolView];
     [_toolView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -89,7 +91,7 @@
         make.height.mas_equalTo(_toolView.viewHeight);
     }];
 }
--(void)sendMessageAction:(NSString*)text
+-(void)sendMessageButtonSingleTouch:(NSString*)text
 {
 //    [self addMessage:text type:MESSAGEFROMTYPE_ME];
     [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
@@ -97,11 +99,30 @@
     }];
 
 }
--(void)sendImageMessageAction:(NSString *)image{
+-(void)expressionButtonSingleTouch{
 //    [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
-    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
-        [_tableView RefreshData];
-    }];
+//    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
+//        [_tableView RefreshData];
+//    }];
+    self.changeAvatar = [[ChangeAvatar alloc] init];
+    [self.changeAvatar showSelectionView:self
+                                delegate:nil
+                      selectedImageBlock:^(UIImage *image) {
+                          
+                          if (image){
+                              [[ChatService sharedInstance]sendChatWithImage:image toUserId:nil callback:^(NSError *error) {
+                                          [_tableView RefreshData];
+                                      }];
+                              
+                          }
+                          
+                      } didSetDefaultBlock:^{
+                          
+                      } title:@"请选择"
+                         hasRemoveOption:NO
+                            canTakePhoto:YES
+                       userOriginalImage:YES];
+ 
 }
 
 
@@ -129,8 +150,7 @@
             [_toolView layoutIfNeeded];
         }];
         
-       
-        
+    
         _tableView.viewHeight = _toolViewHeight;
         [_tableView updateConstraintsIfNeeded];
         [_tableView  setNeedsUpdateConstraints];

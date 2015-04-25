@@ -12,9 +12,10 @@
 
 @protocol ChatToolViewDelegate <NSObject>
 
--(void)sendMessageAction:(NSString*)text;
--(void)sendImageMessageAction:(NSString*)image;
-
+@optional
+-(void)sendMessageButtonSingleTouch:(NSString*)text;
+-(void)plusButtonSingleTouch;
+-(void)expressionButtonSingleTouch;
 @end
 
 @interface ChatToolView : UIView

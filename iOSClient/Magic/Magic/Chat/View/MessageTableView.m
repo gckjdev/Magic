@@ -11,6 +11,7 @@
 #import "ChatCellFrame.h"
 #import "Masonry.h"
 #import "ChatService.h"
+#import "ColorInfo.h"
 @interface MessageTableView()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -26,7 +27,7 @@
 }
 
 -(void)setupView{
-    self.backgroundColor = [UIColor colorWithRed:235/255.00 green:235/255.0 blue:235/255.0 alpha:1.0];
+    self.backgroundColor =BARRAGE_BG_COLOR;
     self.dataSource = self;
     self.delegate = self;
     [self registerClass:ChatCell.class forCellReuseIdentifier:@"cellIdentifier"]; //  注册头像那个cell的类
@@ -42,39 +43,39 @@
     
     [[ChatService sharedInstance]getChatList:^(NSArray *chatArray, NSError *error) {
         if (error == nil) {
-            NSMutableArray *mfArray = [NSMutableArray array];
+            NSMutableArray *messageFArray = [NSMutableArray array];
             NSInteger len = [chatArray count];
             for (int i = 0; i< len;i++) {
                 PBChat * tmpChat = chatArray[len - i - 1];
-                ChatMessage *msg = [ChatMessage messageWithPBChat:tmpChat];
-                ChatCellFrame *lastMf = [mfArray lastObject];
-                ChatMessage *lastMsg = lastMf.message;
+                ChatMessage *message = [ChatMessage messageWithPBChat:tmpChat];
+                ChatCellFrame *lastMessageF = [messageFArray lastObject];
+                ChatMessage *lastMassage = lastMessageF.message;
                 //                msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-                NSTimeInterval secondsInterval = [msg.time timeIntervalSinceDate:lastMsg.time];
+                NSTimeInterval secondsInterval = [message.time timeIntervalSinceDate:lastMassage.time];
                 if (secondsInterval>30) {
-                    msg.hideTime = NO;
+                    message.hideTime = NO;
                 }
                 else{
-                    msg.hideTime = YES;
+                    message.hideTime = YES;
                 }
                 //                [self isHideTime:msg.time lastTime:lastMsg.time];
-                ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-                mf.message = msg;
-                [mfArray addObject:mf];
+                ChatCellFrame *messageF = [[ChatCellFrame alloc] init];
+                messageF.message = message;
+                [messageFArray addObject:messageF];
             }
             
-            _messageFrames = mfArray;
+            _messageFrames = messageFArray;
             
             [self reloadData];
             
             
-            NSInteger s = [self numberOfSections];
-            if (s<1) return;
-            NSInteger r = [self numberOfRowsInSection:s-1];
-            if (r<1) return;
+            NSInteger sectionNum = [self numberOfSections];
+            if (sectionNum<1) return;
+            NSInteger rowNum = [self numberOfRowsInSection:sectionNum-1];
+            if (rowNum<1) return;
             
-            NSIndexPath *ip = [NSIndexPath indexPathForRow:r-1 inSection:s-1];
-            [self scrollToRowAtIndexPath:ip
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowNum-1 inSection:sectionNum-1];
+            [self scrollToRowAtIndexPath:indexPath
                                   atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
         else{

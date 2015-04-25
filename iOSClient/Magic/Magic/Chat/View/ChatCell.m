@@ -114,14 +114,93 @@
     //5
     if (message.type == MESSAGETYPE_IMAGE) {
         _showImageView.frame =  messageFrame.imageF;
+        [_showImageView setContentMode:UIViewContentModeScaleAspectFit];
+     
+        _showImageView.layer.cornerRadius = 10.0;
+        [_showImageView sd_setImageWithURL:[NSURL URLWithString:message.image]
+                 placeholderImage:nil
+                          options:SDWebImageRetryFailed
+                        completed:
+          ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+          {
+              if (error == nil) {
+//                  CGRect imageZoomRect = [self zoomImageFrame:image.size];
+                  _showImageView.frame = [self zoomImageFrame:messageFrame.contentF];
+//                  _textView.frame =[self zoomContentView:imageZoomRect];
+              }
         
-        [_showImageView sd_setImageWithURL:[NSURL URLWithString:message.image]];
-//        [_showImageView setBackgroundColor:[UIColor clearColor]];
+              
+          }];
+        
+
         PPDebug(@"neng : url %@",[NSURL URLWithString:message.image]);
         _showImageView.hidden = NO;
     }else{
         _showImageView.hidden = YES;
     }
     
+}
+-(CGRect)zoomContentView:(CGRect)imageRect{
+    ChatMessage *message = _messageFrame.message;
+    CGRect resultRect = imageRect;
+    resultRect.size.width += 40;
+    resultRect.size.height += 40;
+    if (message.fromType == MESSAGEFROMTYPE_ME) {
+        
+       
+        resultRect.origin.x -= 20;
+        resultRect.origin.y -= 20;
+        
+    }
+    
+    return resultRect;
+}
+-(CGRect)zoomImageFrame:(CGRect)imageSize{
+    
+//    CGSize oldSize = _messageFrame.imageF.size;
+    ChatMessage *message = _messageFrame.message;
+    CGRect resultRect = imageSize;
+//    if (imageSize.width>oldSize.width&&imageSize.height>oldSize.height) {
+//        if (message.fromType == MESSAGEFROMTYPE_ME) {
+//            
+//            resultRect.origin.x = CGRectGetMaxX(resultRect) - oldSize.width;
+//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
+//        }
+//        else{
+//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
+//        }
+//    }else if (imageSize.width<oldSize.width&&imageSize.height<oldSize.height){
+//        if (message.fromType == MESSAGEFROMTYPE_ME) {
+//           
+//            resultRect.origin.x = CGRectGetMaxX(resultRect) - imageSize.width;
+//             resultRect.size = CGSizeMake(imageSize.width, imageSize.height);
+//        }
+//        else{
+//            resultRect.size = CGSizeMake(imageSize.width, imageSize.height);
+//        }
+//    }else{
+//        if (message.fromType == MESSAGEFROMTYPE_ME) {
+//           
+//            resultRect.origin.x = CGRectGetMaxX(resultRect) - oldSize.width;
+//             resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
+//        }
+//        else{
+//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
+//        }
+//    }
+    
+ 
+    resultRect.size.width -= 40;
+    resultRect.size.height -= 40;
+    if (message.fromType == MESSAGEFROMTYPE_ME) {
+       
+        resultRect.origin.x += 20;
+        resultRect.origin.y += 20;
+    }
+   
+  
+    
+    
+    return resultRect;
 }
 @end

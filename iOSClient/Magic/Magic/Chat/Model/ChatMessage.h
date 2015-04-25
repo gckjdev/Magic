@@ -39,5 +39,5 @@ typedef enum{
 
 @property (nonatomic,strong) PBChat*   pbChat;
 
-@property (nonatomic,strong) UIImage   *myImage;
+@property (nonatomic,strong) UIImageView   *myImage;
 @end
