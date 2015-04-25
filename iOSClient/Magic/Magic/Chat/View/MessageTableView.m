@@ -50,15 +50,15 @@
                 ChatMessage *message = [ChatMessage messageWithPBChat:tmpChat];
                 ChatCellFrame *lastMessageF = [messageFArray lastObject];
                 ChatMessage *lastMassage = lastMessageF.message;
-                //                msg.hideTime = [msg.time isEqualToString:lastMsg.time];
+        
                 NSTimeInterval secondsInterval = [message.time timeIntervalSinceDate:lastMassage.time];
-                if (secondsInterval>30) {
+                if (secondsInterval>60||i == 0) {
                     message.hideTime = NO;
                 }
                 else{
                     message.hideTime = YES;
                 }
-                //                [self isHideTime:msg.time lastTime:lastMsg.time];
+           
                 ChatCellFrame *messageF = [[ChatCellFrame alloc] init];
                 messageF.message = message;
                 [messageFArray addObject:messageF];
@@ -86,11 +86,7 @@
 }
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ChatCellFrame *cellFrame = self.messageFrames[indexPath.row];
- 
-}
+
 #pragma mark - UITableViewDataSource
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

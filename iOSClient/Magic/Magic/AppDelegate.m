@@ -216,7 +216,7 @@
     [self.drawerController setShowsShadow:NO];
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];
     
-    [self.drawerController setMaximumLeftDrawerWidth:200];
+    [self.drawerController setMaximumLeftDrawerWidth:CHATSIDEMENUVIEW_WIDTH];
     [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
 //    [self.window setRootViewController:self.loginNavigationController];

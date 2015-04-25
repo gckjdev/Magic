@@ -12,6 +12,7 @@
 #import "ViewInfo.h"
 #import "ColorInfo.h"
 #import "FontInfo.h"
+#import "UIViewUtils.h"
 
 #define MENUITEM_COUNT 3
 #define MENUITEM_HEIGHT 52
@@ -39,13 +40,13 @@
 -(void)setupTableView{
     
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - MENUITEM_HEIGHT * MENUITEM_COUNT) / 2.0f, 200, MENUITEM_HEIGHT * MENUITEM_COUNT) ];
-
+//        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - MENUITEM_HEIGHT * MENUITEM_COUNT) / 2.0f, 200, MENUITEM_HEIGHT * MENUITEM_COUNT) ];
+   UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, CHATSIDEMENUVIEW_WIDTH, self.view.frame.size.height) ];
         tableView.delegate = self;
         tableView.dataSource = self;
-        tableView.backgroundColor = BARRAGE_BG_COLOR;
+        tableView.backgroundColor = [UIColor whiteColor];
       
-        
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
        
     
         tableView;

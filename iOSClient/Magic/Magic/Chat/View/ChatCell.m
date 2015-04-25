@@ -16,6 +16,7 @@
 #import "PPDebug.h"
 #import "UIViewUtils.h"
 #import "MKBlockActionSheet.h"
+#import "TimeUtils.h"
 
 @interface ChatCell()
 @property (nonatomic,strong)UILabel         *timeView;
@@ -112,7 +113,7 @@
     ChatMessage *message = messageFrame.message;
     
     // 1.时间
-    self.timeView.text = [NSString getCurrentTime] ;
+    self.timeView.text = [self getShowTimeString] ;
     self.timeView.frame = messageFrame.timeF;
     
     // 2.头像
@@ -170,20 +171,32 @@
     }
     
 }
--(CGRect)zoomContentView:(CGRect)imageRect{
+-(NSString*)getShowTimeString{
+    NSMutableString *result = [NSMutableString string];
     ChatMessage *message = _messageFrame.message;
-    CGRect resultRect = imageRect;
-    resultRect.size.width += 40;
-    resultRect.size.height += 40;
-    if (message.fromType == MESSAGEFROMTYPE_ME) {
-        
-       
-        resultRect.origin.x -= 20;
-        resultRect.origin.y -= 20;
-        
+    
+    
+    NSDateComponents *messageCmps = getDateComponents(message.time);
+    
+
+    
+    if (isToday(message.time)) {
+        [result appendFormat:@"今天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+    }
+    else if(isYesterday(message.time)){
+        [result appendFormat:@"昨天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+    }
+    else if(isTheDayBeforeYesterday(message.time))
+    {
+        [result appendFormat:@"前天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+    }
+    else if(isThisYear(message.time)){
+        [result appendFormat:@"%ld月%ld号 %ld:%ld",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+    }else{
+        [result appendFormat:@"%ld年%ld月%ld号 %ld:%ld",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }
     
-    return resultRect;
+    return [result copy];
 }
 -(CGRect)zoomImageFrame:(CGRect)imageSize{
     

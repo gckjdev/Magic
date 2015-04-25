@@ -113,6 +113,61 @@ BOOL isLocalToday(NSDate *date)
 	}
 }
 
+BOOL isYesterday(NSDate *date){
+    // Get Today's YYYY-MM-DD
+    NSDateComponents *today_comps = getChineseDateComponents([NSDate date]);
+    
+    // Given Date's YYYY-MM-DD
+    NSDateComponents *select_comps = getChineseDateComponents(date);
+    
+    // if it's today, return TODAY
+    if ( [today_comps year] == [select_comps year] &&
+        [today_comps month] == [select_comps month]&&
+        ([today_comps day] - [select_comps day] == 1)){
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+
+BOOL isTheDayBeforeYesterday(NSDate *date)
+{
+    // Get Today's YYYY-MM-DD
+    NSDateComponents *today_comps = getChineseDateComponents([NSDate date]);
+    
+    // Given Date's YYYY-MM-DD
+    NSDateComponents *select_comps = getChineseDateComponents(date);
+    
+    // if it's today, return TODAY
+    if ( [today_comps year] == [select_comps year] &&
+        [today_comps month] == [select_comps month]&&
+        ([today_comps day] - [select_comps day] == 2)){
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+BOOL isThisYear(NSDate *date)
+{
+    // Get Today's YYYY-MM-DD
+    NSDateComponents *today_comps = getChineseDateComponents([NSDate date]);
+    
+    // Given Date's YYYY-MM-DD
+    NSDateComponents *select_comps = getChineseDateComponents(date);
+    
+    // if it's today, return TODAY
+    if ( [today_comps year] == [select_comps year]){
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
 // return whether given date and today is the same day
 BOOL isLocalDay(NSDate *date, int interval)
 {

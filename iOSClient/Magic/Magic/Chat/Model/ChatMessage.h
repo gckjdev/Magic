@@ -23,17 +23,17 @@ typedef enum{
 
 //+(instancetype)messageWithDict:(NSDictionary *)dict;
 +(instancetype)messageWithPBChat:(PBChat*)chat;
-@property(nonatomic,copy)       NSString        *content;
-@property(nonatomic,strong)     NSDate            *time;
-@property (nonatomic,copy)      NSString        *image;
-@property (nonatomic,copy)      NSString        *voice;
+@property(nonatomic,copy)       NSString            *content;
+@property(nonatomic,strong)     NSDate              *time;
+@property (nonatomic,copy)      NSString            *image;
+@property (nonatomic,copy)      NSString            *voice;
 
-@property (nonatomic,copy)      NSString        *fromUserId;
-@property (nonatomic,copy)      NSString        *fromUser_Ava;
+@property (nonatomic,copy)      NSString            *fromUserId;
+@property (nonatomic,copy)      NSString            *fromUser_Ava;
 
-@property(nonatomic,assign)     MessageType      type;
-@property (nonatomic, assign)   MessageFromType  fromType;
-@property(nonatomic,assign)     BOOL             hideTime;
+@property(nonatomic,assign)     MessageType         type;
+@property (nonatomic, assign)   MessageFromType     fromType;
+@property(nonatomic,assign)     BOOL                hideTime;
 
 
 

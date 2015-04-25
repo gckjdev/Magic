@@ -23,6 +23,12 @@ BOOL isChineseToday(NSDate *date);
 
 BOOL isLocalToday(NSDate *date);
 
+BOOL isYesterday(NSDate *date);
+
+BOOL isTheDayBeforeYesterday(NSDate *date);
+
+BOOL isThisYear(NSDate *date);
+
 NSString *dateToLocaleString(NSDate *date);
 
 NSString *dateToString(NSDate *date);
