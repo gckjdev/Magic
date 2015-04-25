@@ -115,6 +115,7 @@
     // 1.时间
     self.timeView.text = [self getShowTimeString] ;
     self.timeView.frame = messageFrame.timeF;
+    [self.timeView setHidden:message.hideTime];
     
     // 2.头像
 
@@ -142,12 +143,12 @@
         [self.textView setBackgroundImage:[UIImage resizableImage:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
     
-    //5
+    //5.显示图片
     if (message.type == MESSAGETYPE_IMAGE) {
         _showImageView.frame =  messageFrame.imageF;
         [_showImageView setContentMode:UIViewContentModeScaleAspectFit];
      
-        _showImageView.layer.cornerRadius = 10.0;
+       
         [_showImageView sd_setImageWithURL:[NSURL URLWithString:message.image]
                  placeholderImage:nil
                           options:SDWebImageRetryFailed
@@ -164,7 +165,7 @@
           }];
         
 
-        PPDebug(@"neng : url %@",[NSURL URLWithString:message.image]);
+//        PPDebug(@"neng : url %@",[NSURL URLWithString:message.image]);
         _showImageView.hidden = NO;
     }else{
         _showImageView.hidden = YES;
@@ -175,10 +176,7 @@
     NSMutableString *result = [NSMutableString string];
     ChatMessage *message = _messageFrame.message;
     
-    
     NSDateComponents *messageCmps = getDateComponents(message.time);
-    
-
     
     if (isToday(message.time)) {
         [result appendFormat:@"今天 %ld:%ld",messageCmps.hour,messageCmps.minute];

@@ -12,6 +12,8 @@
 #import "Masonry.h"
 #import "ChatService.h"
 #import "ColorInfo.h"
+#import "UIScrollView+MJRefresh.h"
+
 @interface MessageTableView()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -35,8 +37,15 @@
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.allowsSelection = NO;
     
+    [self addHeaderWithTarget:self action:@selector(headRefreshAction)];
     
+    self.headerPullToRefreshText = @"下拉可以刷新了";
+    self.headerReleaseToRefreshText = @"松开马上刷新了";
+    self.headerRefreshingText = @"正在帮你刷新中，不客气";
 
+}
+-(void)headRefreshAction{
+    [self headerEndRefreshing];
 }
 
 -(void)RefreshData{

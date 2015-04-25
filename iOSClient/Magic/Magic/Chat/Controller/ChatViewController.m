@@ -18,6 +18,7 @@
 #import "ChangeAvatar.h"
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
+
 @interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate>
 @property (nonatomic,strong) ChatToolView   *toolView;
 @property (nonatomic,strong) MessageTableView *tableView;
@@ -38,15 +39,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:235/255.00 green:235/255.0 blue:235/255.0 alpha:1.0];
-    self.title = @"聊天";
-    _toolViewHeight = CHATTOOLVIEW_HEIGHT;
-
+    [self setupView];
     [self setupTableView];
     [self setupToolView];
-    
-   
     [self addLeftMenuButton];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -60,12 +57,19 @@
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 #pragma mark - setup
+-(void)setupView{
+    self.view.backgroundColor = [UIColor colorWithRed:235/255.00 green:235/255.0 blue:235/255.0 alpha:1.0];
+    self.title = @"聊天";
+    _toolViewHeight = CHATTOOLVIEW_HEIGHT;
+    self.changeAvatar = [[ChangeAvatar alloc] init];
+}
 -(void)setupTableView{
     
     CGFloat tableHeight =  -_toolViewHeight;
     self.tableView = [[MessageTableView alloc]init];
    
     _tableView.viewHeight = _toolViewHeight;
+    
     
     [self.view addSubview:self.tableView];
     
@@ -79,6 +83,7 @@
  
     [_tableView RefreshData];
 }
+
 -(void)setupToolView{
     _toolView = [[ChatToolView alloc]init];
     _toolView.contentView.delegate = self;
@@ -104,15 +109,20 @@
 //    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
 //        [_tableView RefreshData];
 //    }];
-    self.changeAvatar = [[ChangeAvatar alloc] init];
+  
+ 
+}
+-(void)plusButtonSingleTouch
+{
+    
     [self.changeAvatar showSelectionView:self
                                 delegate:nil
                       selectedImageBlock:^(UIImage *image) {
                           
                           if (image){
                               [[ChatService sharedInstance]sendChatWithImage:image toUserId:nil callback:^(NSError *error) {
-                                          [_tableView RefreshData];
-                                      }];
+                                  [_tableView RefreshData];
+                              }];
                               
                           }
                           
@@ -122,9 +132,7 @@
                          hasRemoveOption:NO
                             canTakePhoto:YES
                        userOriginalImage:YES];
- 
 }
-
 
 
 
