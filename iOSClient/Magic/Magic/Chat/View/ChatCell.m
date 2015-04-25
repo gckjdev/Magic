@@ -14,7 +14,8 @@
 #import "UserAvatarView.h"
 #import "StringUtil.h"
 #import "PPDebug.h"
-
+#import "UIViewUtils.h"
+#import "MKBlockActionSheet.h"
 
 @interface ChatCell()
 @property (nonatomic,strong)UILabel         *timeView;
@@ -49,7 +50,6 @@
         self.timeView = timeView;
         
         // 2.头像
-       
         _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
         [self.contentView addSubview:_avatarView];
         
@@ -60,6 +60,12 @@
         textView.titleLabel.font = MJTextFont;
         textView.contentEdgeInsets = UIEdgeInsetsMake(MJTextPadding, MJTextPadding, MJTextPadding, MJTextPadding);
         [textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(textViewLongPressAction:)];
+        
+        [longPressRecognizer setNumberOfTouchesRequired:1];
+        
+        [textView addGestureRecognizer:longPressRecognizer];
         [self.contentView addSubview:textView];
         self.textView = textView;
 
@@ -74,6 +80,30 @@
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
+}
+- (void)textViewLongPressAction:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Long press Ended");
+        NSString *makeSure = @"复制";
+        MKBlockActionSheet *actionSheet = [[MKBlockActionSheet alloc]
+                                           initWithTitle:@"选项"delegate:nil
+                                           cancelButtonTitle:@"取消"
+                                           destructiveButtonTitle:nil
+                                           otherButtonTitles:makeSure, nil];
+        
+        __weak typeof (actionSheet) as = actionSheet;
+        [actionSheet setActionBlock:^(NSInteger buttonIndex){
+            NSString *title = [as buttonTitleAtIndex:buttonIndex];
+            if ([title isEqualToString:makeSure]) {
+                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                [pasteboard setString: _messageFrame.message.content];
+            }
+        }];
+        [actionSheet showInView:self];
+      
+       
+    }
+  
 }
 - (void)setMessageFrame:(ChatCellFrame *)messageFrame
 {

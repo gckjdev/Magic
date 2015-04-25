@@ -9,8 +9,13 @@
 #import "ChatSideMenuController.h"
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
+#import "ViewInfo.h"
+#import "ColorInfo.h"
+#import "FontInfo.h"
+
 #define MENUITEM_COUNT 3
-#define MENUITEM_WIDTH 54
+#define MENUITEM_HEIGHT 52
+#define CHATSIDEMENUCELL         @"CHATSIDEMENUCELL"
 
 @interface ChatSideMenuController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView   *tableView;
@@ -29,20 +34,19 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)setupView{
-    
+    [self.view setBackgroundColor:BARRAGE_BG_COLOR];
 }
 -(void)setupTableView{
     
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - MENUITEM_WIDTH * MENUITEM_COUNT) / 2.0f, self.view.frame.size.width, MENUITEM_WIDTH * MENUITEM_COUNT) style:UITableViewStylePlain];
-        tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin ;
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - MENUITEM_HEIGHT * MENUITEM_COUNT) / 2.0f, 200, MENUITEM_HEIGHT * MENUITEM_COUNT) ];
+
         tableView.delegate = self;
         tableView.dataSource = self;
-        tableView.opaque = NO;
-        tableView.backgroundColor = [UIColor clearColor];
-        tableView.backgroundView = nil;
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.bounces = NO;
+        tableView.backgroundColor = BARRAGE_BG_COLOR;
+      
+        
+       
     
         tableView;
     });
@@ -70,7 +74,7 @@
 #pragma mark - tableView Source
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return MENUITEM_WIDTH;
+    return MENUITEM_HEIGHT;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -84,24 +88,19 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"cellIdentifier";
+    UITableViewCell  *normalCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1
+                                                         reuseIdentifier:CHATSIDEMENUCELL];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    normalCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    normalCell.textLabel.font = BARRAGE_LABEL_FONT; //  字体
+    normalCell.textLabel.textColor = BARRAGE_TEXTFIELD_COLOR;   //  颜色
+    normalCell.backgroundColor = [UIColor whiteColor];
+
+    NSArray *titles = @[@"个人资料",  @"系统设置", @"意见反馈"];
+    NSArray *images = @[@"friends",  @"setting", @"invite.png"];
+    normalCell.textLabel.text = titles[indexPath.row];
+    normalCell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:21];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.highlightedTextColor = [UIColor lightGrayColor];
-        cell.selectedBackgroundView = [[UIView alloc] init];
-    }
-#warning TODO
-    NSArray *titles = @[@"Home",  @"Profile", @"Settings", @"Calendar",@"Log Out"];
-    NSArray *images = @[@"IconHome",  @"IconProfile", @"IconSettings",@"IconCalendar", @"IconEmpty"];
-    cell.textLabel.text = titles[indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
-    
-    return cell;
+    return normalCell;
 }
 @end

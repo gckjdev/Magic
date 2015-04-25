@@ -562,7 +562,6 @@
 		65B3DAB71AE0C0A8008507FD /* MessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAB61AE0C0A8008507FD /* MessageTableView.m */; };
 		65B3DABE1AE0C107008507FD /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DABB1AE0C107008507FD /* NSString+Extension.m */; };
 		65B3DABF1AE0C107008507FD /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DABD1AE0C107008507FD /* UIImage+Extension.m */; };
-		65B3DAC11AE0C3DC008507FD /* messages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65B3DAC01AE0C3DC008507FD /* messages.plist */; };
 		65B3DAC41AE0FB4B008507FD /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAC31AE0FB4B008507FD /* AudioManager.m */; };
 		65CDB3FD1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 65CDB3FB1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt */; };
 		65CDB3FE1AE7429900C7FD3E /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CDB3FC1AE7429900C7FD3E /* WebViewJavascriptBridge.m */; };
@@ -1413,7 +1412,6 @@
 		65B3DABB1AE0C107008507FD /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		65B3DABC1AE0C107008507FD /* UIImage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extension.h"; sourceTree = "<group>"; };
 		65B3DABD1AE0C107008507FD /* UIImage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extension.m"; sourceTree = "<group>"; };
-		65B3DAC01AE0C3DC008507FD /* messages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = messages.plist; sourceTree = "<group>"; };
 		65B3DAC21AE0FB4B008507FD /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		65B3DAC31AE0FB4B008507FD /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
 		65CDB3FA1AE7429900C7FD3E /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
@@ -3493,7 +3491,6 @@
 		65B3DAB91AE0C107008507FD /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				65B3DAC01AE0C3DC008507FD /* messages.plist */,
 				65B3DABA1AE0C107008507FD /* NSString+Extension.h */,
 				65B3DABB1AE0C107008507FD /* NSString+Extension.m */,
 				65B3DABC1AE0C107008507FD /* UIImage+Extension.h */,
@@ -3835,7 +3832,6 @@
 				65CDB3FD1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt in Resources */,
 				3638C1B21ADF8079008246CF /* addfriend_2dcode@2x.png in Resources */,
 				3638C25E1ADF8079008246CF /* tag_selected@2x.png in Resources */,
-				65B3DAC11AE0C3DC008507FD /* messages.plist in Resources */,
 				3638C2D41ADF8079008246CF /* email@2x.png in Resources */,
 				3638C18F1ADF8079008246CF /* delete_friend_pressed@3x.png in Resources */,
 				3638C2931ADF8079008246CF /* share_wechat_section_pressed@2x.png in Resources */,
