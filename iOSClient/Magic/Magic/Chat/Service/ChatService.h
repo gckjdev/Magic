@@ -35,4 +35,10 @@ DEF_SINGLETON_FOR_CLASS(UserService);
 
 -(void)reloadLatest;
 
+- (BOOL)downloadDataFile:(NSString*)dataURL
+            saveFilePath:(NSString*)saveFilePath             // 下载完成后保存路径
+            tempFilePath:(NSString*)tempFilePath             // 下载临时保存路径（用于断点续传）
+        progressDelegate:(id)progressDelegate;                // 下载进度回调
+
+
 @end

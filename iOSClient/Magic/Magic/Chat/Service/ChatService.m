@@ -12,6 +12,8 @@
 #import "StringUtil.h"
 #import "PPDebug.h"
 #import "ChatManager.h"
+#import "ASIHTTPRequest.h"
+#import "FileUtil.h"
 
 @implementation ChatService
 IMPL_SINGLETON_FOR_CLASS(UserService)
@@ -81,6 +83,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
         }
     }];
 }
+
 -(void)sendChatWithText:(NSString*)text
                toUserId:(NSString*)toUserId
                callback:(SendChatWithTextCallBackBlock)callback
@@ -172,5 +175,46 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
 {
     // TODO reload chat list and post notification to UI to reload
 }
+
+// call this method to download data
+- (BOOL)downloadDataFile:(NSString*)dataURL
+            saveFilePath:(NSString*)saveFilePath             // 下载完成后保存路径
+            tempFilePath:(NSString*)tempFilePath             // 下载临时保存路径（用于断点续传）
+        progressDelegate:(id)progressDelegate                // 下载进度回调
+{
+    if (dataURL == nil)
+        return NO;
+    
+    NSURL* url = [NSURL URLWithString:dataURL];
+    if (url == nil)
+        return NO;
+    
+    ASIHTTPRequest* downloadHttpRequest = [ASIHTTPRequest requestWithURL:url];
+    
+    downloadHttpRequest.delegate = self;
+    [downloadHttpRequest setAllowCompressedResponse:YES];
+    //    [downloadHttpRequest setUsername:DEFAULT_HTTP_USER_NAME];
+    //    [downloadHttpRequest setPassword:DEFAULT_HTTP_PASSWORD];
+    
+    [downloadHttpRequest setDownloadDestinationPath:saveFilePath];
+    [downloadHttpRequest setTemporaryFileDownloadPath:tempFilePath];
+    
+    [downloadHttpRequest setDownloadProgressDelegate:progressDelegate];
+    [downloadHttpRequest setAllowResumeForFileDownloads:YES];
+    
+    PPDebug(@"<downloadURL> URL=%@, Local Temp=%@, Store At=%@",
+            url.absoluteString, tempFilePath, saveFilePath);
+    
+    [downloadHttpRequest startSynchronous];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:saveFilePath] == NO){
+        PPDebug(@"<downloadURL> %@ failure, file not downloaded", dataURL);
+        return NO;
+    }
+    
+    PPDebug(@"<downloadURL> success, size=%lld", [FileUtil fileSizeAtPath:saveFilePath]);
+    return YES;
+}
+
 
 @end
