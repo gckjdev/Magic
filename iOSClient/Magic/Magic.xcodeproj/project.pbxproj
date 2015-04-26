@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		361307431AEC930100A4CA0A /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 361307421AEC930100A4CA0A /* ChatManager.m */; };
+		361307461AECA25C00A4CA0A /* VoiceCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 361307451AECA25C00A4CA0A /* VoiceCacheManager.m */; };
 		3638BD2D1ADF7C53008246CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3638BD2C1ADF7C53008246CF /* main.m */; };
 		3638BD301ADF7C53008246CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3638BD2F1ADF7C53008246CF /* AppDelegate.m */; };
 		3638BD391ADF7C53008246CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3638BD371ADF7C53008246CF /* Main.storyboard */; };
@@ -586,6 +587,8 @@
 /* Begin PBXFileReference section */
 		361307411AEC930100A4CA0A /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
 		361307421AEC930100A4CA0A /* ChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatManager.m; sourceTree = "<group>"; };
+		361307441AECA25B00A4CA0A /* VoiceCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceCacheManager.h; sourceTree = "<group>"; };
+		361307451AECA25C00A4CA0A /* VoiceCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceCacheManager.m; sourceTree = "<group>"; };
 		3638BD271ADF7C53008246CF /* Magic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3638BD2B1ADF7C53008246CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3638BD2C1ADF7C53008246CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -3472,6 +3475,8 @@
 				65B3DAAA1AE0C051008507FD /* ChatMessage.m */,
 				361307411AEC930100A4CA0A /* ChatManager.h */,
 				361307421AEC930100A4CA0A /* ChatManager.m */,
+				361307441AECA25B00A4CA0A /* VoiceCacheManager.h */,
+				361307451AECA25C00A4CA0A /* VoiceCacheManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4071,6 +4076,7 @@
 				3638C1111ADF8079008246CF /* CommonService.m in Sources */,
 				3638C2451ADF8079008246CF /* BarrageFrame.m in Sources */,
 				3638C29A1ADF8079008246CF /* UserTimelineController.m in Sources */,
+				361307461AECA25C00A4CA0A /* VoiceCacheManager.m in Sources */,
 				3638C2991ADF8079008246CF /* FeedService.m in Sources */,
 				3638C1681ADF8079008246CF /* BarrageError.m in Sources */,
 				65B3DABE1AE0C107008507FD /* NSString+Extension.m in Sources */,
