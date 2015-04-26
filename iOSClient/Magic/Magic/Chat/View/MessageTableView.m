@@ -29,21 +29,22 @@
 }
 
 -(void)setupView{
-    self.backgroundColor =BARRAGE_BG_COLOR;
+    self.backgroundColor = BARRAGE_BG_COLOR;
     self.dataSource = self;
     self.delegate = self;
-    [self registerClass:ChatCell.class forCellReuseIdentifier:@"cellIdentifier"]; //  注册头像那个cell的类
+    [self registerClass:ChatCell.class forCellReuseIdentifier:CHAT_CELL_IDENTIFIER]; //  注册头像那个cell的类
     
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.allowsSelection = NO;
     
     [self addHeaderWithTarget:self action:@selector(headRefreshAction)];
     
-    self.headerPullToRefreshText = @"下拉可以刷新了";
-    self.headerReleaseToRefreshText = @"松开马上刷新了";
-    self.headerRefreshingText = @"正在帮你刷新中，不客气";
+    self.headerPullToRefreshText = @"下拉可刷新更多消息";
+    self.headerReleaseToRefreshText = @"松开马上刷新";
+    self.headerRefreshingText = @"奋力刷新中";
 
 }
+
 -(void)headRefreshAction{
     [self headerEndRefreshing];
 }

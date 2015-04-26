@@ -27,7 +27,6 @@
 @property (nonatomic,strong) ChangeAvatar   *changeAvatar;
 @end
 
-#define cellIdentifier @"cellIdentifier"
 
 
 #define MAX_HEIGHT_INPUTVIEW  60.0f
@@ -45,24 +44,30 @@
     [self addLeftMenuButton];
 
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
 }
+
 -(void)addLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
+
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
+
 #pragma mark - setup
+
 -(void)setupView{
     self.view.backgroundColor = [UIColor colorWithRed:235/255.00 green:235/255.0 blue:235/255.0 alpha:1.0];
     self.title = @"聊天";
     _toolViewHeight = CHATTOOLVIEW_HEIGHT;
     self.changeAvatar = [[ChangeAvatar alloc] init];
 }
+
 -(void)setupTableView{
     
     CGFloat tableHeight =  -_toolViewHeight;

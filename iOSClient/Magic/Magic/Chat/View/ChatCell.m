@@ -30,10 +30,10 @@
 
 +(instancetype)cellWithTableView:(UITableView *)tableView
 {
-    static NSString *ID = @"cellIdentifier";
-    ChatCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    
+    ChatCell *cell = [tableView dequeueReusableCellWithIdentifier:CHAT_CELL_IDENTIFIER];
     if (cell == nil) {
-        cell = [[ChatCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        cell = [[ChatCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CHAT_CELL_IDENTIFIER];
     }
     return cell;
 }

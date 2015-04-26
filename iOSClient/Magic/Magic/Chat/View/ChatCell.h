@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ChatCellFrame.h"
+
+#define CHAT_CELL_IDENTIFIER        @"ChatCellIdentifier"
+
 @interface ChatCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView *)tableView;
 @property (nonatomic,strong)ChatCellFrame *messageFrame;
