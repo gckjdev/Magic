@@ -11,8 +11,7 @@
 #import "UserManager.h"
 #import "StringUtil.h"
 #import "PPDebug.h"
-
-
+#import "ChatManager.h"
 
 @implementation ChatService
 IMPL_SINGLETON_FOR_CLASS(UserService)
@@ -35,7 +34,11 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
                  
                  NSArray *array = response.getChatListResponse.chat ;
                  if (error == nil) {
-                     PPDebug(@"getChatList  success");
+                     PPDebug(@"getChatList success");
+                     
+                     // store chat list locally
+                     [[ChatManager sharedInstance] storeChatList:array];
+                     
                      EXECUTE_BLOCK(callback,array,error);
                  }else{
                      PPDebug(@"getChatList  fail %@",error.description);
@@ -154,6 +157,11 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     [self sendRequest:PBMessageTypeMessageSendChat
        requestBuilder:builder
              callback:^(PBDataResponse *response, NSError *error) {
+                 
+                 PBChat* retChat = response.sendChatResponse.chat;
+                 if (retChat != nil){
+                     [[ChatManager sharedInstance] insertChat:retChat];
+                 }
                  
                  EXECUTE_BLOCK(callback,error);
                 

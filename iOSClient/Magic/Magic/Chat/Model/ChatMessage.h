@@ -15,14 +15,16 @@ typedef enum{
 }MessageFromType;
 
 typedef enum{
-    MESSAGETYPE_TEXT = 0,
-    MESSAGETYPE_IMAGE ,
-    MESSAGETYPE_VOICE
+    MESSAGETYPE_TEXT = PBChatTypeTextChat,
+    MESSAGETYPE_IMAGE = PBChatTypePictureChat,
+    MESSAGETYPE_VOICE = PBChatTypeVoiceChat
 }MessageType;
+
 @interface ChatMessage : NSObject
 
 //+(instancetype)messageWithDict:(NSDictionary *)dict;
 +(instancetype)messageWithPBChat:(PBChat*)chat;
+
 @property(nonatomic,copy)       NSString            *content;
 @property(nonatomic,strong)     NSDate              *time;
 @property (nonatomic,copy)      NSString            *image;
@@ -35,9 +37,8 @@ typedef enum{
 @property (nonatomic, assign)   MessageFromType     fromType;
 @property(nonatomic,assign)     BOOL                hideTime;
 
-
-
 @property (nonatomic,strong) PBChat*   pbChat;
 
 @property (nonatomic,strong) UIImageView   *myImage;
+
 @end

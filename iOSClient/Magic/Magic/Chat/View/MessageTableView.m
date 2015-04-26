@@ -111,22 +111,23 @@
     return cell;
     
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     ChatCellFrame *mf = self.messageFrames[indexPath.row];
     return mf.cellHeight;
 }
 
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.messageFrames.count;
 }
+
 -(void)setMessageFrames:(NSArray *)messageFrames{
     _messageFrames = messageFrames;
     
     [self reloadData];
 }
+
 -(void)updateConstraints{
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.superview).with.offset(-self.viewHeight);

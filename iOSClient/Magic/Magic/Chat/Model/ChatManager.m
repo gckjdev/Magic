@@ -72,12 +72,13 @@ IMPL_SINGLETON_FOR_CLASS(ChatManager);
     self.chatList = list;
 }
 
-- (void)addChat:(PBChat*)pbChat
+- (void)insertChat:(PBChat*)pbChat
 {
     if ([pbChat.chatId length] == 0){
         return;
     }
     
+    PPDebug(@"<addChat> chatId=%@", pbChat.chatId);
     [_db setObject:[pbChat data] forKey:pbChat.chatId];
     [self reloadLocalList];
 }

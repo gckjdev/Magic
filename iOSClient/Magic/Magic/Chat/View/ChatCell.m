@@ -19,11 +19,11 @@
 #import "TimeUtils.h"
 
 @interface ChatCell()
-@property (nonatomic,strong)UILabel         *timeView;
-@property (nonatomic,strong)UIImageView     *iconView;
-@property (nonatomic,strong)UIButton        *textView;
-@property (nonatomic,strong)UIImageView     *showImageView;
-@property (nonatomic,strong) UserAvatarView   *avatarView;
+@property (nonatomic,strong) UILabel         *timeView;
+@property (nonatomic,strong) UIImageView     *iconView;
+@property (nonatomic,strong) UIButton        *textView;
+@property (nonatomic,strong) UIImageView     *showImageView;
+@property (nonatomic,strong) UserAvatarView  *avatarView;
 @end
 
 @implementation ChatCell
@@ -37,6 +37,7 @@
     }
     return cell;
 }
+
 -(id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
