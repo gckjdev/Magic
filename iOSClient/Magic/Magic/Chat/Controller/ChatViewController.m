@@ -21,6 +21,7 @@
 #import "TGRImageViewController.h"
 #import "AudioManager.h"
 #import "FileUtil.h"
+#import "StringUtil.h"
 
 
 
@@ -32,6 +33,7 @@
 @property (nonatomic,strong) NSMutableArray*   messageFrames;
 @property (nonatomic, assign) CGFloat      toolViewHeight;
 @property (nonatomic,strong) ChangeAvatar   *changeAvatar;
+@property (nonatomic,strong) NSString   *tmpMyVoiceFile;
 @end
 
 
@@ -107,6 +109,9 @@
         TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
         [weakSelf presentViewController:vc animated:YES completion:nil];
     };
+    _tableView.voiceViewSinglePressBlock = ^(PBChat* pbChat,ChatCell *cell){
+        
+    };
 }
 
 -(void)setupToolView{
@@ -166,24 +171,24 @@
 
 -(void)talkButtonTouchDown
 {
-    NSString *docDir = [FileUtil getAppDocumentDir];
-    NSString *testFile = [NSString stringWithFormat:@"%@/%@",docDir,DEFAULT_SAVE_AUDIO_NAME];
-    PPDebug(@"neng : wav save  : %@ ",testFile);
-    [[AudioManager sharedInstance]recorderInitWithPath:[NSURL URLWithString:testFile]];
+    NSString *tmpDir = [FileUtil getAppTempDir];
+
+    _tmpMyVoiceFile = [NSString stringWithFormat:@"%@/%@.wav",tmpDir,[NSString GetUUID]];
+    PPDebug(@"neng : wav save  : %@ ",_tmpMyVoiceFile);
+    [[AudioManager sharedInstance]recorderInitWithPath:[NSURL URLWithString:_tmpMyVoiceFile]];
 }
 
 -(void)talkButtonTouchUpInside
 {
     [[AudioManager sharedInstance]recorderEnd];
     
-    NSString *docDir = [FileUtil getAppDocumentDir];
-    NSString *testFile = [NSString stringWithFormat:@"%@/%@",docDir,DEFAULT_SAVE_AUDIO_NAME];
+ 
     
-    [[ChatService sharedInstance]sendChatWithAudio:testFile toUserId:@""
+    [[ChatService sharedInstance]sendChatWithAudio:_tmpMyVoiceFile toUserId:@""
                                           callback:^(NSError *error)
     {
         if (error == nil) {
-            
+            [_tableView RefreshData];
         }
         
     }];
@@ -198,17 +203,14 @@
 {
     //    [self addMessage:text type:MESSAGEFROMTYPE_ME];
     [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
-        [_tableView RefreshData];
+        if (error == nil) {
+             [_tableView RefreshData];
+        }
+       
     }];
     
 }
--(void)expressionButtonSingleTouch{
-    //    [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
-    //    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
-    //        [_tableView RefreshData];
-    //    }];
 
-}
 -(void)plusButtonSingleTouch
 {
     

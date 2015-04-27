@@ -17,13 +17,15 @@
 #import "UIViewUtils.h"
 #import "MKBlockActionSheet.h"
 #import "TimeUtils.h"
-
+#import "Masonry.h"
 
 @interface ChatCell()
 @property (nonatomic,strong) UILabel         *timeView;
 @property (nonatomic,strong) UIImageView     *iconView;
 @property (nonatomic,strong) UIButton        *textView;
 @property (nonatomic,strong) UIImageView     *showImageView;
+@property (nonatomic,strong) UIImageView     *voiceAnimationView;
+
 @property (nonatomic,strong) UserAvatarView  *avatarView;
 @end
 
@@ -48,8 +50,22 @@
     return self;
 }
 
+#pragma mark -setup
 -(void)setupView{
     // 子控件的创建和初始化
+
+    [self setupTimeView];
+    [self setupAvatar];
+    [self setupTextView];
+    [self setupImageView];
+    [self setupVoiceAnimationView];
+    
+    // 6.设置cell的背景色
+    self.backgroundColor = [UIColor clearColor];
+}
+
+
+-(void)setupTimeView{
     // 1.时间
     UILabel *timeView = [[UILabel alloc] init];
     timeView.textAlignment = NSTextAlignmentCenter;
@@ -57,12 +73,15 @@
     timeView.font = [UIFont systemFontOfSize:13];
     [self.contentView addSubview:timeView];
     self.timeView = timeView;
-    
+}
+
+-(void)setupAvatar{
     // 2.头像
     _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
     [self.contentView addSubview:_avatarView];
-    
-    
+}
+
+-(void)setupTextView{
     // 3.正文
     UIButton *textView = [[UIButton alloc] init];
     textView.titleLabel.numberOfLines = 0; // 自动换行
@@ -71,19 +90,38 @@
     [textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textView = textView;
     [self.contentView addSubview:textView];
- 
-    [self textViewAddGesture];
     
+    [self textViewAddGesture];
+}
+
+-(void)setupImageView{
+
     //4.图片
     _showImageView = [[UIImageView alloc]init];
     //        _showImageView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:_showImageView];
     
-    
-    // 6.设置cell的背景色
-    self.backgroundColor = [UIColor clearColor];
 }
 
+-(void)setupVoiceAnimationView{
+    _voiceAnimationView = [[UIImageView alloc]init];
+    [self.contentView addSubview:_voiceAnimationView];
+    [_voiceAnimationView setContentMode:UIViewContentModeScaleAspectFit];
+    NSMutableArray *imageArray = [NSMutableArray array];
+    for (int i = 0; i< 3; i++) {
+        NSString *tmpName = [NSString stringWithFormat:@"SenderVoiceNodePlaying00%d",i+1];
+        UIImage *image = [UIImage imageNamed:tmpName];
+        [imageArray addObject:image];
+    }
+    [_voiceAnimationView setAnimationImages:[imageArray copy]];
+    [_voiceAnimationView setAnimationRepeatCount:0];
+    [_voiceAnimationView setAnimationDuration:0.8];
+    [_voiceAnimationView setUserInteractionEnabled:NO];
+    [_voiceAnimationView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
+    [_voiceAnimationView setHidden:YES];
+//    [_voiceAnimationView startAnimating];
+}
+#pragma mark - Action
 - (void)textViewAddGesture{
     
     
@@ -112,7 +150,13 @@
                 [self.delegate imageViewSinglePress:_messageFrame.message.pbChat image:_showImageView.image];
             }
         }
-      
+        else if (_messageFrame.message.type == MESSAGETYPE_VOICE){
+            if (self.delegate&&[self.delegate respondsToSelector:@selector(voiceViewSinglePress:cell:)])
+            {
+                [self voiceAnimationStart];
+                [self.delegate voiceViewSinglePress:_messageFrame.message.pbChat cell:self];
+            }
+        }
 
     }
 }
@@ -140,6 +184,21 @@
     }
   
 }
+
+#pragma mark - Animation
+
+-(void)voiceAnimationStart
+{
+    [_voiceAnimationView startAnimating];
+}
+
+-(void)voiceAnimationStop
+{
+    [_voiceAnimationView stopAnimating];
+}
+
+#pragma mark - setupFrame 
+
 - (void)setMessageFrame:(ChatCellFrame *)messageFrame
 {
     _messageFrame = messageFrame;
@@ -195,16 +254,21 @@
 //                  _textView.frame =[self zoomContentView:imageZoomRect];
               }
         
-              
           }];
         
-
-//        PPDebug(@"neng : url %@",[NSURL URLWithString:message.image]);
         _showImageView.hidden = NO;
     }else{
         _showImageView.hidden = YES;
     }
     
+    
+    if (message.type == MESSAGETYPE_VOICE) {
+        [_voiceAnimationView setHidden:NO];
+        _voiceAnimationView.frame = messageFrame.voiceAnimationF;
+    }
+    else{
+        [_voiceAnimationView setHidden:YES];
+    }
 }
 -(NSString*)getShowTimeString{
     NSMutableString *result = [NSMutableString string];
@@ -232,39 +296,9 @@
 }
 -(CGRect)zoomImageFrame:(CGRect)imageSize{
     
-//    CGSize oldSize = _messageFrame.imageF.size;
     ChatMessage *message = _messageFrame.message;
     CGRect resultRect = imageSize;
-//    if (imageSize.width>oldSize.width&&imageSize.height>oldSize.height) {
-//        if (message.fromType == MESSAGEFROMTYPE_ME) {
-//            
-//            resultRect.origin.x = CGRectGetMaxX(resultRect) - oldSize.width;
-//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//        else{
-//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//    }else if (imageSize.width<oldSize.width&&imageSize.height<oldSize.height){
-//        if (message.fromType == MESSAGEFROMTYPE_ME) {
-//           
-//            resultRect.origin.x = CGRectGetMaxX(resultRect) - imageSize.width;
-//             resultRect.size = CGSizeMake(imageSize.width, imageSize.height);
-//        }
-//        else{
-//            resultRect.size = CGSizeMake(imageSize.width, imageSize.height);
-//        }
-//    }else{
-//        if (message.fromType == MESSAGEFROMTYPE_ME) {
-//           
-//            resultRect.origin.x = CGRectGetMaxX(resultRect) - oldSize.width;
-//             resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//        else{
-//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//    }
-    
- 
+
     resultRect.size.width -= 40;
     resultRect.size.height -= 40;
     if (message.fromType == MESSAGEFROMTYPE_ME) {
@@ -273,9 +307,7 @@
         resultRect.origin.y += 20;
     }
    
-  
-    
-    
+
     return resultRect;
 }
 @end

@@ -137,11 +137,17 @@
 }
 
 
+#pragma mark - ChatCellDelegate
+
 -(void)imageViewSinglePress:(PBChat*)pbChat image:(UIImage*)image;
 {
     EXECUTE_BLOCK(self.imageViewSinglePressBlock ,pbChat,image);
-//    TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
-//    [ presentViewController:vc animated:YES completion:nil];
+
+}
+
+-(void)voiceViewSinglePress:(PBChat*)pbChat cell:(ChatCell *)cell
+{
+    EXECUTE_BLOCK(self.voiceViewSinglePressBlock,pbChat ,cell);
 }
 
 @end
