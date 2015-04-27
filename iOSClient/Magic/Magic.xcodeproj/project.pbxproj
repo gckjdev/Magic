@@ -552,6 +552,11 @@
 		3638C31B1AE0B070008246CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31A1AE0B070008246CF /* MobileCoreServices.framework */; };
 		3638C31D1AE0B07D008246CF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31C1AE0B07D008246CF /* CFNetwork.framework */; };
 		3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */; };
+		652C88B01AEDDB4E00884299 /* icon-chatkeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */; };
+		652C88B11AEDDB4E00884299 /* icon-chatvoice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */; };
+		652C88B21AEDDB4E00884299 /* icon-record-voice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AD1AEDDB4E00884299 /* icon-record-voice.png */; };
+		652C88B31AEDDB4E00884299 /* iconfont-leftvoice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */; };
+		652C88B41AEDDB4E00884299 /* iconfont-rightvoice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */; };
 		652CA84F1AE4A3DA00DB1013 /* CreateFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */; };
 		6567FA141AE20CDD0043FF64 /* ChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6567FA131AE20CDD0043FF64 /* ChatService.m */; };
 		656FCF811AE7649800823DBA /* ChatSideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 656FCF801AE7649800823DBA /* ChatSideMenuView.m */; };
@@ -567,10 +572,6 @@
 		65B3DAC41AE0FB4B008507FD /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DAC31AE0FB4B008507FD /* AudioManager.m */; };
 		65CDB3FD1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 65CDB3FB1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt */; };
 		65CDB3FE1AE7429900C7FD3E /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CDB3FC1AE7429900C7FD3E /* WebViewJavascriptBridge.m */; };
-		65E123131AE8E87B0039327C /* IconCalendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E1230F1AE8E87B0039327C /* IconCalendar@2x.png */; };
-		65E123141AE8E87B0039327C /* IconHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E123101AE8E87B0039327C /* IconHome@2x.png */; };
-		65E123151AE8E87B0039327C /* IconProfile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E123111AE8E87B0039327C /* IconProfile@2x.png */; };
-		65E123161AE8E87B0039327C /* IconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E123121AE8E87B0039327C /* IconSettings@2x.png */; };
 		93FD21456C5B9ADF108E75CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E987D56EAB81CEF90C80AA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1394,6 +1395,11 @@
 		3638C3201AE0B0D1008246CF /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		3D127CDED7A3722734306BED /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62E987D56EAB81CEF90C80AA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-chatkeyboard.png"; path = "Resource/icon-chatkeyboard.png"; sourceTree = "<group>"; };
+		652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-chatvoice.png"; path = "Resource/icon-chatvoice.png"; sourceTree = "<group>"; };
+		652C88AD1AEDDB4E00884299 /* icon-record-voice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-record-voice.png"; path = "Resource/icon-record-voice.png"; sourceTree = "<group>"; };
+		652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-leftvoice.png"; path = "Resource/iconfont-leftvoice.png"; sourceTree = "<group>"; };
+		652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-rightvoice.png"; path = "Resource/iconfont-rightvoice.png"; sourceTree = "<group>"; };
 		652CA84D1AE4A3DA00DB1013 /* CreateFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateFileInfo.h; sourceTree = "<group>"; };
 		652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateFileInfo.m; sourceTree = "<group>"; };
 		6567FA121AE20CDD0043FF64 /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
@@ -1423,10 +1429,6 @@
 		65CDB3FA1AE7429900C7FD3E /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
 		65CDB3FB1AE7429900C7FD3E /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		65CDB3FC1AE7429900C7FD3E /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
-		65E1230F1AE8E87B0039327C /* IconCalendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendar@2x.png"; sourceTree = "<group>"; };
-		65E123101AE8E87B0039327C /* IconHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHome@2x.png"; sourceTree = "<group>"; };
-		65E123111AE8E87B0039327C /* IconProfile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconProfile@2x.png"; sourceTree = "<group>"; };
-		65E123121AE8E87B0039327C /* IconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconSettings@2x.png"; sourceTree = "<group>"; };
 		AA0282C8927B1D9A94CDA328 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3436,10 +3438,6 @@
 		656FCF851AE76A2000823DBA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				65E1230F1AE8E87B0039327C /* IconCalendar@2x.png */,
-				65E123101AE8E87B0039327C /* IconHome@2x.png */,
-				65E123111AE8E87B0039327C /* IconProfile@2x.png */,
-				65E123121AE8E87B0039327C /* IconSettings@2x.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -3448,6 +3446,11 @@
 			isa = PBXGroup;
 			children = (
 				656FCF851AE76A2000823DBA /* Resource */,
+				652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */,
+				652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */,
+				652C88AD1AEDDB4E00884299 /* icon-record-voice.png */,
+				652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */,
+				652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */,
 				6567FA111AE20CA90043FF64 /* Service */,
 				65B3DAB91AE0C107008507FD /* Common */,
 				65B3DAA31AE0C051008507FD /* Controller */,
@@ -3642,6 +3645,7 @@
 				3638BD3E1ADF7C53008246CF /* LaunchScreen.xib in Resources */,
 				3638C2BC1ADF8079008246CF /* friends@2x.png in Resources */,
 				3638C2651ADF8079008246CF /* new_message_bg.png in Resources */,
+				652C88B11AEDDB4E00884299 /* icon-chatvoice.png in Resources */,
 				3638C2EA1ADF8079008246CF /* qq_selected@2x.png in Resources */,
 				3638C2E71ADF8079008246CF /* pull_down@2x.png in Resources */,
 				3638C2F21ADF8079008246CF /* weixin@2x.png in Resources */,
@@ -3688,6 +3692,7 @@
 				3638C2611ADF8079008246CF /* text_normal@3x.png in Resources */,
 				3638C19A1ADF8079008246CF /* invite_with_code@2x.png in Resources */,
 				3638C2661ADF8079008246CF /* new_message_normal@2x.png in Resources */,
+				652C88B31AEDDB4E00884299 /* iconfont-leftvoice.png in Resources */,
 				3638C1891ADF8079008246CF /* arrows@2x.png in Resources */,
 				3638C1B91ADF8079008246CF /* addfriend_search@3x.png in Resources */,
 				3638C1991ADF8079008246CF /* invite_selected@3x.png in Resources */,
@@ -3696,7 +3701,6 @@
 				3638C1FD1ADF8079008246CF /* backarrow@2x.png in Resources */,
 				3638C1051ADF8079008246CF /* ShareSDKiPadDefaultShareViewUI.bundle in Resources */,
 				3638C2DC1ADF8079008246CF /* location_black@2x.png in Resources */,
-				65E123141AE8E87B0039327C /* IconHome@2x.png in Resources */,
 				3638C2511ADF8079008246CF /* graffiti_normal@3x.png in Resources */,
 				3638C28F1ADF8079008246CF /* share_sina_pressed@2x.png in Resources */,
 				3638C1851ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3720,7 +3724,6 @@
 				3638C28C1ADF8079008246CF /* share_qq_space_pressed@3x.png in Resources */,
 				3638C1B71ADF8079008246CF /* addfriend_qqlogo@3x.png in Resources */,
 				3638C1941ADF8079008246CF /* invite_with_code@2x.png in Resources */,
-				65E123151AE8E87B0039327C /* IconProfile@2x.png in Resources */,
 				3638C2DB1ADF8079008246CF /* invite@3x.png in Resources */,
 				3638C2961ADF8079008246CF /* share_wechat_timeline@3x.png in Resources */,
 				3638C1B61ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3769,7 +3772,6 @@
 				3638C2D21ADF8079008246CF /* default_user_avatar@3x.png in Resources */,
 				3638C22A1ADF8079008246CF /* CommentFeedController.xib in Resources */,
 				3638C28D1ADF8079008246CF /* share_sina@2x.png in Resources */,
-				65E123131AE8E87B0039327C /* IconCalendar@2x.png in Resources */,
 				3638C1F11ADF8079008246CF /* demo7.dat in Resources */,
 				3638C1DC1ADF8079008246CF /* Error.proto in Resources */,
 				3638C2F11ADF8079008246CF /* sina_selected@3x.png in Resources */,
@@ -3828,6 +3830,7 @@
 				3638C2041ADF8079008246CF /* barbg64@3x.png in Resources */,
 				3638C26B1ADF8079008246CF /* pause@3x.png in Resources */,
 				3638C2DA1ADF8079008246CF /* invite@2x.png in Resources */,
+				652C88B41AEDDB4E00884299 /* iconfont-rightvoice.png in Resources */,
 				3638C2791ADF8079008246CF /* share_sina_pressed@2x.png in Resources */,
 				3638C1E91ADF8079008246CF /* demo11.dat in Resources */,
 				3638C2501ADF8079008246CF /* graffiti_normal@2x.png in Resources */,
@@ -3836,6 +3839,7 @@
 				3638C2551ADF8079008246CF /* grids@3x.png in Resources */,
 				3638C1A01ADF8079008246CF /* delete_friend@2x.png in Resources */,
 				3638C2161ADF8079008246CF /* published_selected@2x.png in Resources */,
+				652C88B21AEDDB4E00884299 /* icon-record-voice.png in Resources */,
 				3638C2871ADF8079008246CF /* slider_circle@2x.png in Resources */,
 				3638C2DF1ADF8079008246CF /* location_white@3x.png in Resources */,
 				3638C2061ADF8079008246CF /* camera_normal@2x.png in Resources */,
@@ -3845,7 +3849,6 @@
 				3638C2D41ADF8079008246CF /* email@2x.png in Resources */,
 				3638C18F1ADF8079008246CF /* delete_friend_pressed@3x.png in Resources */,
 				3638C2931ADF8079008246CF /* share_wechat_section_pressed@2x.png in Resources */,
-				65E123161AE8E87B0039327C /* IconSettings@2x.png in Resources */,
 				3638C2731ADF8079008246CF /* share_qq_space@2x.png in Resources */,
 				3638C2E91ADF8079008246CF /* qq@3x.png in Resources */,
 				3638C1D11ADF8079008246CF /* plus_menu_add_friend.png in Resources */,
@@ -3899,6 +3902,7 @@
 				3638C27E1ADF8079008246CF /* share_wechat_section_pressed@3x.png in Resources */,
 				3638C2E61ADF8079008246CF /* pull_back@2x.png in Resources */,
 				3638C1A11ADF8079008246CF /* delete_friend@3x.png in Resources */,
+				652C88B01AEDDB4E00884299 /* icon-chatkeyboard.png in Resources */,
 				3638C2071ADF8079008246CF /* camera_normal@3x.png in Resources */,
 				3638C2E31ADF8079008246CF /* mobile_selected@3x.png in Resources */,
 				3638C3191ADF8C21008246CF /* Info.plist in Resources */,

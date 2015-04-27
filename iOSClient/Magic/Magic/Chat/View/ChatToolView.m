@@ -147,11 +147,14 @@
     }
 }
 -(void)soundButtonTouchDownAciton{
-//    [[AudioManager sharedInstance] recorderStart];
+    [[AudioManager sharedInstance] recorderStart];
     
 }
 -(void)soundButtonTouchUpInsideAciton{
-//    [[AudioManager sharedInstance] recorderEnd];
+    [[AudioManager sharedInstance] recorderEnd];
+    
+    
+    [[AudioManager sharedInstance]playerStart];
 #warning - todo save audio data
 //    
 //    NSString *docDir = [FileUtil getAppDocumentDir];

@@ -11,14 +11,17 @@
 #import <UIKit/UIKit.h>
 #import "PPDebug.h"
 #import "FileUtil.h"
+
 @interface AudioManager()
 @property (nonatomic,strong) AVAudioRecorder   *recorder;
 @property (nonatomic,strong) AVAudioPlayer   *player;
 @property (nonatomic,strong) NSDictionary *recorderSettingsDict;
 @property (nonatomic,copy) NSString *playName;
 @end
+
 @implementation AudioManager
-+ (id) sharedInstance {
+
++ (instancetype) sharedInstance {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
     dispatch_once(&pred, ^{
@@ -26,6 +29,7 @@
     });
     return _sharedObject;
 }
+
 + (void)setPermission
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
@@ -43,27 +47,26 @@
 }
 
 
-#pragma recorder
+#pragma mark - recorder
 -(void)recorderStart
 {
     NSString *docDir = [FileUtil getAppDocumentDir];
-    _playName = [NSString stringWithFormat:@"%@/play.aac",docDir];
+    _playName = [NSString stringWithFormat:@"%@/play.wav",docDir];
     
     _recorderSettingsDict =[[NSDictionary alloc] initWithObjectsAndKeys:
-                           [NSNumber numberWithInt:kAudioFormatMPEG4AAC],AVFormatIDKey,
-                           [NSNumber numberWithInt:1000.0],AVSampleRateKey,
-                           [NSNumber numberWithInt:2],AVNumberOfChannelsKey,
-                           [NSNumber numberWithInt:8],AVLinearPCMBitDepthKey,
-                           [NSNumber numberWithBool:NO],AVLinearPCMIsBigEndianKey,
-                           [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
-                           nil];
+                            [NSNumber numberWithFloat: 8000.0],AVSampleRateKey, //采样率
+                            [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
+                            [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
+                            [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
+                            [NSNumber numberWithInt: AVAudioQualityMedium],AVEncoderAudioQualityKey,//音频编码质量
+                            nil];
     
     PPDebug(@"neng : %@",_playName);
     //按下录音
     if ([self canRecord]) {
         
         NSError *error = nil;
-        //必须真机上测试,模拟器上可能会崩溃
+        _recorder = nil;
         _recorder = [[AVAudioRecorder alloc] initWithURL:[NSURL URLWithString:_playName] settings:_recorderSettingsDict error:&error];
         
         if (_recorder) {
@@ -83,27 +86,39 @@
 }
 -(void)recorderEnd{
     [_recorder stop];
-    _recorder = nil;
 }
 -(void)recorderCancel{
-   
+    [_recorder stop];
+    [_recorder deleteRecording];
 }
 
 
-#pragma player
--(void)playerStart{
-     NSError *playerError;
-    _player = nil;
-    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:_playName] error:&playerError];
+#pragma  mark - player
+
+-(void)playWithFile:(NSURL*)fileURL{
     
+//    NSString *docDir = [FileUtil getAppDocumentDir];
+//    NSString *testFile = [NSString stringWithFormat:@"%@/test2.wav",docDir];
+    
+    NSError *playerError;
+    [self playerStop];
+    _player = nil;
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&playerError];
     if (_player == nil)
     {
         NSLog(@"ERror creating player: %@", [playerError description]);
     }else
     {
-        
+        [_player play];
     }
 }
+
+-(void)playerStart{
+    
+    [_player play];
+    
+}
+
 -(void)playerStop
 {
     [_player stop];
@@ -114,7 +129,7 @@
     [_player pause];
 }
 -(void)playerResume{
-   
+   //Not use temporarily
 }
 
 
