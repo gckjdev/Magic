@@ -63,6 +63,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     CommonService  *service =[[CommonService alloc]init];
     [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
         if (error == nil) {
+            PPDebug(@"upload : audioNUL  %@",audioURL);
             [chatBuilder setVoice:audioURL];
             [self sendChatCommonMessage:chatBuilder callback:^(NSError *error1) {
                 

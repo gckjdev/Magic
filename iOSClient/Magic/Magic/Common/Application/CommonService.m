@@ -180,7 +180,7 @@
     QNUploadManager *upManager = [[QNUploadManager alloc] init];
     QNUploadOption *opt = [[QNUploadOption alloc] initWithMime:nil
                                                progressHandler:^(NSString *key, float percent) {
-                                                   // TODO post image upload notification
+                                                 
                                                    PPDebug(@"<uploadUserAvatar> upload image key(%@) percent(%.2f)", key, percent);
                                                }
                                                         params:nil
@@ -196,11 +196,8 @@
                       // success
                       NSString* cdnKey = [resp objectForKey:@"key"];
                       
-                      // avatar url
                       NSString* url = [[CdnManager sharedInstance] getUserDataUrl:cdnKey];
                       
-                      // now can send request to server
-                      //                      [self updateUserAvatar:url callback:callback];
                       EXECUTE_BLOCK(callback,url ,nil);
                   }
                   else{

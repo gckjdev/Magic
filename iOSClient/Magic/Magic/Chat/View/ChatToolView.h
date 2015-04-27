@@ -16,6 +16,9 @@
 -(void)sendMessageButtonSingleTouch:(NSString*)text;
 -(void)plusButtonSingleTouch;
 -(void)expressionButtonSingleTouch;
+-(void)talkButtonTouchDown;
+-(void)talkButtonTouchUpInside;
+-(void)talkButtonTouchCancel;
 @end
 
 @interface ChatToolView : UIView

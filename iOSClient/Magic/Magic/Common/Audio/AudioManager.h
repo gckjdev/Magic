@@ -14,10 +14,12 @@
 + (void)setPermission;
 
 
+-(void)recorderInitWithPath:(NSURL*)PathURL;
 -(void)recorderStart;
 -(void)recorderEnd;
+-(void)recorderCancel;
 
--(void)playWithFile:(NSURL*)fileURL;
+-(void)playInitWithFile:(NSURL*)fileURL;
 -(void)playerStart;
 -(void)playerStop;
 -(void)playerPause;

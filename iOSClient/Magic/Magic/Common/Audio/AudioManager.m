@@ -48,11 +48,7 @@
 
 
 #pragma mark - recorder
--(void)recorderStart
-{
-    NSString *docDir = [FileUtil getAppDocumentDir];
-    _playName = [NSString stringWithFormat:@"%@/play.wav",docDir];
-    
+-(void)recorderInitWithPath:(NSURL*)PathURL{
     _recorderSettingsDict =[[NSDictionary alloc] initWithObjectsAndKeys:
                             [NSNumber numberWithFloat: 8000.0],AVSampleRateKey, //采样率
                             [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
@@ -60,33 +56,39 @@
                             [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
                             [NSNumber numberWithInt: AVAudioQualityMedium],AVEncoderAudioQualityKey,//音频编码质量
                             nil];
-    
-    PPDebug(@"neng : %@",_playName);
     //按下录音
     if ([self canRecord]) {
         
         NSError *error = nil;
         _recorder = nil;
-        _recorder = [[AVAudioRecorder alloc] initWithURL:[NSURL URLWithString:_playName] settings:_recorderSettingsDict error:&error];
+        _recorder = [[AVAudioRecorder alloc] initWithURL:PathURL settings:_recorderSettingsDict error:&error];
         
         if (_recorder) {
             _recorder.meteringEnabled = YES;
             [_recorder prepareToRecord];
+            
             [_recorder record];
             
-          
             
         } else
         {
-//            int errorCode = CFSwapInt32HostToBig ([error code]);
+            //            int errorCode = CFSwapInt32HostToBig ([error code]);
             NSLog(@"Error: %@ " , [error description]);
             
         }
     }
+
 }
+
+-(void)recorderStart
+{
+   [_recorder record];
+}
+
 -(void)recorderEnd{
     [_recorder stop];
 }
+
 -(void)recorderCancel{
     [_recorder stop];
     [_recorder deleteRecording];
@@ -95,11 +97,9 @@
 
 #pragma  mark - player
 
--(void)playWithFile:(NSURL*)fileURL{
+-(void)playInitWithFile:(NSURL*)fileURL{
     
-//    NSString *docDir = [FileUtil getAppDocumentDir];
-//    NSString *testFile = [NSString stringWithFormat:@"%@/test2.wav",docDir];
-    
+
     NSError *playerError;
     [self playerStop];
     _player = nil;
