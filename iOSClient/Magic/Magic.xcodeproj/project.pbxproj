@@ -1395,11 +1395,11 @@
 		3638C3201AE0B0D1008246CF /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		3D127CDED7A3722734306BED /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62E987D56EAB81CEF90C80AA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-chatkeyboard.png"; path = "Resource/icon-chatkeyboard.png"; sourceTree = "<group>"; };
-		652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-chatvoice.png"; path = "Resource/icon-chatvoice.png"; sourceTree = "<group>"; };
-		652C88AD1AEDDB4E00884299 /* icon-record-voice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-record-voice.png"; path = "Resource/icon-record-voice.png"; sourceTree = "<group>"; };
-		652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-leftvoice.png"; path = "Resource/iconfont-leftvoice.png"; sourceTree = "<group>"; };
-		652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-rightvoice.png"; path = "Resource/iconfont-rightvoice.png"; sourceTree = "<group>"; };
+		652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-chatkeyboard.png"; sourceTree = "<group>"; };
+		652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-chatvoice.png"; sourceTree = "<group>"; };
+		652C88AD1AEDDB4E00884299 /* icon-record-voice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-record-voice.png"; sourceTree = "<group>"; };
+		652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-leftvoice.png"; sourceTree = "<group>"; };
+		652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-rightvoice.png"; sourceTree = "<group>"; };
 		652CA84D1AE4A3DA00DB1013 /* CreateFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateFileInfo.h; sourceTree = "<group>"; };
 		652CA84E1AE4A3DA00DB1013 /* CreateFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateFileInfo.m; sourceTree = "<group>"; };
 		6567FA121AE20CDD0043FF64 /* ChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatService.h; sourceTree = "<group>"; };
@@ -3438,6 +3438,11 @@
 		656FCF851AE76A2000823DBA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */,
+				652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */,
+				652C88AD1AEDDB4E00884299 /* icon-record-voice.png */,
+				652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */,
+				652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -3446,11 +3451,6 @@
 			isa = PBXGroup;
 			children = (
 				656FCF851AE76A2000823DBA /* Resource */,
-				652C88AB1AEDDB4E00884299 /* icon-chatkeyboard.png */,
-				652C88AC1AEDDB4E00884299 /* icon-chatvoice.png */,
-				652C88AD1AEDDB4E00884299 /* icon-record-voice.png */,
-				652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */,
-				652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */,
 				6567FA111AE20CA90043FF64 /* Service */,
 				65B3DAB91AE0C107008507FD /* Common */,
 				65B3DAA31AE0C051008507FD /* Controller */,

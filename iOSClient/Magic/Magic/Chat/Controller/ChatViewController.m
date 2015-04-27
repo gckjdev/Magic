@@ -18,6 +18,7 @@
 #import "ChangeAvatar.h"
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
+#import "TGRImageViewController.h"
 
 @interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate>
 @property (nonatomic,strong) ChatToolView   *toolView;
@@ -87,6 +88,12 @@
     }];
  
     [_tableView RefreshData];
+    
+    __weak typeof(self) weakSelf = self;
+    _tableView.imageViewSinglePressBlock = ^(PBChat* pbChat,UIImage *image){
+        TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
+        [weakSelf presentViewController:vc animated:YES completion:nil];
+    };
 }
 
 -(void)setupToolView{
@@ -154,6 +161,14 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     CGSize size = textView.contentSize;
+    
+    if (textView.text.length>0) {
+        [_toolView.placeHolder setHidden:YES];
+    }
+    else{
+        [_toolView.placeHolder setHidden:NO];
+    }
+    
     if (size.height<MAX_HEIGHT_INPUTVIEW) {
         _toolViewHeight = CHATTOOLVIEW_HEIGHT + (size.height - MAX_HEIGHT_INPUTVIEW/2);
         _toolView.viewHeight = _toolViewHeight;

@@ -18,6 +18,7 @@
 #import "MKBlockActionSheet.h"
 #import "TimeUtils.h"
 
+
 @interface ChatCell()
 @property (nonatomic,strong) UILabel         *timeView;
 @property (nonatomic,strong) UIImageView     *iconView;
@@ -42,46 +43,78 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // 子控件的创建和初始化
-        // 1.时间
-        UILabel *timeView = [[UILabel alloc] init];
-        timeView.textAlignment = NSTextAlignmentCenter;
-        timeView.textColor = [UIColor grayColor];
-        timeView.font = [UIFont systemFontOfSize:13];
-        [self.contentView addSubview:timeView];
-        self.timeView = timeView;
-        
-        // 2.头像
-        _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
-        [self.contentView addSubview:_avatarView];
-        
-    
-        // 3.正文
-        UIButton *textView = [[UIButton alloc] init];
-        textView.titleLabel.numberOfLines = 0; // 自动换行
-        textView.titleLabel.font = MJTextFont;
-        textView.contentEdgeInsets = UIEdgeInsetsMake(MJTextPadding, MJTextPadding, MJTextPadding, MJTextPadding);
-        [textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        
-        UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(textViewLongPressAction:)];
-        
-        [longPressRecognizer setNumberOfTouchesRequired:1];
-        
-        [textView addGestureRecognizer:longPressRecognizer];
-        [self.contentView addSubview:textView];
-        self.textView = textView;
-
-        //4.图片
-        _showImageView = [[UIImageView alloc]init];
-//        _showImageView.backgroundColor = [UIColor redColor];
-        [self.contentView addSubview:_showImageView];
-        
-        
-        
-        // 6.设置cell的背景色
-        self.backgroundColor = [UIColor clearColor];
+        [self setupView];
     }
     return self;
+}
+
+-(void)setupView{
+    // 子控件的创建和初始化
+    // 1.时间
+    UILabel *timeView = [[UILabel alloc] init];
+    timeView.textAlignment = NSTextAlignmentCenter;
+    timeView.textColor = [UIColor grayColor];
+    timeView.font = [UIFont systemFontOfSize:13];
+    [self.contentView addSubview:timeView];
+    self.timeView = timeView;
+    
+    // 2.头像
+    _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
+    [self.contentView addSubview:_avatarView];
+    
+    
+    // 3.正文
+    UIButton *textView = [[UIButton alloc] init];
+    textView.titleLabel.numberOfLines = 0; // 自动换行
+    textView.titleLabel.font = MJTextFont;
+    textView.contentEdgeInsets = UIEdgeInsetsMake(MJTextPadding, MJTextPadding, MJTextPadding, MJTextPadding);
+    [textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.textView = textView;
+    [self.contentView addSubview:textView];
+ 
+    [self textViewAddGesture];
+    
+    //4.图片
+    _showImageView = [[UIImageView alloc]init];
+    //        _showImageView.backgroundColor = [UIColor redColor];
+    [self.contentView addSubview:_showImageView];
+    
+    
+    // 6.设置cell的背景色
+    self.backgroundColor = [UIColor clearColor];
+}
+
+- (void)textViewAddGesture{
+    
+    
+    // 单击的 Recognizer
+    UITapGestureRecognizer* singleRecognizer;
+    singleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewSinglePressAction:)];
+    singleRecognizer.numberOfTapsRequired = 1; // 单击
+    
+    //给view添加一个手势监测；
+    [_textView addGestureRecognizer:singleRecognizer];
+    
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(textViewLongPressAction:)];
+    
+    [longPressRecognizer setNumberOfTouchesRequired:1];
+    
+    [_textView addGestureRecognizer:longPressRecognizer];
+    
+   
+    
+}
+-(void)textViewSinglePressAction:(UITapGestureRecognizer*)sender{
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        if (_messageFrame.message.type == MESSAGETYPE_IMAGE) {
+            if (self.delegate&&[self.delegate respondsToSelector:@selector(imageViewSinglePress:image:)])
+            {
+                [self.delegate imageViewSinglePress:_messageFrame.message.pbChat image:_showImageView.image];
+            }
+        }
+      
+
+    }
 }
 - (void)textViewLongPressAction:(UILongPressGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {

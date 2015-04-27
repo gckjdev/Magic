@@ -13,8 +13,9 @@
 #import "ChatService.h"
 #import "ColorInfo.h"
 #import "UIScrollView+MJRefresh.h"
+#import "PPDebug.h"
 
-@interface MessageTableView()<UITableViewDataSource,UITableViewDelegate>
+@interface MessageTableView()<UITableViewDataSource,UITableViewDelegate,ChatCellDelegate>
 
 @end
 
@@ -106,7 +107,7 @@
     
     // 2.给cell传递模型
     cell.messageFrame = self.messageFrames[indexPath.row];
-    
+    cell.delegate = self;
     // 3.返回cell
     return cell;
     
@@ -135,9 +136,12 @@
     [super updateConstraints];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+
+-(void)imageViewSinglePress:(PBChat*)pbChat image:(UIImage*)image;
 {
-    // 退出键盘
-    [self.superview endEditing:YES];
+    EXECUTE_BLOCK(self.imageViewSinglePressBlock ,pbChat,image);
+//    TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
+//    [ presentViewController:vc animated:YES completion:nil];
 }
+
 @end

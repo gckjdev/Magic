@@ -19,6 +19,13 @@
 #define COMMON_ICON_SIZE 40.0f
 
 @interface ChatToolView()
+@property (nonatomic,strong) UIButton       *soundBtn;
+
+@property (nonatomic,strong) UIButton       *sendBtn;
+@property (nonatomic,strong) UIButton       *faceBtn;
+@property (nonatomic,strong) UIButton       *plusBtn;
+
+
 @end
 
 @implementation ChatToolView
@@ -35,6 +42,8 @@
     return self;
 }
 -(void)setupView{
+    
+    
     _soundBtn = [[UIButton alloc]init];
     [_soundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
     [_soundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_press"] forState:UIControlStateHighlighted];
@@ -50,6 +59,7 @@
     }];
     
     
+
     _contentView = [[UITextView alloc]init];
     _contentView.backgroundColor = BARRAGE_BG_COLOR;
     [self addSubview:_contentView];
@@ -65,6 +75,24 @@
         make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
     }];
     
+    _placeHolder = [[UILabel alloc]init];
+    [_placeHolder setUserInteractionEnabled:NO];
+    [_placeHolder setText:@"请问需要什么服务"];
+    [_placeHolder setFont:BARRAGE_LITTLE_LABEL_FONT];
+    [_placeHolder setTextColor:COLOR255(0,0,0,100)];
+    [_placeHolder setTextAlignment:NSTextAlignmentLeft];
+    [self addSubview:_placeHolder];
+    [_placeHolder mas_makeConstraints:^(MASConstraintMaker *make) {
+        //        make.size.mas_equalTo(CGSizeMake(40, 40));
+        make.left.equalTo(self).offset(COMMON_ICON_SIZE+5);
+        make.centerY.equalTo(self);
+        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
+        make.height.equalTo(self);
+    }];
+    
+    
+    
+    
 
 #ifdef showFaceBtn
     _faceBtn = [[UIButton alloc]init];
@@ -78,6 +106,9 @@
         make.centerY.equalTo(self);
     }];
 #endif
+    
+    
+    
     _plusBtn = [[UIButton alloc]init];
     
     [_plusBtn setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
@@ -137,7 +168,7 @@
 -(void)plusBtnAction{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(plusButtonSingleTouch)]) {
 
-#warning -wait for image select
+
         [self.delegate plusButtonSingleTouch];
     }
 }

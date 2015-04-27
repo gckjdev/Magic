@@ -11,7 +11,16 @@
 
 #define CHAT_CELL_IDENTIFIER        @"ChatCellIdentifier"
 
+
+@protocol ChatCellDelegate <NSObject>
+
+@optional
+-(void)imageViewSinglePress:(PBChat*)pbChat image:(UIImage*)image;
+@end
+
+
 @interface ChatCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView *)tableView;
 @property (nonatomic,strong)ChatCellFrame *messageFrame;
+@property (nonatomic, assign) id<ChatCellDelegate>    delegate;
 @end

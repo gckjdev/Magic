@@ -19,12 +19,9 @@
 @end
 
 @interface ChatToolView : UIView
-@property (nonatomic,strong) UIButton       *soundBtn;
-@property (nonatomic,strong) UITextView     *contentView;
-@property (nonatomic,strong) UIButton       *sendBtn;
-@property (nonatomic,strong) UIButton       *faceBtn;
-@property (nonatomic,strong) UIButton       *plusBtn;
-@property (nonatomic, assign) CGFloat      viewHeight;
-@property (nonatomic, assign)  id<ChatToolViewDelegate>  delegate;
 
+@property (nonatomic, assign)  id<ChatToolViewDelegate>  delegate;
+@property (nonatomic, assign) CGFloat      viewHeight;
+@property (nonatomic,strong) UITextView     *contentView;
+@property (nonatomic,strong) UILabel        *placeHolder;
 @end
