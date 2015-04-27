@@ -47,9 +47,22 @@ IMPL_SINGLETON_FOR_CLASS(ChatManager);
 
 - (NSArray*)readChatListFromCache
 {
-    NSArray* list = [_db reversedAllObjects];
-    PPDebug(@"total %d chat message load from cache", [list count]);
-    return list;
+    NSArray* dataList = [_db reversedAllObjects];
+    NSMutableArray* pbList = [NSMutableArray array];
+    
+    for (NSData* data in dataList){
+        @try {
+            PBChat* chat = [PBChat parseFromData:data];
+            [pbList addObject:chat];
+        }
+        @catch (NSException *exception) {
+        }
+        @finally {
+        }
+    }
+    
+    PPDebug(@"total %d chat message load from cache", [pbList count]);
+    return pbList;
 }
 
 - (void)storeChatList:(NSArray*)pbChatList
