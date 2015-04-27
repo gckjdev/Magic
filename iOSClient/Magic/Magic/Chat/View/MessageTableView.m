@@ -107,7 +107,9 @@
     
     // 2.给cell传递模型
     cell.messageFrame = self.messageFrames[indexPath.row];
-    cell.delegate = self;
+    cell.delegate = self.controller;
+    
+    
     // 3.返回cell
     return cell;
     
@@ -137,17 +139,5 @@
 }
 
 
-#pragma mark - ChatCellDelegate
-
--(void)imageViewSinglePress:(PBChat*)pbChat image:(UIImage*)image;
-{
-    EXECUTE_BLOCK(self.imageViewSinglePressBlock ,pbChat,image);
-
-}
-
--(void)voiceViewSinglePress:(PBChat*)pbChat cell:(ChatCell *)cell
-{
-    EXECUTE_BLOCK(self.voiceViewSinglePressBlock,pbChat ,cell);
-}
 
 @end

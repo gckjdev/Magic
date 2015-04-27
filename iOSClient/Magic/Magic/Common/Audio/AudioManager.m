@@ -86,6 +86,7 @@
 }
 
 -(void)recorderEnd{
+    
     [_recorder stop];
 }
 

@@ -27,7 +27,7 @@
 
 #define DEFAULT_SAVE_AUDIO_NAME @"user_talking.wav"
 
-@interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate>
+@interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate,ChatCellDelegate>
 @property (nonatomic,strong) ChatToolView   *toolView;
 @property (nonatomic,strong) MessageTableView *tableView;
 @property (nonatomic,strong) NSMutableArray*   messageFrames;
@@ -90,7 +90,7 @@
     self.tableView = [[MessageTableView alloc]init];
    
     _tableView.viewHeight = _toolViewHeight;
-    
+    _tableView.controller = self;
     
     [self.view addSubview:self.tableView];
     
@@ -104,14 +104,7 @@
  
     [_tableView RefreshData];
     
-    __weak typeof(self) weakSelf = self;
-    _tableView.imageViewSinglePressBlock = ^(PBChat* pbChat,UIImage *image){
-        TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
-        [weakSelf presentViewController:vc animated:YES completion:nil];
-    };
-    _tableView.voiceViewSinglePressBlock = ^(PBChat* pbChat,ChatCell *cell){
-        
-    };
+
 }
 
 -(void)setupToolView{
@@ -235,6 +228,19 @@
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+#pragma mark - ChatCellDelegate
+
+-(void)imageViewSinglePress:(PBChat*)pbChat image:(UIImage*)image;
+{
+    TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
+    [self presentViewController:vc animated:YES completion:nil];
+    
+}
+
+-(void)voiceViewSinglePress:(PBChat*)pbChat cell:(ChatCell *)cell
+{
+//    EXECUTE_BLOCK(self.voiceViewSinglePressBlock,pbChat ,cell);
 }
 
 @end
