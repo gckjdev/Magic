@@ -262,6 +262,7 @@ message PBChat
     optional string image = 11;                 // 消息图片
     optional string thumb = 12;                 // 消息图片缩略图
     optional string voice = 13;                 // 语音
+    optional int32  duration = 14;              // 录音时长，秒
 
     optional int32 createDate = 20;             // 创建日期
     optional int32 status = 21;                 // 状态，参考PBChatStatus

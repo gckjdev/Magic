@@ -5999,6 +5999,7 @@ static PBUserGroupList* defaultPBUserGroupListInstance = nil;
 @property (strong) NSString* image;
 @property (strong) NSString* thumb;
 @property (strong) NSString* voice;
+@property SInt32 duration;
 @property SInt32 createDate;
 @property SInt32 status;
 @property SInt32 type;
@@ -6096,6 +6097,13 @@ static PBUserGroupList* defaultPBUserGroupListInstance = nil;
   hasVoice_ = !!_value_;
 }
 @synthesize voice;
+- (BOOL) hasDuration {
+  return !!hasDuration_;
+}
+- (void) setHasDuration:(BOOL) _value_ {
+  hasDuration_ = !!_value_;
+}
+@synthesize duration;
 - (BOOL) hasCreateDate {
   return !!hasCreateDate_;
 }
@@ -6138,6 +6146,7 @@ static PBUserGroupList* defaultPBUserGroupListInstance = nil;
     self.image = @"";
     self.thumb = @"";
     self.voice = @"";
+    self.duration = 0;
     self.createDate = 0;
     self.status = 0;
     self.type = 0;
@@ -6215,6 +6224,9 @@ static PBChat* defaultPBChatInstance = nil;
   if (self.hasVoice) {
     [output writeString:13 value:self.voice];
   }
+  if (self.hasDuration) {
+    [output writeInt32:14 value:self.duration];
+  }
   if (self.hasCreateDate) {
     [output writeInt32:20 value:self.createDate];
   }
@@ -6271,6 +6283,9 @@ static PBChat* defaultPBChatInstance = nil;
   }
   if (self.hasVoice) {
     size_ += computeStringSize(13, self.voice);
+  }
+  if (self.hasDuration) {
+    size_ += computeInt32Size(14, self.duration);
   }
   if (self.hasCreateDate) {
     size_ += computeInt32Size(20, self.createDate);
@@ -6364,6 +6379,9 @@ static PBChat* defaultPBChatInstance = nil;
   if (self.hasVoice) {
     [output appendFormat:@"%@%@: %@\n", indent, @"voice", self.voice];
   }
+  if (self.hasDuration) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"duration", [NSNumber numberWithInteger:self.duration]];
+  }
   if (self.hasCreateDate) {
     [output appendFormat:@"%@%@: %@\n", indent, @"createDate", [NSNumber numberWithInteger:self.createDate]];
   }
@@ -6411,6 +6429,8 @@ static PBChat* defaultPBChatInstance = nil;
       (!self.hasThumb || [self.thumb isEqual:otherMessage.thumb]) &&
       self.hasVoice == otherMessage.hasVoice &&
       (!self.hasVoice || [self.voice isEqual:otherMessage.voice]) &&
+      self.hasDuration == otherMessage.hasDuration &&
+      (!self.hasDuration || self.duration == otherMessage.duration) &&
       self.hasCreateDate == otherMessage.hasCreateDate &&
       (!self.hasCreateDate || self.createDate == otherMessage.createDate) &&
       self.hasStatus == otherMessage.hasStatus &&
@@ -6458,6 +6478,9 @@ static PBChat* defaultPBChatInstance = nil;
   }
   if (self.hasVoice) {
     hashCode = hashCode * 31 + [self.voice hash];
+  }
+  if (self.hasDuration) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.duration] hash];
   }
   if (self.hasCreateDate) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.createDate] hash];
@@ -6549,6 +6572,9 @@ static PBChat* defaultPBChatInstance = nil;
   }
   if (other.hasVoice) {
     [self setVoice:other.voice];
+  }
+  if (other.hasDuration) {
+    [self setDuration:other.duration];
   }
   if (other.hasCreateDate) {
     [self setCreateDate:other.createDate];
@@ -6644,6 +6670,10 @@ static PBChat* defaultPBChatInstance = nil;
       }
       case 106: {
         [self setVoice:[input readString]];
+        break;
+      }
+      case 112: {
+        [self setDuration:[input readInt32]];
         break;
       }
       case 160: {
@@ -6897,6 +6927,22 @@ static PBChat* defaultPBChatInstance = nil;
 - (PBChatBuilder*) clearVoice {
   resultPbchat.hasVoice = NO;
   resultPbchat.voice = @"";
+  return self;
+}
+- (BOOL) hasDuration {
+  return resultPbchat.hasDuration;
+}
+- (SInt32) duration {
+  return resultPbchat.duration;
+}
+- (PBChatBuilder*) setDuration:(SInt32) value {
+  resultPbchat.hasDuration = YES;
+  resultPbchat.duration = value;
+  return self;
+}
+- (PBChatBuilder*) clearDuration {
+  resultPbchat.hasDuration = NO;
+  resultPbchat.duration = 0;
   return self;
 }
 - (BOOL) hasCreateDate {

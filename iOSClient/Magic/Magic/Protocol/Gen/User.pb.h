@@ -1312,6 +1312,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 @interface PBChat : PBGeneratedMessage<GeneratedMessageProtocol> {
 @private
   BOOL hasFromAgent_:1;
+  BOOL hasDuration_:1;
   BOOL hasCreateDate_:1;
   BOOL hasStatus_:1;
   BOOL hasType_:1;
@@ -1328,6 +1329,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
   BOOL hasFromDevice_:1;
   BOOL hasToUser_:1;
   BOOL fromAgent_:1;
+  SInt32 duration;
   SInt32 createDate;
   SInt32 status;
   SInt32 type;
@@ -1356,6 +1358,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 - (BOOL) hasImage;
 - (BOOL) hasThumb;
 - (BOOL) hasVoice;
+- (BOOL) hasDuration;
 - (BOOL) hasCreateDate;
 - (BOOL) hasStatus;
 - (BOOL) hasType;
@@ -1372,6 +1375,7 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 @property (readonly, strong) NSString* image;
 @property (readonly, strong) NSString* thumb;
 @property (readonly, strong) NSString* voice;
+@property (readonly) SInt32 duration;
 @property (readonly) SInt32 createDate;
 @property (readonly) SInt32 status;
 @property (readonly) SInt32 type;
@@ -1477,6 +1481,11 @@ NSString *NSStringFromPBAgentStatus(PBAgentStatus value);
 - (NSString*) voice;
 - (PBChatBuilder*) setVoice:(NSString*) value;
 - (PBChatBuilder*) clearVoice;
+
+- (BOOL) hasDuration;
+- (SInt32) duration;
+- (PBChatBuilder*) setDuration:(SInt32) value;
+- (PBChatBuilder*) clearDuration;
 
 - (BOOL) hasCreateDate;
 - (SInt32) createDate;
