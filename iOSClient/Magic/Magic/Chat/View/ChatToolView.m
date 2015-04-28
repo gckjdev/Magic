@@ -19,6 +19,14 @@
 #define COMMON_ICON_SIZE 40.0f
 
 @interface ChatToolView()
+@property (nonatomic,strong) UIButton       *soundBtn;
+
+@property (nonatomic,strong) UIButton       *sendBtn;
+@property (nonatomic,strong) UIButton       *faceBtn;
+@property (nonatomic,strong) UIButton       *plusBtn;
+
+@property (nonatomic,strong) UIButton       *talkButton;
+@property (nonatomic, assign) BOOL          isTalkMode;
 @end
 
 @implementation ChatToolView
@@ -34,14 +42,32 @@
     }
     return self;
 }
+#pragma mark - setup
 -(void)setupView{
+    
+    _isTalkMode = NO;
+    
+    [self setupSoundButton];
+    [self setupContentView];
+    [self setupPlaceHolder];
+    [self setupTalkButton];
+    [self setupFaceButton];
+    [self setupPlusButton];
+    [self setupSendButton];
+ 
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showSendButton) name:@"MESSAGE_HAVE_TEXT" object:nil];
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hideSendButton) name:@"MESSAGE_HAVE_NO_TEXT" object:nil];
+}
+
+-(void)setupSoundButton{
     _soundBtn = [[UIButton alloc]init];
-    [_soundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
-    [_soundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_press"] forState:UIControlStateHighlighted];
+    [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoice"] forState:UIControlStateNormal];
+    [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoiceHL"] forState:UIControlStateHighlighted];
+    
     [self addSubview:_soundBtn];
-    [_soundBtn addTarget:self action:@selector(soundButtonTouchDownAciton) forControlEvents:UIControlEventTouchDown];
     [_soundBtn addTarget:self action:@selector(soundButtonTouchUpInsideAciton) forControlEvents:UIControlEventTouchUpInside];
-    [_soundBtn addTarget:self action:@selector(soundButtonTouchTouchUpOutsideAction) forControlEvents:UIControlEventTouchUpOutside];
+    
     
     [_soundBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(COMMON_ICON_SIZE, COMMON_ICON_SIZE));
@@ -49,12 +75,13 @@
         make.centerY.equalTo(self);
     }];
     
-    
+}
+
+-(void)setupContentView{
     _contentView = [[UITextView alloc]init];
     _contentView.backgroundColor = BARRAGE_BG_COLOR;
     [self addSubview:_contentView];
     [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(40, 40));
         make.left.equalTo(self).offset(COMMON_ICON_SIZE);
         make.centerY.equalTo(self);
 #ifdef showFaceBtn
@@ -64,8 +91,52 @@
 #endif
         make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
     }];
-    
+}
 
+-(void)setupPlaceHolder{
+    
+    _placeHolder = [[UILabel alloc]init];
+    [_placeHolder setUserInteractionEnabled:NO];
+    [_placeHolder setText:@"请问需要什么服务"];
+    [_placeHolder setFont:BARRAGE_LITTLE_LABEL_FONT];
+    [_placeHolder setTextColor:COLOR255(0,0,0,100)];
+    [_placeHolder setTextAlignment:NSTextAlignmentLeft];
+    [self addSubview:_placeHolder];
+    [_placeHolder mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(COMMON_ICON_SIZE+5);
+        make.centerY.equalTo(self);
+        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
+        make.height.equalTo(self);
+    }];
+    
+}
+
+-(void)setupTalkButton{
+    
+    _talkButton = [[UIButton alloc]init];
+    [_talkButton setTitle:@"按住 说话" forState:UIControlStateNormal];
+    [_talkButton setTitle:@"松开 结束"  forState:UIControlStateHighlighted];
+    [_talkButton.titleLabel  setFont:BARRAGE_TEXTFIELD_FONT];
+    [_talkButton setTitleColor:COLOR255(0,0,0,200) forState:UIControlStateNormal];
+    [_talkButton setHidden:YES];
+    [_talkButton.layer setBorderWidth:1.0];
+    [_talkButton.layer setCornerRadius:5.0];
+    UIColor *borderColor = COLOR255(0,0,0,100);
+    [_talkButton.layer setBorderColor: borderColor.CGColor];
+    [self addSubview:_talkButton];
+    [_talkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(COMMON_ICON_SIZE);
+        make.centerY.equalTo(self);
+        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
+        make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
+    }];
+    
+    [_talkButton addTarget:self action:@selector(talkButtonTouchDownAction) forControlEvents:UIControlEventTouchDown];
+    [_talkButton addTarget:self action:@selector(talkButtonTouchUpInsideAction) forControlEvents:UIControlEventTouchUpInside];
+    [_talkButton addTarget:self action:@selector(talkButtonTouchCancelAction) forControlEvents:UIControlEventTouchCancel];
+}
+
+-(void)setupFaceButton{
 #ifdef showFaceBtn
     _faceBtn = [[UIButton alloc]init];
     [_faceBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_nor"] forState:UIControlStateNormal];
@@ -78,6 +149,8 @@
         make.centerY.equalTo(self);
     }];
 #endif
+}
+-(void)setupPlusButton{
     _plusBtn = [[UIButton alloc]init];
     
     [_plusBtn setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
@@ -91,12 +164,13 @@
         make.right.equalTo(self);
         make.centerY.equalTo(self);
     }];
-    
-    
+}
+
+-(void)setupSendButton{
     _sendBtn = [[UIButton alloc]init];
     [_sendBtn setTitle:@"发送" forState:UIControlStateNormal];
     [_sendBtn.titleLabel setFont:BARRAGE_IMAGEBUTTON_BENEATH_FONT];
-//    [_sendBtn setTitleColor:BARRAGE_IMAGEBUTTON_BENEATH_FONT forState:UIControlStateNormal];
+    //    [_sendBtn setTitleColor:BARRAGE_IMAGEBUTTON_BENEATH_FONT forState:UIControlStateNormal];
     [_sendBtn setTitleColor: BARRAGE_LABEL_COLOR forState:UIControlStateNormal];
     [_sendBtn setHidden:YES];
     [_sendBtn addTarget:self action:@selector(sendButtonAction) forControlEvents:UIControlEventTouchUpInside];
@@ -106,12 +180,14 @@
         make.right.equalTo(self);
         make.centerY.equalTo(self);
     }];
-    
-    
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showSendButton) name:@"MESSAGE_HAVE_TEXT" object:nil];
-     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hideSendButton) name:@"MESSAGE_HAVE_NO_TEXT" object:nil];
 }
+
+
+
+#pragma mark - Action
+
+
+
 -(void)sendButtonAction{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(sendMessageButtonSingleTouch:)]) {
         [self.delegate sendMessageButtonSingleTouch:_contentView.text];
@@ -137,7 +213,7 @@
 -(void)plusBtnAction{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(plusButtonSingleTouch)]) {
 
-#warning -wait for image select
+
         [self.delegate plusButtonSingleTouch];
     }
 }
@@ -147,21 +223,54 @@
     }
 }
 -(void)soundButtonTouchDownAciton{
-//    [[AudioManager sharedInstance] recorderStart];
+    [[AudioManager sharedInstance] recorderStart];
     
 }
 -(void)soundButtonTouchUpInsideAciton{
-//    [[AudioManager sharedInstance] recorderEnd];
-#warning - todo save audio data
-//    
-//    NSString *docDir = [FileUtil getAppDocumentDir];
-//    NSString *playname = [NSString stringWithFormat:@"%@/play.aac",docDir];
-
+    _isTalkMode = !_isTalkMode;
+    
+    if (_isTalkMode) {
+        [_talkButton setHidden:NO];
+        [_contentView setHidden:YES];
+        [_placeHolder setHidden:YES];
+        
+        [_soundBtn setImage:[UIImage imageNamed:@"ToolViewKeyboard"]
+                   forState:UIControlStateNormal];
+        [_soundBtn setImage:[UIImage imageNamed:@"ToolViewKeyboardHL"]
+                   forState:UIControlStateHighlighted];
+       
+    }
+    else{
+        [_talkButton setHidden:YES];
+        [_contentView setHidden:NO];
+        [_placeHolder setHidden:NO];
+        [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoice"] forState:UIControlStateNormal];
+        [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoiceHL"] forState:UIControlStateHighlighted];
+        
+    }
+    
     
 }
--(void)soundButtonTouchTouchUpOutsideAction{
-    [[AudioManager sharedInstance] recorderEnd];
+
+
+-(void)talkButtonTouchDownAction{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(talkButtonTouchDown)]) {
+        [self.delegate talkButtonTouchDown];
+    }
 }
+
+-(void)talkButtonTouchUpInsideAction{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(talkButtonTouchUpInside)]) {
+        [self.delegate talkButtonTouchUpInside];
+    }
+}
+
+-(void)talkButtonTouchCancelAction{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(talkButtonTouchCancel)]) {
+        [self.delegate talkButtonTouchCancel];
+    }
+}
+
 - (void)updateConstraints {
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(_viewHeight);

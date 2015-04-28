@@ -10,13 +10,16 @@
 
 @interface AudioManager : NSObject
 
-+ (id) sharedInstance;
++ (instancetype) sharedInstance;
 + (void)setPermission;
 
 
+-(void)recorderInitWithPath:(NSURL*)PathURL;
 -(void)recorderStart;
 -(void)recorderEnd;
+-(void)recorderCancel;
 
+-(void)playInitWithFile:(NSURL*)fileURL;
 -(void)playerStart;
 -(void)playerStop;
 -(void)playerPause;

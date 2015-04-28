@@ -18,13 +18,22 @@
 #import "ChangeAvatar.h"
 #import "ChatCellFrame.h"
 #import "MessageTableView.h"
+#import "TGRImageViewController.h"
+#import "AudioManager.h"
+#import "FileUtil.h"
+#import "StringUtil.h"
 
-@interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate>
+
+
+#define DEFAULT_SAVE_AUDIO_NAME @"user_talking.wav"
+
+@interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate,ChatCellDelegate>
 @property (nonatomic,strong) ChatToolView   *toolView;
 @property (nonatomic,strong) MessageTableView *tableView;
 @property (nonatomic,strong) NSMutableArray*   messageFrames;
 @property (nonatomic, assign) CGFloat      toolViewHeight;
 @property (nonatomic,strong) ChangeAvatar   *changeAvatar;
+@property (nonatomic,strong) NSString   *tmpMyVoiceFile;
 @end
 
 
@@ -55,8 +64,15 @@
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
--(void)leftDrawerButtonPress:(id)sender{
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
 }
 
 #pragma mark - setup
@@ -74,7 +90,7 @@
     self.tableView = [[MessageTableView alloc]init];
    
     _tableView.viewHeight = _toolViewHeight;
-    
+    _tableView.controller = self;
     
     [self.view addSubview:self.tableView];
     
@@ -87,6 +103,8 @@
     }];
  
     [_tableView RefreshData];
+    
+
 }
 
 -(void)setupToolView{
@@ -101,59 +119,21 @@
         make.height.mas_equalTo(_toolView.viewHeight);
     }];
 }
--(void)sendMessageButtonSingleTouch:(NSString*)text
-{
-//    [self addMessage:text type:MESSAGEFROMTYPE_ME];
-    [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
-        [_tableView RefreshData];
-    }];
-
-}
--(void)expressionButtonSingleTouch{
-//    [self addMessageImage:@"test" type:MESSAGEFROMTYPE_OTHER];
-//    [[ChatService sharedInstance]sendChatWithImage:[UIImage imageNamed:@"test"] toUserId:nil callback:^(NSError *error) {
-//        [_tableView RefreshData];
-//    }];
-  
- 
-}
--(void)plusButtonSingleTouch
-{
-    
-    [self.changeAvatar showSelectionView:self
-                                delegate:nil
-                      selectedImageBlock:^(UIImage *image) {
-                          
-                          if (image){
-                              [[ChatService sharedInstance]sendChatWithImage:image toUserId:nil callback:^(NSError *error) {
-                                  [_tableView RefreshData];
-                              }];
-                              
-                          }
-                          
-                      } didSetDefaultBlock:^{
-                          
-                      } title:@"请选择"
-                         hasRemoveOption:NO
-                            canTakePhoto:YES
-                       userOriginalImage:YES];
-}
 
 
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-
-}
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-
-}
 
 #pragma mark - InputView
 - (void)textViewDidChange:(UITextView *)textView
 {
     CGSize size = textView.contentSize;
+    
+    if (textView.text.length>0) {
+        [_toolView.placeHolder setHidden:YES];
+    }
+    else{
+        [_toolView.placeHolder setHidden:NO];
+    }
+    
     if (size.height<MAX_HEIGHT_INPUTVIEW) {
         _toolViewHeight = CHATTOOLVIEW_HEIGHT + (size.height - MAX_HEIGHT_INPUTVIEW/2);
         _toolView.viewHeight = _toolViewHeight;
@@ -180,76 +160,87 @@
     }
    
 }
-//-(void)addMessageImage:(NSString*)image type:(MessageFromType)fromType{
-//    // 1.数据模型
-//    ChatMessage *msg = [[ChatMessage alloc] init];
-//    msg.fromType = fromType;
-//    msg.type = MESSAGETYPE_IMAGE;
-//    
-//    // 设置数据模型的时间
-//    NSDate *now = [NSDate date];
-//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-//    fmt.dateFormat = @"HH:mm";
-//    // NSDate  --->  NSString
-//    // NSString ---> NSDate
-//    //    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-//    //  2014-08-09 15:45:56
-//    // 09/08/2014  15:45:56
-//    msg.time = [fmt stringFromDate:now];
-//    
-//    // 看是否需要隐藏时间
-//    ChatCellFrame *lastMf = [self.messageFrames lastObject];
-//    ChatMessage *lastMsg = lastMf.message;
-//    msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-//    msg.myImage = [UIImage imageNamed:image];
-//    
-//    // 2.frame模型
-//    ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-//    mf.message = msg;
-//    [self.messageFrames addObject:mf];
-//    _tableView.messageFrames = [self.messageFrames copy];
-//    // 3.刷新表格
-//    [self.tableView reloadData];
-//    
-//    // 4.自动滚动表格到最后一行
-//    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
-//    [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//}
-//-(void)addMessage:(NSString*)text type:(MessageFromType)fromType
-//{
-//    // 1.数据模型
-//    ChatMessage *msg = [[ChatMessage alloc] init];
-//    msg.fromType = fromType;
-//    msg.content  = text;
-//    msg.type = MESSAGETYPE_TEXT;
-//    
-//    // 设置数据模型的时间
-//    NSDate *now = [NSDate date];
-//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-//    fmt.dateFormat = @"HH:mm";
-//    // NSDate  --->  NSString
-//    // NSString ---> NSDate
-//    //    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-//    //  2014-08-09 15:45:56
-//    // 09/08/2014  15:45:56
-//    msg.time = [fmt stringFromDate:now];
-//    
-//    // 看是否需要隐藏时间
-//    ChatCellFrame *lastMf = [self.messageFrames lastObject];
-//    ChatMessage *lastMsg = lastMf.message;
-//    msg.hideTime = [msg.time isEqualToString:lastMsg.time];
-//  
-//    
-//    // 2.frame模型
-//    ChatCellFrame *mf = [[ChatCellFrame alloc] init];
-//    mf.message = msg;
-//    [self.messageFrames addObject:mf];
-//    _tableView.messageFrames = [self.messageFrames copy];
-//    // 3.刷新表格
-//    [self.tableView reloadData];
-//    
-//    // 4.自动滚动表格到最后一行
-//    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.messageFrames.count - 1 inSection:0];
-//    [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//}
+#pragma mark - Action
+
+-(void)talkButtonTouchDown
+{
+    NSString *tmpDir = [FileUtil getAppTempDir];
+
+    _tmpMyVoiceFile = [NSString stringWithFormat:@"%@/%@.wav",tmpDir,[NSString GetUUID]];
+    PPDebug(@"neng : wav save  : %@ ",_tmpMyVoiceFile);
+    [[AudioManager sharedInstance]recorderInitWithPath:[NSURL URLWithString:_tmpMyVoiceFile]];
+}
+
+-(void)talkButtonTouchUpInside
+{
+    [[AudioManager sharedInstance]recorderEnd];
+    
+ 
+    
+    [[ChatService sharedInstance]sendChatWithAudio:_tmpMyVoiceFile toUserId:@""
+                                          callback:^(NSError *error)
+    {
+        if (error == nil) {
+            [_tableView RefreshData];
+        }
+        
+    }];
+}
+
+-(void)talkButtonTouchCancel
+{
+    [[AudioManager sharedInstance]recorderCancel];
+}
+
+-(void)sendMessageButtonSingleTouch:(NSString*)text
+{
+    //    [self addMessage:text type:MESSAGEFROMTYPE_ME];
+    [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
+        if (error == nil) {
+             [_tableView RefreshData];
+        }
+       
+    }];
+    
+}
+
+-(void)plusButtonSingleTouch
+{
+    
+    [self.changeAvatar showSelectionView:self
+                                delegate:nil
+                      selectedImageBlock:^(UIImage *image) {
+                          
+                          if (image){
+                              [[ChatService sharedInstance]sendChatWithImage:image toUserId:nil callback:^(NSError *error) {
+                                  [_tableView RefreshData];
+                              }];
+                              
+                          }
+                          
+                      } didSetDefaultBlock:^{
+                          
+                      } title:@"请选择"
+                         hasRemoveOption:NO
+                            canTakePhoto:YES
+                       userOriginalImage:YES];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+#pragma mark - ChatCellDelegate
+
+-(void)imageViewSinglePress:(PBChat*)pbChat image:(UIImage*)image;
+{
+    TGRImageViewController *vc = [[TGRImageViewController alloc] initWithImage:image];
+    [self presentViewController:vc animated:YES completion:nil];
+    
+}
+
+-(void)voiceViewSinglePress:(PBChat*)pbChat cell:(ChatCell *)cell
+{
+//    EXECUTE_BLOCK(self.voiceViewSinglePressBlock,pbChat ,cell);
+}
+
 @end

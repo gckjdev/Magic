@@ -14,7 +14,7 @@
 @implementation CreateFileInfo
 +(NSString*)audioCreateKey:(NSString*)keyPrefix
 {
-    NSString* pathExt = @"aac";
+    NSString* pathExt = @"wav";
     NSString* uuid = [NSString GetUUID];
     NSString* date = dateToStringByFormat([NSDate date], @"yyyyMMdd");
     NSString* key = [NSString stringWithFormat:@"%@/audio/%@/%@.%@", keyPrefix, date, uuid, pathExt];

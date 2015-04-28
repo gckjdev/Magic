@@ -16,6 +16,8 @@
 
 #define ICONSIZE 40.0f
 
+#define SMALL_ICON_SIZE 20.0f
+
 #define CELLPADDING 0.0f
 
 #define COMMON_SPACE 6.0f
@@ -69,9 +71,10 @@
         CGSize textRealSize = [message.content sizeWithFont:MJTextFont maxSize:textMaxSize];
         CGSize textBtnSize = CGSizeMake(textRealSize.width + MJTextPadding*2, textRealSize.height + MJTextPadding*2);
         showSize = textBtnSize;
-        
-       
-     
+    }
+    else if (_message.type == MESSAGETYPE_VOICE){
+        CGSize textBtnSize = CGSizeMake(100, 50);
+        showSize = textBtnSize;
     }
     
     
@@ -89,6 +92,12 @@
     else if(_message.type == MESSAGETYPE_TEXT){
         _textF = (CGRect){{contentX,contentY},showSize};
         _contentF = (CGRect){{contentX,contentY},showSize};
+    }else if(_message.type == MESSAGETYPE_VOICE){
+        CGFloat posX = contentX + showSize.width - SMALL_ICON_SIZE - MJTextPadding;
+        CGFloat posY = contentY + (showSize.height - SMALL_ICON_SIZE)/2;
+        _voiceAnimationF = (CGRect){{posX,posY},CGSizeMake(SMALL_ICON_SIZE, SMALL_ICON_SIZE)};
+        _contentF = (CGRect){{contentX,contentY},showSize};
+        
     }
     
     

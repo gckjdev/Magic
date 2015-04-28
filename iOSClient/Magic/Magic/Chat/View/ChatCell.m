@@ -17,12 +17,15 @@
 #import "UIViewUtils.h"
 #import "MKBlockActionSheet.h"
 #import "TimeUtils.h"
+#import "Masonry.h"
 
 @interface ChatCell()
 @property (nonatomic,strong) UILabel         *timeView;
 @property (nonatomic,strong) UIImageView     *iconView;
 @property (nonatomic,strong) UIButton        *textView;
 @property (nonatomic,strong) UIImageView     *showImageView;
+@property (nonatomic,strong) UIImageView     *voiceAnimationView;
+
 @property (nonatomic,strong) UserAvatarView  *avatarView;
 @end
 
@@ -42,46 +45,120 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // 子控件的创建和初始化
-        // 1.时间
-        UILabel *timeView = [[UILabel alloc] init];
-        timeView.textAlignment = NSTextAlignmentCenter;
-        timeView.textColor = BARRAGE_LABEL_GRAY_COLOR;
-        timeView.font = [UIFont systemFontOfSize:13];
-        [self.contentView addSubview:timeView];
-        self.timeView = timeView;
-        
-        // 2.头像
-        _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
-        [self.contentView addSubview:_avatarView];
-        
-    
-        // 3.正文
-        UIButton *textView = [[UIButton alloc] init];
-        textView.titleLabel.numberOfLines = 0; // 自动换行
-        textView.titleLabel.font = MJTextFont;
-        textView.contentEdgeInsets = UIEdgeInsetsMake(MJTextPadding, MJTextPadding, MJTextPadding, MJTextPadding);
-        [textView setTitleColor:BARRAGE_LABEL_COLOR forState:UIControlStateNormal];
-        
-        UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(textViewLongPressAction:)];
-        
-        [longPressRecognizer setNumberOfTouchesRequired:1];
-        
-        [textView addGestureRecognizer:longPressRecognizer];
-        [self.contentView addSubview:textView];
-        self.textView = textView;
-
-        //4.图片
-        _showImageView = [[UIImageView alloc]init];
-//        _showImageView.backgroundColor = [UIColor redColor];
-        [self.contentView addSubview:_showImageView];
-        
-        
-        
-        // 6.设置cell的背景色
-        self.backgroundColor = [UIColor clearColor];
+        [self setupView];
     }
     return self;
+}
+
+#pragma mark -setup
+-(void)setupView{
+    // 子控件的创建和初始化
+
+    [self setupTimeView];
+    [self setupAvatar];
+    [self setupTextView];
+    [self setupImageView];
+    [self setupVoiceAnimationView];
+    
+    // 6.设置cell的背景色
+    self.backgroundColor = [UIColor clearColor];
+}
+
+
+-(void)setupTimeView{
+    // 1.时间
+    UILabel *timeView = [[UILabel alloc] init];
+    timeView.textAlignment = NSTextAlignmentCenter;
+    timeView.textColor = [UIColor grayColor];
+    timeView.font = [UIFont systemFontOfSize:13];
+    [self.contentView addSubview:timeView];
+    self.timeView = timeView;
+}
+
+-(void)setupAvatar{
+    // 2.头像
+    _avatarView =  [[UserAvatarView alloc]initWithUser:nil frame:CGRectZero borderWidth:1.0f];
+    [self.contentView addSubview:_avatarView];
+}
+
+-(void)setupTextView{
+    // 3.正文
+    UIButton *textView = [[UIButton alloc] init];
+    textView.titleLabel.numberOfLines = 0; // 自动换行
+    textView.titleLabel.font = MJTextFont;
+    textView.contentEdgeInsets = UIEdgeInsetsMake(MJTextPadding, MJTextPadding, MJTextPadding, MJTextPadding);
+    [textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.textView = textView;
+    [self.contentView addSubview:textView];
+    
+    [self textViewAddGesture];
+}
+
+-(void)setupImageView{
+
+    //4.图片
+    _showImageView = [[UIImageView alloc]init];
+    //        _showImageView.backgroundColor = [UIColor redColor];
+    [self.contentView addSubview:_showImageView];
+    
+}
+
+-(void)setupVoiceAnimationView{
+    _voiceAnimationView = [[UIImageView alloc]init];
+    [self.contentView addSubview:_voiceAnimationView];
+    [_voiceAnimationView setContentMode:UIViewContentModeScaleAspectFit];
+    NSMutableArray *imageArray = [NSMutableArray array];
+    for (int i = 0; i< 3; i++) {
+        NSString *tmpName = [NSString stringWithFormat:@"SenderVoiceNodePlaying00%d",i+1];
+        UIImage *image = [UIImage imageNamed:tmpName];
+        [imageArray addObject:image];
+    }
+    [_voiceAnimationView setAnimationImages:[imageArray copy]];
+    [_voiceAnimationView setAnimationRepeatCount:0];
+    [_voiceAnimationView setAnimationDuration:0.8];
+    [_voiceAnimationView setUserInteractionEnabled:NO];
+    [_voiceAnimationView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
+    [_voiceAnimationView setHidden:YES];
+//    [_voiceAnimationView startAnimating];
+}
+#pragma mark - Action
+- (void)textViewAddGesture{
+    
+    
+    // 单击的 Recognizer
+    UITapGestureRecognizer* singleRecognizer;
+    singleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewSinglePressAction:)];
+    singleRecognizer.numberOfTapsRequired = 1; // 单击
+    
+    //给view添加一个手势监测；
+    [_textView addGestureRecognizer:singleRecognizer];
+    
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(textViewLongPressAction:)];
+    
+    [longPressRecognizer setNumberOfTouchesRequired:1];
+    
+    [_textView addGestureRecognizer:longPressRecognizer];
+    
+   
+    
+}
+-(void)textViewSinglePressAction:(UITapGestureRecognizer*)sender{
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        if (_messageFrame.message.type == MESSAGETYPE_IMAGE) {
+            if (self.delegate&&[self.delegate respondsToSelector:@selector(imageViewSinglePress:image:)])
+            {
+                [self.delegate imageViewSinglePress:_messageFrame.message.pbChat image:_showImageView.image];
+            }
+        }
+        else if (_messageFrame.message.type == MESSAGETYPE_VOICE){
+            if (self.delegate&&[self.delegate respondsToSelector:@selector(voiceViewSinglePress:cell:)])
+            {
+                [self voiceAnimationStart];
+                [self.delegate voiceViewSinglePress:_messageFrame.message.pbChat cell:self];
+            }
+        }
+
+    }
 }
 - (void)textViewLongPressAction:(UILongPressGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
@@ -107,6 +184,21 @@
     }
   
 }
+
+#pragma mark - Animation
+
+-(void)voiceAnimationStart
+{
+    [_voiceAnimationView startAnimating];
+}
+
+-(void)voiceAnimationStop
+{
+    [_voiceAnimationView stopAnimating];
+}
+
+#pragma mark - setupFrame 
+
 - (void)setMessageFrame:(ChatCellFrame *)messageFrame
 {
     _messageFrame = messageFrame;
@@ -162,16 +254,21 @@
 //                  _textView.frame =[self zoomContentView:imageZoomRect];
               }
         
-              
           }];
         
-
-//        PPDebug(@"neng : url %@",[NSURL URLWithString:message.image]);
         _showImageView.hidden = NO;
     }else{
         _showImageView.hidden = YES;
     }
     
+    
+    if (message.type == MESSAGETYPE_VOICE) {
+        [_voiceAnimationView setHidden:NO];
+        _voiceAnimationView.frame = messageFrame.voiceAnimationF;
+    }
+    else{
+        [_voiceAnimationView setHidden:YES];
+    }
 }
 -(NSString*)getShowTimeString{
     NSMutableString *result = [NSMutableString string];
@@ -180,58 +277,28 @@
     NSDateComponents *messageCmps = getDateComponents(message.time);
     
     if (isToday(message.time)) {
-        [result appendFormat:@"今天 %d:%d",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"今天 %ld:%ld",messageCmps.hour,messageCmps.minute];
     }
     else if(isYesterday(message.time)){
-        [result appendFormat:@"昨天 %d:%d",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"昨天 %ld:%ld",messageCmps.hour,messageCmps.minute];
     }
     else if(isTheDayBeforeYesterday(message.time))
     {
-        [result appendFormat:@"前天 %d:%d",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"前天 %ld:%ld",messageCmps.hour,messageCmps.minute];
     }
     else if(isThisYear(message.time)){
-        [result appendFormat:@"%d月%d号 %d:%d",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%ld月%ld号 %ld:%ld",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }else{
-        [result appendFormat:@"%d年%d月%d号 %d:%d",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%ld年%ld月%ld号 %ld:%ld",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }
     
     return [result copy];
 }
 -(CGRect)zoomImageFrame:(CGRect)imageSize{
     
-//    CGSize oldSize = _messageFrame.imageF.size;
     ChatMessage *message = _messageFrame.message;
     CGRect resultRect = imageSize;
-//    if (imageSize.width>oldSize.width&&imageSize.height>oldSize.height) {
-//        if (message.fromType == MESSAGEFROMTYPE_ME) {
-//            
-//            resultRect.origin.x = CGRectGetMaxX(resultRect) - oldSize.width;
-//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//        else{
-//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//    }else if (imageSize.width<oldSize.width&&imageSize.height<oldSize.height){
-//        if (message.fromType == MESSAGEFROMTYPE_ME) {
-//           
-//            resultRect.origin.x = CGRectGetMaxX(resultRect) - imageSize.width;
-//             resultRect.size = CGSizeMake(imageSize.width, imageSize.height);
-//        }
-//        else{
-//            resultRect.size = CGSizeMake(imageSize.width, imageSize.height);
-//        }
-//    }else{
-//        if (message.fromType == MESSAGEFROMTYPE_ME) {
-//           
-//            resultRect.origin.x = CGRectGetMaxX(resultRect) - oldSize.width;
-//             resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//        else{
-//            resultRect.size = CGSizeMake(oldSize.width, oldSize.height);
-//        }
-//    }
-    
- 
+
     resultRect.size.width -= 40;
     resultRect.size.height -= 40;
     if (message.fromType == MESSAGEFROMTYPE_ME) {
@@ -240,9 +307,7 @@
         resultRect.origin.y += 20;
     }
    
-  
-    
-    
+
     return resultRect;
 }
 @end
