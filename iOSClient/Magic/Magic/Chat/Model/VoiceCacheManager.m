@@ -7,8 +7,9 @@
 //
 
 #import "VoiceCacheManager.h"
-#import "TMDiskCache.h"
+
 #import "LevelDBManager.h"
+#import "FileUtil.h"
 
 #define DB_USER_CHAT               @"db_chatvoice_cache"
 
@@ -34,13 +35,22 @@ IMPL_SINGLETON_FOR_CLASS(VoiceCacheManager);
 
 -(void)setVoicePath:(NSString*)voiceURL filePath:(NSString*)filePath
 {
-    [_db setObject:filePath forKey:voiceURL];
+    
+    [_db setObject:filePath.lastPathComponent forKey:voiceURL];
 }
 
 -(NSString*)getVoicePath:(NSString*)voiceURL
 {
-    NSString *result = [_db objectForKey:voiceURL];
-    return result;
+    NSString *voiceName = [_db objectForKey:voiceURL];
+    if (voiceName ==nil) {
+        return nil;
+    }
+    NSMutableString *path = [NSMutableString string];
+    NSString *tmpPath = [[FileUtil getAppCacheDir]stringByAppendingPathComponent:@"chatvoice"];
+
+    [path appendString: [tmpPath stringByAppendingPathComponent:voiceName]];
+  
+    return [path copy];
 }
 
 -(void)removeVoicePath:(NSString*)voiceURL

@@ -256,20 +256,23 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 
 -(void)getVoiceFile:(PBChat*)pbChat callback:(GetVoicePathCallBack)callback{
     
-    NSMutableString* voiceFilePath = [[[VoiceCacheManager sharedInstance]
-                                       getVoicePath:pbChat.voice] mutableCopy];
+    NSString* voiceFilePath = [[VoiceCacheManager sharedInstance]
+                                       getVoicePath:pbChat.voice] ;
+    BOOL isExit = [FileUtil isPathExist:voiceFilePath];
+    if (voiceFilePath == nil || !isExit) {
     
-    if (voiceFilePath == nil) {
-        NSString *tmpDir = [FileUtil getAppTempDir];
-        NSString *tempPath = [NSString stringWithFormat:@"%@tmpVoice",tmpDir];
+        NSString *tempPath = [[FileUtil getAppTempDir]stringByAppendingPathComponent:@"tmpVoice"];
+        
         NSString *savePath = [NSString stringWithFormat:@"%@/chatvoice/%@.wav",[FileUtil getAppCacheDir],[NSString GetUUID]];
         [FileUtil createDir:savePath];
         
         [[ChatService sharedInstance]downloadDataFile:pbChat.voice saveFilePath:savePath tempFilePath:tempPath callback:^(NSString *filePath, NSError *error) {
             if (error == nil) {
                 PPDebug(@"download voicefile success path = %@",filePath);
-                [[VoiceCacheManager sharedInstance]setVoicePath:pbChat.voice filePath:filePath];
+             
+                [[VoiceCacheManager sharedInstance]setVoicePath:pbChat.voice filePath:filePath.lastPathComponent];
                 EXECUTE_BLOCK(callback,filePath);
+            
             }
             else{
                 PPDebug(@"download voicefile fail");
