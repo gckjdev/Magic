@@ -14,6 +14,7 @@
 #import "ColorInfo.h"
 #import "UIScrollView+MJRefresh.h"
 #import "PPDebug.h"
+#import "ChatManager.h"
 
 @interface MessageTableView()<UITableViewDataSource,UITableViewDelegate,ChatCellDelegate>
 
@@ -47,55 +48,84 @@
 }
 
 -(void)headRefreshAction{
-    [self headerEndRefreshing];
-}
-
--(void)RefreshData{
     
-    [[ChatService sharedInstance]getChatList:^(NSArray *chatArray, NSError *error) {
+    NSString *offsetId;
+    if ([_messageFrames count]>0) {
+        ChatCellFrame *tmpMessageFrame = _messageFrames[0];
+        offsetId = tmpMessageFrame.message.pbChat.chatId;
+    }
+    else{
+        offsetId = [NSString stringWithFormat:@""];
+    }
+    [[ChatService sharedInstance]getChatList:offsetId callback:^(NSArray *chatArray, NSError *error) {
         if (error == nil) {
-            NSMutableArray *messageFArray = [NSMutableArray array];
-            NSInteger len = [chatArray count];
-            for (int i = 0; i< len;i++) {
-                PBChat * tmpChat = chatArray[len - i - 1];
-                ChatMessage *message = [ChatMessage messageWithPBChat:tmpChat];
-                ChatCellFrame *lastMessageF = [messageFArray lastObject];
-                ChatMessage *lastMassage = lastMessageF.message;
-        
-                NSTimeInterval secondsInterval = [message.time timeIntervalSinceDate:lastMassage.time];
-                if (secondsInterval>60||i == 0) {
-                    message.hideTime = NO;
-                }
-                else{
-                    message.hideTime = YES;
-                }
-           
-                ChatCellFrame *messageF = [[ChatCellFrame alloc] init];
-                messageF.message = message;
-                [messageFArray addObject:messageF];
-            }
             
-            _messageFrames = messageFArray;
+            NSArray *localChatArray = [[ChatManager sharedInstance]chatList];
+            [self dealWithChatArray:localChatArray];
             
             [self reloadData];
-            
-            
-            NSInteger sectionNum = [self numberOfSections];
-            if (sectionNum<1) return;
-            NSInteger rowNum = [self numberOfRowsInSection:sectionNum-1];
-            if (rowNum<1) return;
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowNum-1 inSection:sectionNum-1];
-            [self scrollToRowAtIndexPath:indexPath
-                                  atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [self headerEndRefreshing];
         }
         else{
             POST_ERROR(@"加载数据失败");
         }
     }];
-
 }
 
+-(void)RefreshData{
+    
+    [[ChatService sharedInstance]getChatList:@"" callback:^(NSArray *chatArray, NSError *error) {
+        if (error == nil) {
+            
+            NSArray *localChatArray = [[ChatManager sharedInstance]chatList];
+            
+            [self dealWithChatArray:localChatArray];
+            
+            [self reloadData];
+            [self tableViewScrollToBottom];
+            
+        }
+        else{
+            POST_ERROR(@"加载数据失败");
+        }
+    }];
+}
+-(void)dealWithChatArray:(NSArray *)chatArray{
+    NSMutableArray *messageFArray = [NSMutableArray array];
+    NSInteger len = [chatArray count];
+    for (int i = 0; i< len;i++) {
+        PBChat * tmpChat = chatArray[len - i - 1];
+        ChatMessage *message = [ChatMessage messageWithPBChat:tmpChat];
+        ChatCellFrame *lastMessageF = [messageFArray lastObject];
+        ChatMessage *lastMassage = lastMessageF.message;
+        
+        NSTimeInterval secondsInterval = [message.time timeIntervalSinceDate:lastMassage.time];
+        if (secondsInterval>60||i == 0) {
+            message.hideTime = NO;
+        }
+        else{
+            message.hideTime = YES;
+        }
+        
+        ChatCellFrame *messageF = [[ChatCellFrame alloc] init];
+        messageF.message = message;
+        [messageFArray addObject:messageF];
+    }
+    
+    _messageFrames = messageFArray;
+    
+}
+-(void) tableViewScrollToBottom{
+    
+    NSInteger sectionNum = [self numberOfSections];
+    if (sectionNum<1) return;
+    NSInteger rowNum = [self numberOfRowsInSection:sectionNum-1];
+    if (rowNum<1) return;
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowNum-1 inSection:sectionNum-1];
+    [self scrollToRowAtIndexPath:indexPath
+                atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+}
 #pragma mark - UITableViewDelegate
 
 #pragma mark - UITableViewDataSource

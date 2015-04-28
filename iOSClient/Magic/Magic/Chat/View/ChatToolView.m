@@ -91,6 +91,8 @@
 #endif
         make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
     }];
+    
+   
 }
 
 -(void)setupPlaceHolder{
@@ -182,7 +184,11 @@
     }];
 }
 
-
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    
+    [_contentView becomeFirstResponder];
+}
 
 #pragma mark - Action
 
@@ -238,7 +244,7 @@
                    forState:UIControlStateNormal];
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewKeyboardHL"]
                    forState:UIControlStateHighlighted];
-       
+        [self endEditing:YES];
     }
     else{
         [_talkButton setHidden:YES];
@@ -247,6 +253,8 @@
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoice"] forState:UIControlStateNormal];
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoiceHL"] forState:UIControlStateHighlighted];
         
+       
+        [_contentView becomeFirstResponder];
     }
     
     

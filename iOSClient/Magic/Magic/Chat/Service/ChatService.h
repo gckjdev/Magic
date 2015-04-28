@@ -32,7 +32,7 @@ DEF_SINGLETON_FOR_CLASS(UserService);
                    toUserId:(NSString*)toUserId
                    callback:(SendChatWithAudioCallBackBlock)callback;
 
--(void)getChatList:(GetChatListCallBackBlock)callback;
+-(void)getChatList:(NSString*)ChatOffset callback:(GetChatListCallBackBlock)callback;
 
 -(void)reloadLatest;
 

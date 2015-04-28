@@ -24,12 +24,14 @@
 @implementation ChatService
 IMPL_SINGLETON_FOR_CLASS(UserService)
 
--(void)getChatList:(GetChatListCallBackBlock)callback
+-(void)getChatList:(NSString*)ChatOffset callback:(GetChatListCallBackBlock)callback
 {
     PBDataRequestBuilder* builder = [PBDataRequest builder];
     
     PBGetChatListRequestBuilder* reqBuilder = [PBGetChatListRequest builder];
-//    [reqBuilder setChatOffsetId:@""];
+    
+    [reqBuilder setChatOffsetId:ChatOffset];
+    
     [reqBuilder setLimit:30];
     PBGetChatListRequest *req = [reqBuilder build];
     
@@ -230,14 +232,6 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
 #pragma mark - ChatService Delegate
 
 - (void)requestFinished:(ASIHTTPRequest *)request {
-    
-//    
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:request.downloadDestinationPath] == NO){
-//        PPDebug(@"<downloadURL> %@ failure, file not downloaded", request.url);
-//        return;
-//    }
-//    
-//    PPDebug(@"<downloadURL> success, size=%lld", [FileUtil fileSizeAtPath:request.downloadDestinationPath]);
     
     EXECUTE_BLOCK(_downloadDataFileCallBackBlock,request.downloadDestinationPath,request.error);
     
