@@ -15,6 +15,11 @@
 #import "ASIHTTPRequest.h"
 #import "FileUtil.h"
 
+@interface ChatService ()
+
+@property (nonatomic,copy) DownloadDataFileCallBackBlock downloadDataFileCallBackBlock;
+@end
+
 @implementation ChatService
 IMPL_SINGLETON_FOR_CLASS(UserService)
 
@@ -179,9 +184,9 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
 
 // call this method to download data
 - (void)downloadDataFile:(NSString*)dataURL
-            saveFilePath:(NSString*)saveFilePath             // 下载完成后保存路径
-            tempFilePath:(NSString*)tempFilePath             // 下载临时保存路径（用于断点续传）
-        progressDelegate:(id)progressDelegate                // 下载进度回调
+            saveFilePath:(NSString*)saveFilePath                // 下载完成后保存路径
+            tempFilePath:(NSString*)tempFilePath                // 下载临时保存路径（用于断点续传）
+                callback:(DownloadDataFileCallBackBlock)callback
 {
     if (dataURL == nil)
         return;
@@ -189,24 +194,22 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     NSURL* url = [NSURL URLWithString:dataURL];
     if (url == nil)
         return;
+    
+    _downloadDataFileCallBackBlock = callback;
+    
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        ASIHTTPRequest* downloadHttpRequest = [ASIHTTPRequest requestWithURL:url];
         
+        ASIHTTPRequest* downloadHttpRequest = [ASIHTTPRequest requestWithURL:url];
         downloadHttpRequest.delegate = self;
         [downloadHttpRequest setAllowCompressedResponse:YES];
-        //    [downloadHttpRequest setUsername:DEFAULT_HTTP_USER_NAME];
-        //    [downloadHttpRequest setPassword:DEFAULT_HTTP_PASSWORD];
-        
         [downloadHttpRequest setDownloadDestinationPath:saveFilePath];
         [downloadHttpRequest setTemporaryFileDownloadPath:tempFilePath];
-        
-        [downloadHttpRequest setDownloadProgressDelegate:progressDelegate];
+        [downloadHttpRequest setDownloadProgressDelegate:self];
         [downloadHttpRequest setAllowResumeForFileDownloads:YES];
-        
         PPDebug(@"<downloadURL> URL=%@, Local Temp=%@, Store At=%@",
                 url.absoluteString, tempFilePath, saveFilePath);
         [downloadHttpRequest startSynchronous];
-        
         
     });
     
@@ -214,14 +217,20 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
    
 }
 
+#pragma mark - ChatService Delegate
+
 - (void)requestFinished:(ASIHTTPRequest *)request {
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:request.downloadDestinationPath] == NO){
-        PPDebug(@"<downloadURL> %@ failure, file not downloaded", request.url);
-        return;
-    }
+//    
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:request.downloadDestinationPath] == NO){
+//        PPDebug(@"<downloadURL> %@ failure, file not downloaded", request.url);
+//        return;
+//    }
+//    
+//    PPDebug(@"<downloadURL> success, size=%lld", [FileUtil fileSizeAtPath:request.downloadDestinationPath]);
     
-    PPDebug(@"<downloadURL> success, size=%lld", [FileUtil fileSizeAtPath:request.downloadDestinationPath]);
+    EXECUTE_BLOCK(_downloadDataFileCallBackBlock,request.downloadDestinationPath,request.error);
+    
     return ;
 }
 @end

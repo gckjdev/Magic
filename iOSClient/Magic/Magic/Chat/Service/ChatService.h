@@ -15,6 +15,7 @@ typedef void (^SendChatWithTextCallBackBlock)(NSError *error);
 typedef void (^SendChatWithImageCallBackBlock)(NSError *error);
 typedef void (^SendChatWithAudioCallBackBlock)(NSError *error);
 typedef void (^GetChatListCallBackBlock)(NSArray *chatArray,NSError *error);
+typedef void (^DownloadDataFileCallBackBlock)(NSString *filePath,NSError *error);
 
 @interface ChatService : CommonService
 DEF_SINGLETON_FOR_CLASS(UserService);
@@ -36,9 +37,9 @@ DEF_SINGLETON_FOR_CLASS(UserService);
 -(void)reloadLatest;
 
 - (void)downloadDataFile:(NSString*)dataURL
-            saveFilePath:(NSString*)saveFilePath             // 下载完成后保存路径
-            tempFilePath:(NSString*)tempFilePath             // 下载临时保存路径（用于断点续传）
-        progressDelegate:(id)progressDelegate;                // 下载进度回调
+            saveFilePath:(NSString*)saveFilePath                // 下载完成后保存路径
+            tempFilePath:(NSString*)tempFilePath                // 下载临时保存路径（用于断点续传）
+            callback:(DownloadDataFileCallBackBlock)callback;
 
 
 @end

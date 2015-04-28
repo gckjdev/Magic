@@ -22,12 +22,16 @@
 #import "AudioManager.h"
 #import "FileUtil.h"
 #import "StringUtil.h"
-
+#import "VoiceCacheManager.h"
 
 
 #define DEFAULT_SAVE_AUDIO_NAME @"user_talking.wav"
 
+typedef void (^GetVoicePathCallBack) (NSString* filePath);
+
 @interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate,ChatCellDelegate>
+
+
 @property (nonatomic,strong) ChatToolView   *toolView;
 @property (nonatomic,strong) MessageTableView *tableView;
 @property (nonatomic,strong) NSMutableArray*   messageFrames;
@@ -152,11 +156,12 @@
         }];
     }
     if (textView.text.length>0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:MESSAGE_HAVE_TEXT
-                                                            object:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_TEXT
+                                                           object:nil];
     }
     else{
-        [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_NO_TEXT object:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_NO_TEXT
+                                                           object:nil];
     }
    
 }
@@ -166,9 +171,10 @@
 {
     NSString *tmpDir = [FileUtil getAppTempDir];
 
-    _tmpMyVoiceFile = [NSString stringWithFormat:@"%@/%@.wav",tmpDir,[NSString GetUUID]];
+    _tmpMyVoiceFile = [NSString stringWithFormat:@"%@%@.wav",tmpDir,[NSString GetUUID]];
     PPDebug(@"neng : wav save  : %@ ",_tmpMyVoiceFile);
     [[AudioManager sharedInstance]recorderInitWithPath:[NSURL URLWithString:_tmpMyVoiceFile]];
+    [[AudioManager sharedInstance]recorderStart];
 }
 
 -(void)talkButtonTouchUpInside
@@ -240,7 +246,37 @@
 
 -(void)voiceViewSinglePress:(PBChat*)pbChat cell:(ChatCell *)cell
 {
-//    EXECUTE_BLOCK(self.voiceViewSinglePressBlock,pbChat ,cell);
+   [self getVoiceFile:pbChat callback:^(NSString *filePath) {
+       PPDebug(@"neng : filePath %@",filePath);
+       [[AudioManager sharedInstance]playInitWithFile:[NSURL URLWithString:filePath]];
+       [[AudioManager sharedInstance] playerStart];
+   }];
 }
 
+
+-(void)getVoiceFile:(PBChat*)pbChat callback:(GetVoicePathCallBack)callback{
+    
+    NSMutableString* voiceFilePath = [[[VoiceCacheManager sharedInstance]
+                                       getVoicePath:pbChat.voice] mutableCopy];
+    
+    if (voiceFilePath == nil) {
+        NSString *tmpDir = [FileUtil getAppTempDir];
+        NSString *tempPath = [NSString stringWithFormat:@"%@tmpVoice",tmpDir];
+        NSString *savePath = [NSString stringWithFormat:@"%@/chatvoice/%@.wav",[FileUtil getAppCacheDir],[NSString GetUUID]];
+        [FileUtil createDir:savePath];
+        
+        [[ChatService sharedInstance]downloadDataFile:pbChat.voice saveFilePath:savePath tempFilePath:tempPath callback:^(NSString *filePath, NSError *error) {
+            if (error == nil) {
+                PPDebug(@"download voicefile success path = %@",filePath);
+                [[VoiceCacheManager sharedInstance]setVoicePath:pbChat.voice filePath:filePath];
+                EXECUTE_BLOCK(callback,filePath);
+            }
+            else{
+                PPDebug(@"download voicefile fail");
+            }
+        }];
+        
+    }
+    EXECUTE_BLOCK(callback,voiceFilePath);
+}
 @end

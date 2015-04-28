@@ -40,7 +40,7 @@
         //AVAudioSessionCategoryPlayAndRecord用于录音和播放
         [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
         if(session == nil)
-            NSLog(@"Error creating session: %@", [sessionError description]);
+            PPDebug(@"Error creating session: %@", [sessionError description]);
         else
             [session setActive:YES error:nil];
     }
@@ -67,13 +67,13 @@
             _recorder.meteringEnabled = YES;
             [_recorder prepareToRecord];
             
-            [_recorder record];
+//            [_recorder record];
             
             
         } else
         {
             //            int errorCode = CFSwapInt32HostToBig ([error code]);
-            NSLog(@"Error: %@ " , [error description]);
+            PPDebug(@"Error: %@ " , [error description]);
             
         }
     }
@@ -102,15 +102,20 @@
     
 
     NSError *playerError;
-    [self playerStop];
-    _player = nil;
+    if(_player != nil){
+        [self playerStop];
+        _player = nil;
+    }
+
     _player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&playerError];
+    
     if (_player == nil)
     {
-        NSLog(@"ERror creating player: %@", [playerError description]);
+        PPDebug(@"ERror creating player: %@", [playerError description]);
     }else
     {
-        [_player play];
+//        [_player play];
+        PPDebug(@"creating player success");
     }
 }
 
