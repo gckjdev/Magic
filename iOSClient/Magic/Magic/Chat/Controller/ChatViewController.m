@@ -129,6 +129,26 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 #pragma mark - InputView
 - (void)textViewDidChange:(UITextView *)textView
 {
+   
+    [self updateToolView:textView];
+}
+-(void)changeInputMode:(BOOL)isTalkMode textView:(UITextView*)textView
+{
+    if (!isTalkMode) {
+
+        [self updateToolView:textView];
+        [textView becomeFirstResponder];
+    }
+    else{
+        [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_NO_TEXT
+                                                           object:nil];
+        _toolViewHeight = CHATTOOLVIEW_HEIGHT;
+        [self updateLayout];
+        [textView resignFirstResponder];
+    }
+}
+-(void)updateToolView:(UITextView *)textView
+{
     CGSize size = textView.contentSize;
     
     if (textView.text.length>0) {
@@ -140,20 +160,11 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     
     if (size.height<MAX_HEIGHT_INPUTVIEW) {
         _toolViewHeight = CHATTOOLVIEW_HEIGHT + (size.height - MAX_HEIGHT_INPUTVIEW/2);
-        _toolView.viewHeight = _toolViewHeight;
-        [_toolView setNeedsUpdateConstraints];
-        [_toolView updateConstraintsIfNeeded];
-        [UIView animateWithDuration:0.4 animations:^{
-            [_toolView layoutIfNeeded];
-        }];
-        
-    
-        _tableView.viewHeight = _toolViewHeight;
-        [_tableView updateConstraintsIfNeeded];
-        [_tableView  setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.4 animations:^{
-            [_tableView layoutIfNeeded];
-        }];
+        [self updateLayout];
+    }
+    else{
+        _toolViewHeight = CHATTOOLVIEW_HEIGHT +  MAX_HEIGHT_INPUTVIEW/2;
+        [self updateLayout];
     }
     if (textView.text.length>0) {
         [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_TEXT
@@ -163,7 +174,22 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
         [[NSNotificationCenter defaultCenter]postNotificationName:MESSAGE_HAVE_NO_TEXT
                                                            object:nil];
     }
-   
+}
+-(void)updateLayout{
+    _toolView.viewHeight = _toolViewHeight;
+    [_toolView setNeedsUpdateConstraints];
+    [_toolView updateConstraintsIfNeeded];
+    [UIView animateWithDuration:0.4 animations:^{
+        [_toolView layoutIfNeeded];
+    }];
+    
+    
+    _tableView.viewHeight = _toolViewHeight;
+    [_tableView updateConstraintsIfNeeded];
+    [_tableView  setNeedsUpdateConstraints];
+    [UIView animateWithDuration:0.4 animations:^{
+        [_tableView layoutIfNeeded];
+    }];
 }
 #pragma mark - Action
 

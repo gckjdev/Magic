@@ -19,6 +19,8 @@
 -(void)talkButtonTouchDown;
 -(void)talkButtonTouchUpInside;
 -(void)talkButtonTouchCancel;
+
+-(void)changeInputMode:(BOOL)isTalkMode textView:(UITextView*)textView;
 @end
 
 @interface ChatToolView : UIView

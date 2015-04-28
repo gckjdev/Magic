@@ -17,7 +17,7 @@
 #import "ChatManager.h"
 
 @interface MessageTableView()<UITableViewDataSource,UITableViewDelegate,ChatCellDelegate>
-
+@property (nonatomic,strong) NSArray   *localChatArray;
 @end
 
 @implementation MessageTableView
@@ -60,10 +60,13 @@
     [[ChatService sharedInstance]getChatList:offsetId callback:^(NSArray *chatArray, NSError *error) {
         if (error == nil) {
             
-            NSArray *localChatArray = [[ChatManager sharedInstance]chatList];
-            [self dealWithChatArray:localChatArray];
+            NSArray *newChatArray = [[ChatManager sharedInstance]chatList];
             
-            [self reloadData];
+            if ([_localChatArray count] != [newChatArray count]) {
+                [self dealWithChatArray:newChatArray];
+                [self reloadData];
+                _localChatArray = newChatArray;
+            }
             [self headerEndRefreshing];
         }
         else{
@@ -74,15 +77,24 @@
 
 -(void)RefreshData{
     
+    _localChatArray = [[ChatManager sharedInstance]chatList];
+    if (_localChatArray!=nil) {
+        [self dealWithChatArray:_localChatArray];
+        [self reloadData];
+    }
+    
     [[ChatService sharedInstance]getChatList:@"" callback:^(NSArray *chatArray, NSError *error) {
         if (error == nil) {
             
-            NSArray *localChatArray = [[ChatManager sharedInstance]chatList];
+            NSArray *newChatArray = [[ChatManager sharedInstance]chatList];
             
-            [self dealWithChatArray:localChatArray];
-            
-            [self reloadData];
-            [self tableViewScrollToBottom];
+            if ([_localChatArray count] != [newChatArray count]) {
+                [self dealWithChatArray:newChatArray];
+                
+                [self reloadData];
+                [self tableViewScrollToBottom];
+            }
+          
             
         }
         else{

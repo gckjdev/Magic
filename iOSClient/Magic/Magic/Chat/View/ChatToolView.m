@@ -187,7 +187,7 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    [_contentView becomeFirstResponder];
+//    [_contentView becomeFirstResponder];
 }
 
 #pragma mark - Action
@@ -244,7 +244,7 @@
                    forState:UIControlStateNormal];
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewKeyboardHL"]
                    forState:UIControlStateHighlighted];
-        [self endEditing:YES];
+//        [self endEditing:YES];
     }
     else{
         [_talkButton setHidden:YES];
@@ -254,9 +254,12 @@
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoiceHL"] forState:UIControlStateHighlighted];
         
        
-        [_contentView becomeFirstResponder];
+//        [_contentView becomeFirstResponder];
     }
-    
+   
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(changeInputMode:textView:)]) {
+        [self.delegate changeInputMode:_isTalkMode textView:_contentView];
+    }
     
 }
 
