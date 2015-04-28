@@ -14,6 +14,7 @@
 #import "ChatManager.h"
 #import "ASIHTTPRequest.h"
 #import "FileUtil.h"
+#import "AudioManager.h"
 
 @interface ChatService ()
 
@@ -57,14 +58,23 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     
 }
 
--(void)sendChatWithAudio:(NSString*)audio
+-(void)sendChatWithAudio:(NSString*)audioURL
                 toUserId:(NSString*)toUserId
                 callback:(SendChatWithAudioCallBackBlock)callback
 {
+    
+    NSURL *fileURL = [NSURL fileURLWithPath:audioURL];
+    
     PBChatBuilder *chatBuilder  = [PBChat builder];
     [chatBuilder setType:PBChatTypeVoiceChat];
     [chatBuilder setToUserId:toUserId];
-    NSData * data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:audio]];
+    
+    [[AudioManager sharedInstance]playInitWithFile:fileURL];
+    
+    int duration = [AudioManager sharedInstance].player.duration;
+    [chatBuilder setDuration:duration];
+    
+    NSData * data = [NSData dataWithContentsOfURL:fileURL];
     CommonService  *service =[[CommonService alloc]init];
     [service uploadAudio:data prefix:@"chat/voice" callback:^(NSString *audioURL, NSError *error) {
         if (error == nil) {
@@ -116,8 +126,8 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     [chatBuilder setType:PBChatTypePictureChat];
     [chatBuilder setToUserId:toUserId];
     
-#warning prefix is nil
-    [self uploadImage:image prefix:@"" callback:^(NSString *imageURL, NSError *error) {
+
+    [self uploadImage:image prefix:@"chat/image" callback:^(NSString *imageURL, NSError *error) {
         if (error == nil) {
             [chatBuilder setImage:imageURL];
             [self sendChatCommonMessage:chatBuilder callback:^(NSError *error1) {

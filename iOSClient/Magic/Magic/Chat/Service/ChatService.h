@@ -28,7 +28,7 @@ DEF_SINGLETON_FOR_CLASS(UserService);
                    toUserId:(NSString*)toUserId
                    callback:(SendChatWithImageCallBackBlock)callback;
 
--(void)sendChatWithAudio:(NSString*)audio
+-(void)sendChatWithAudio:(NSString*)audioURL
                    toUserId:(NSString*)toUserId
                    callback:(SendChatWithAudioCallBackBlock)callback;
 

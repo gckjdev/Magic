@@ -200,7 +200,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 
 -(void)sendMessageButtonSingleTouch:(NSString*)text
 {
-    //    [self addMessage:text type:MESSAGEFROMTYPE_ME];
+   
     [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
         if (error == nil) {
              [_tableView RefreshData];
@@ -208,6 +208,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
        
     }];
     
+    [self.view endEditing:YES];
 }
 
 -(void)plusButtonSingleTouch

@@ -277,19 +277,19 @@
     NSDateComponents *messageCmps = getDateComponents(message.time);
     
     if (isToday(message.time)) {
-        [result appendFormat:@"今天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"今天 %d:%02d",messageCmps.hour,messageCmps.minute];
     }
     else if(isYesterday(message.time)){
-        [result appendFormat:@"昨天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"昨天 %d:%02d",messageCmps.hour,messageCmps.minute];
     }
     else if(isTheDayBeforeYesterday(message.time))
     {
-        [result appendFormat:@"前天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"前天 %d:%02d",messageCmps.hour,messageCmps.minute];
     }
     else if(isThisYear(message.time)){
-        [result appendFormat:@"%ld月%ld号 %ld:%ld",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%d月%d号 %d:%02d",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }else{
-        [result appendFormat:@"%ld年%ld月%ld号 %ld:%ld",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%d年%d月%d号 %d:%02d",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }
     
     return [result copy];

@@ -13,8 +13,7 @@
 #import "FileUtil.h"
 
 @interface AudioManager()
-@property (nonatomic,strong) AVAudioRecorder   *recorder;
-@property (nonatomic,strong) AVAudioPlayer   *player;
+
 @property (nonatomic,strong) NSDictionary *recorderSettingsDict;
 @property (nonatomic,copy) NSString *playName;
 @end

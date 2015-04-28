@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <AVFoundation/AVFoundation.h>
 @interface AudioManager : NSObject
+
+
+@property (nonatomic,strong) AVAudioRecorder   *recorder;
+@property (nonatomic,strong) AVAudioPlayer   *player;
+
 
 + (instancetype) sharedInstance;
 + (void)setPermission;
