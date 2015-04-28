@@ -46,7 +46,7 @@
         // 1.时间
         UILabel *timeView = [[UILabel alloc] init];
         timeView.textAlignment = NSTextAlignmentCenter;
-        timeView.textColor = [UIColor grayColor];
+        timeView.textColor = BARRAGE_LABEL_GRAY_COLOR;
         timeView.font = [UIFont systemFontOfSize:13];
         [self.contentView addSubview:timeView];
         self.timeView = timeView;
@@ -61,7 +61,7 @@
         textView.titleLabel.numberOfLines = 0; // 自动换行
         textView.titleLabel.font = MJTextFont;
         textView.contentEdgeInsets = UIEdgeInsetsMake(MJTextPadding, MJTextPadding, MJTextPadding, MJTextPadding);
-        [textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [textView setTitleColor:BARRAGE_LABEL_COLOR forState:UIControlStateNormal];
         
         UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(textViewLongPressAction:)];
         
@@ -180,19 +180,19 @@
     NSDateComponents *messageCmps = getDateComponents(message.time);
     
     if (isToday(message.time)) {
-        [result appendFormat:@"今天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"今天 %d:%d",messageCmps.hour,messageCmps.minute];
     }
     else if(isYesterday(message.time)){
-        [result appendFormat:@"昨天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"昨天 %d:%d",messageCmps.hour,messageCmps.minute];
     }
     else if(isTheDayBeforeYesterday(message.time))
     {
-        [result appendFormat:@"前天 %ld:%ld",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"前天 %d:%d",messageCmps.hour,messageCmps.minute];
     }
     else if(isThisYear(message.time)){
-        [result appendFormat:@"%ld月%ld号 %ld:%ld",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%d月%d号 %d:%d",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }else{
-        [result appendFormat:@"%ld年%ld月%ld号 %ld:%ld",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%d年%d月%d号 %d:%d",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }
     
     return [result copy];

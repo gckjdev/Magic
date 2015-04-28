@@ -18,7 +18,7 @@
 DEF_SINGLETON_FOR_CLASS(ChatManager);
 
 - (NSArray*)chatList;
-- (void)storeChatList:(NSArray*)pbFeedList;
+- (void)storeChatList:(NSArray*)pbChatList;
 - (void)insertChat:(PBChat*)chat;
 - (NSUInteger)totalChatCount;
 
