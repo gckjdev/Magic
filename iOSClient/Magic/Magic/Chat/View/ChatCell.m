@@ -162,7 +162,7 @@
         else if (_messageFrame.message.type == MESSAGETYPE_VOICE){
             if (self.delegate&&[self.delegate respondsToSelector:@selector(voiceViewSinglePress:cell:)])
             {
-                [self voiceAnimationStart];
+               
                 [self.delegate voiceViewSinglePress:_messageFrame.message.pbChat cell:self];
             }
         }

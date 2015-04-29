@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+
+typedef void(^PlayFinishCallBackBlock) (BOOL flag);
+
+
+
 @interface AudioManager : NSObject
 
 
@@ -26,6 +31,7 @@
 
 -(void)playInitWithFile:(NSURL*)fileURL;
 -(void)playerStart;
+-(void)playerStart:(PlayFinishCallBackBlock)callback;
 -(void)playerStop;
 -(void)playerPause;
 -(void)playerResume;

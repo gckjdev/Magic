@@ -213,7 +213,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         ASIHTTPRequest* downloadHttpRequest = [ASIHTTPRequest requestWithURL:url];
-//        downloadHttpRequest.delegate = self;
+
         [downloadHttpRequest setAllowCompressedResponse:YES];
         [downloadHttpRequest setDownloadDestinationPath:saveFilePath];
         [downloadHttpRequest setTemporaryFileDownloadPath:tempFilePath];
@@ -232,15 +232,8 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     });
     
     
-   
 }
 
-//#pragma mark - ChatService Delegate
-//
-//- (void)requestFinished:(ASIHTTPRequest *)request {
-//    
-//    
-//    return ;
-//}
+
 
 @end

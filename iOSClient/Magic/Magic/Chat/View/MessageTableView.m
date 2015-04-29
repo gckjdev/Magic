@@ -34,6 +34,8 @@
     self.backgroundColor = BARRAGE_BG_COLOR;
     self.dataSource = self;
     self.delegate = self;
+    _playingCellPath = nil;
+    
     [self registerClass:ChatCell.class forCellReuseIdentifier:CHAT_CELL_IDENTIFIER]; //  注册头像那个cell的类
     
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -75,7 +77,7 @@
     }];
 }
 
--(void)RefreshData{
+-(void)refreshData{
     
     _localChatArray = [[ChatManager sharedInstance]chatList];
     if (_localChatArray!=nil) {
@@ -102,6 +104,16 @@
         }
     }];
 }
+-(void)stopPlayingCellAnimation{
+    ChatCell *cell = (ChatCell*)[self cellForRowAtIndexPath:_playingCellPath];
+    [cell voiceAnimationStop];
+}
+-(void)startPlayingCellAnimation
+{
+    ChatCell *cell = (ChatCell*)[self cellForRowAtIndexPath:_playingCellPath];
+    [cell voiceAnimationStart];
+}
+
 -(void)dealWithChatArray:(NSArray *)chatArray{
     NSMutableArray *messageFArray = [NSMutableArray array];
     NSInteger len = [chatArray count];
@@ -144,15 +156,16 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 1.创建cell
+  
     ChatCell *cell = [ChatCell cellWithTableView:tableView];
     
-    // 2.给cell传递模型
+    
     cell.messageFrame = self.messageFrames[indexPath.row];
     cell.delegate = self.controller;
     
-    
-    // 3.返回cell
+    if (_playingCellPath == indexPath) {
+        [cell voiceAnimationStart];
+    }
     return cell;
     
 }

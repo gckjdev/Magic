@@ -12,10 +12,11 @@
 #import "PPDebug.h"
 #import "FileUtil.h"
 
-@interface AudioManager()
+@interface AudioManager()<AVAudioPlayerDelegate>
 
 @property (nonatomic,strong) NSDictionary *recorderSettingsDict;
 @property (nonatomic,copy) NSString *playName;
+@property (nonatomic,copy) PlayFinishCallBackBlock playFinishCallBackBlock;
 @end
 
 @implementation AudioManager
@@ -45,6 +46,14 @@
     }
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 #pragma mark - recorder
 -(void)recorderInitWithPath:(NSURL*)PathURL{
@@ -108,12 +117,13 @@
 
     _player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&playerError];
     
+    _player.delegate = self;
+    
     if (_player == nil)
     {
         PPDebug(@"ERror creating player: %@", [playerError description]);
     }else
     {
-//        [_player play];
         PPDebug(@"creating player success");
     }
 }
@@ -124,8 +134,17 @@
     
 }
 
+-(void)playerStart:(PlayFinishCallBackBlock)callback
+{
+    [_player play];
+    _playFinishCallBackBlock = callback;
+}
+
 -(void)playerStop
 {
+//    if(_player.isPlaying){
+//        EXECUTE_BLOCK(_playFinishCallBackBlock,NO);
+//    }
     [_player stop];
     
 }
@@ -165,5 +184,11 @@
     }
     
     return bCanRecord;
+}
+
+#pragma mark - player delegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    EXECUTE_BLOCK(_playFinishCallBackBlock,flag);
 }
 @end
