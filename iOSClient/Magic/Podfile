@@ -37,3 +37,6 @@ pod 'BlocksKit'
 pod 'MMDrawerController', '~> 0.5.7'
 pod 'RESideMenu', '~> 4.0.7'
 pod 'MSDynamicsDrawerViewController'
+pod 'JSQMessagesViewController'
+pod 'JSQSystemSoundPlayer'
+

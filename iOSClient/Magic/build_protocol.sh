@@ -20,12 +20,12 @@ protoc --proto_path=./Magic/Protocol/ --objc_out=./Magic/Protocol/Gen ./Magic/Pr
 
 echo build Java server codes
 
-protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Common.proto
-protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Constants.proto
-protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Error.proto
-protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src  ./Magic/Protocol/Message.proto
-protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src ./Magic/Protocol/User.proto
-protoc --proto_path=./Magic/Protocol/ --java_out=../../../Common_Java_Barrage/src ./Magic/Protocol/Barrage.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../MagicServer/CommonBusiness/src  ./Magic/Protocol/Common.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../MagicServer/CommonBusiness/src  ./Magic/Protocol/Constants.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../MagicServer/CommonBusiness/src  ./Magic/Protocol/Error.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../MagicServer/CommonBusiness/src  ./Magic/Protocol/Message.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../MagicServer/CommonBusiness/src ./Magic/Protocol/User.proto
+protoc --proto_path=./Magic/Protocol/ --java_out=../../../MagicServer/CommonBusiness/src ./Magic/Protocol/Barrage.proto
 
 echo build Java Android code
 

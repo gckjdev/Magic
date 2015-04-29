@@ -213,28 +213,34 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         ASIHTTPRequest* downloadHttpRequest = [ASIHTTPRequest requestWithURL:url];
-        downloadHttpRequest.delegate = self;
+//        downloadHttpRequest.delegate = self;
         [downloadHttpRequest setAllowCompressedResponse:YES];
         [downloadHttpRequest setDownloadDestinationPath:saveFilePath];
         [downloadHttpRequest setTemporaryFileDownloadPath:tempFilePath];
         [downloadHttpRequest setDownloadProgressDelegate:self];
         [downloadHttpRequest setAllowResumeForFileDownloads:YES];
-        PPDebug(@"<downloadURL> URL=%@, Local Temp=%@, Store At=%@",
+        PPDebug(@"<downloadURL> \nURL=%@, \nLocal Temp=%@, \nStore At=%@",
                 url.absoluteString, tempFilePath, saveFilePath);
         [downloadHttpRequest startSynchronous];
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            PPDebug(@"request finished");
+            EXECUTE_BLOCK(_downloadDataFileCallBackBlock,
+                          downloadHttpRequest.downloadDestinationPath,
+                          downloadHttpRequest.error);
+        });
     });
     
     
    
 }
 
-#pragma mark - ChatService Delegate
+//#pragma mark - ChatService Delegate
+//
+//- (void)requestFinished:(ASIHTTPRequest *)request {
+//    
+//    
+//    return ;
+//}
 
-- (void)requestFinished:(ASIHTTPRequest *)request {
-    
-    EXECUTE_BLOCK(_downloadDataFileCallBackBlock,request.downloadDestinationPath,request.error);
-    
-    return ;
-}
 @end
