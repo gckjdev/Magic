@@ -81,6 +81,7 @@
     if (_localChatArray!=nil) {
         [self dealWithChatArray:_localChatArray];
         [self reloadData];
+        [self tableViewScrollToBottom];
     }
     
     [[ChatService sharedInstance]getChatList:@"" callback:^(NSArray *chatArray, NSError *error) {
@@ -90,7 +91,6 @@
             
             if ([_localChatArray count] != [newChatArray count]) {
                 [self dealWithChatArray:newChatArray];
-                
                 [self reloadData];
                 [self tableViewScrollToBottom];
             }

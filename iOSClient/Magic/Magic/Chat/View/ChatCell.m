@@ -18,6 +18,11 @@
 #import "MKBlockActionSheet.h"
 #import "TimeUtils.h"
 #import "Masonry.h"
+#import "FontInfo.h"
+
+
+
+#define IMAGEVIEW_PADDING 20.0f
 
 @interface ChatCell()
 @property (nonatomic,strong) UILabel         *timeView;
@@ -25,6 +30,7 @@
 @property (nonatomic,strong) UIButton        *textView;
 @property (nonatomic,strong) UIImageView     *showImageView;
 @property (nonatomic,strong) UIImageView     *voiceAnimationView;
+@property (nonatomic,strong) UILabel         *voiceDurationView;
 
 @property (nonatomic,strong) UserAvatarView  *avatarView;
 @end
@@ -59,8 +65,8 @@
     [self setupTextView];
     [self setupImageView];
     [self setupVoiceAnimationView];
+    [self setupVoiceDurationView];
     
-    // 6.设置cell的背景色
     self.backgroundColor = [UIColor clearColor];
 }
 
@@ -98,8 +104,9 @@
 
     //4.图片
     _showImageView = [[UIImageView alloc]init];
-    //        _showImageView.backgroundColor = [UIColor redColor];
+
     [self.contentView addSubview:_showImageView];
+//    [_showImageView setBackgroundColor:[UIColor redColor]];
     
 }
 
@@ -107,20 +114,22 @@
     _voiceAnimationView = [[UIImageView alloc]init];
     [self.contentView addSubview:_voiceAnimationView];
     [_voiceAnimationView setContentMode:UIViewContentModeScaleAspectFit];
-    NSMutableArray *imageArray = [NSMutableArray array];
-    for (int i = 0; i< 3; i++) {
-        NSString *tmpName = [NSString stringWithFormat:@"SenderVoiceNodePlaying00%d",i+1];
-        UIImage *image = [UIImage imageNamed:tmpName];
-        [imageArray addObject:image];
-    }
-    [_voiceAnimationView setAnimationImages:[imageArray copy]];
-    [_voiceAnimationView setAnimationRepeatCount:0];
-    [_voiceAnimationView setAnimationDuration:0.8];
-    [_voiceAnimationView setUserInteractionEnabled:NO];
-    [_voiceAnimationView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
-    [_voiceAnimationView setHidden:YES];
-//    [_voiceAnimationView startAnimating];
+    
+    
+ 
+  
+    
+
 }
+
+-(void)setupVoiceDurationView{
+    _voiceDurationView = [[UILabel alloc]init];
+    [self addSubview:_voiceDurationView];
+    [_voiceDurationView setTextColor:[UIColor grayColor]];
+    [_voiceDurationView setTextAlignment:NSTextAlignmentRight];
+    [_voiceDurationView setFont:CELL_TIME_FONT];
+}
+
 #pragma mark - Action
 - (void)textViewAddGesture{
     
@@ -205,20 +214,42 @@
     
     ChatMessage *message = messageFrame.message;
     
+   
+    
+    [self setupCommonMode];
+    
+    
+    if (message.type == MESSAGETYPE_TEXT) {
+        [self setupTextMode];
+    }
+    else if(message.type == MESSAGETYPE_IMAGE)
+    {
+        [self setupImageMode];
+    }
+    else if (message.type == MESSAGETYPE_VOICE)
+    {
+        [self setupVoiceMode];
+    }
+    
+}
+
+-(void)setupCommonMode{
+     ChatMessage *message = _messageFrame.message;
+    
     // 1.时间
     self.timeView.text = [self getShowTimeString] ;
-    self.timeView.frame = messageFrame.timeF;
+    self.timeView.frame = _messageFrame.timeF;
     [self.timeView setHidden:message.hideTime];
     
     // 2.头像
-
+    
     PBUser *avatarUser = _messageFrame.message.pbChat.fromUser;
-    _avatarView.frame = messageFrame.iconF;
+    _avatarView.frame = _messageFrame.iconF;
     [_avatarView updateUser:avatarUser];
-  
+    
     
     // 3.正文
-     self.textView.frame = messageFrame.contentF;
+    self.textView.frame = _messageFrame.contentF;
     
     [self.textView setTitle:message.content forState:UIControlStateNormal];
     if (message.fromType == MESSAGEFROMTYPE_ME) {
@@ -226,49 +257,90 @@
     } else {
         [self.textView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
-   
+    
     
     
     // 4.正文的背景
-    if (message.fromType == MESSAGEFROMTYPE_ME) { // 自己发的,蓝色
+    if (message.fromType == MESSAGEFROMTYPE_ME) {
         [self.textView setBackgroundImage:[UIImage resizableImage:@"chat_send_nor"] forState:UIControlStateNormal];
-    } else { // 别人发的,白色
+    } else {
         [self.textView setBackgroundImage:[UIImage resizableImage:@"chat_recive_nor"] forState:UIControlStateNormal];
     }
     
-    //5.显示图片
-    if (message.type == MESSAGETYPE_IMAGE) {
-        _showImageView.frame =  messageFrame.imageF;
-        [_showImageView setContentMode:UIViewContentModeScaleAspectFit];
-     
-       
-        [_showImageView sd_setImageWithURL:[NSURL URLWithString:message.image]
-                 placeholderImage:nil
-                          options:SDWebImageRetryFailed
-                        completed:
-          ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
-          {
-              if (error == nil) {
-//                  CGRect imageZoomRect = [self zoomImageFrame:image.size];
-                  _showImageView.frame = [self zoomImageFrame:messageFrame.contentF];
-//                  _textView.frame =[self zoomContentView:imageZoomRect];
-              }
+    
+    [_voiceAnimationView setHidden:YES];
+    [_voiceDurationView setHidden:YES];
+    [_showImageView setHidden:YES];
+}
+-(void)setupTextMode{
+    
+}
+
+-(void)setupImageMode{
+    ChatMessage *message = _messageFrame.message;
+    _showImageView.frame =  _messageFrame.imageF;
+    [_showImageView setContentMode:UIViewContentModeScaleAspectFit];
+    
+    
+    [_showImageView sd_setImageWithURL:[NSURL URLWithString:message.image]
+                      placeholderImage:nil
+                               options:SDWebImageRetryFailed
+                             completed:
+     ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+     {
+         if (error == nil) {
+             //                  CGRect imageZoomRect = [self zoomImageFrame:image.size];
+             _showImageView.frame = [self zoomImageFrame:_messageFrame.contentF];
+             //                  _textView.frame =[self zoomContentView:imageZoomRect];
+         }
+         
+     }];
+    
+    _showImageView.hidden = NO;
+}
+
+-(void)setupVoiceMode{
+    ChatMessage *message = _messageFrame.message;
+   
+
+    [_voiceAnimationView setHidden:NO];
+    [_voiceDurationView setHidden:NO];
+    _voiceAnimationView.frame = _messageFrame.voiceAnimationF;
+    _voiceDurationView.frame = _messageFrame.voiceDurationF;
+    NSString *duration = [NSString stringWithFormat:@"%ld\"",message.voiceDuration];
+    [_voiceDurationView setText:duration];
+    
+    
+    
+    NSMutableArray *imageArray = [NSMutableArray array];
+    for (int i = 0; i< 3; i++) {
+        UIImage *image;
+        if (_messageFrame.message.fromType == MESSAGEFROMTYPE_ME) {
+            NSString *tmpName = [NSString stringWithFormat:@"SenderVoiceNodePlaying00%d",i+1];
+            image = [UIImage imageNamed:tmpName];
+        }
+        else{
+            NSString *tmpName = [NSString stringWithFormat:@"ReceiverVoiceNodePlaying00%d",i+1];
+            image = [UIImage imageNamed:tmpName];
+        }
         
-          }];
-        
-        _showImageView.hidden = NO;
-    }else{
-        _showImageView.hidden = YES;
+        [imageArray addObject:image];
     }
-    
-    
-    if (message.type == MESSAGETYPE_VOICE) {
-        [_voiceAnimationView setHidden:NO];
-        _voiceAnimationView.frame = messageFrame.voiceAnimationF;
+    [_voiceAnimationView setAnimationImages:[imageArray copy]];
+    [_voiceAnimationView setAnimationRepeatCount:0];
+    [_voiceAnimationView setAnimationDuration:0.8];
+    [_voiceAnimationView setUserInteractionEnabled:NO];
+    if (_messageFrame.message.fromType == MESSAGEFROMTYPE_ME) {
+        [_voiceAnimationView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
+        [_voiceDurationView setTextAlignment:NSTextAlignmentRight];
     }
     else{
-        [_voiceAnimationView setHidden:YES];
+        [_voiceAnimationView setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying"]];
+        [_voiceDurationView setTextAlignment:NSTextAlignmentLeft];
     }
+    
+    
+   
 }
 -(NSString*)getShowTimeString{
     NSMutableString *result = [NSMutableString string];
@@ -277,19 +349,20 @@
     NSDateComponents *messageCmps = getDateComponents(message.time);
     
     if (isToday(message.time)) {
-        [result appendFormat:@"今天 %d:%02d",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"今天 %ld:%02ld",messageCmps.hour,messageCmps.minute];
     }
     else if(isYesterday(message.time)){
-        [result appendFormat:@"昨天 %d:%02d",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"昨天 %ld:%02ld",messageCmps.hour,messageCmps.minute];
     }
     else if(isTheDayBeforeYesterday(message.time))
     {
-        [result appendFormat:@"前天 %d:%02d",messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"前天 %ld:%02ld",messageCmps.hour,messageCmps.minute];
     }
     else if(isThisYear(message.time)){
-        [result appendFormat:@"%d月%d号 %d:%02d",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
-    }else{
-        [result appendFormat:@"%d年%d月%d号 %d:%02d",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+        [result appendFormat:@"%ld月%ld号 %ld:%02ld",messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
+    }
+    else{
+        [result appendFormat:@"%ld年%ld月%ld号 %ld:%02ld",messageCmps.year,messageCmps.month,messageCmps.day,messageCmps.hour,messageCmps.minute];
     }
     
     return [result copy];
@@ -299,14 +372,17 @@
     ChatMessage *message = _messageFrame.message;
     CGRect resultRect = imageSize;
 
-    resultRect.size.width -= 40;
-    resultRect.size.height -= 40;
+    resultRect.size.width -= IMAGEVIEW_PADDING*2;
+    resultRect.size.height -= IMAGEVIEW_PADDING*2;
     if (message.fromType == MESSAGEFROMTYPE_ME) {
        
-        resultRect.origin.x += 20;
-        resultRect.origin.y += 20;
+        resultRect.origin.x += IMAGEVIEW_PADDING;
+        resultRect.origin.y += IMAGEVIEW_PADDING;
     }
-   
+    else{
+        resultRect.origin.x += IMAGEVIEW_PADDING;
+        resultRect.origin.y += IMAGEVIEW_PADDING;
+    }
 
     return resultRect;
 }

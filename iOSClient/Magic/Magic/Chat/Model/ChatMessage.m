@@ -19,11 +19,11 @@
     
     if (self = [super init]) {
         _pbChat = chat;
-        //    _time = pbChat.createDate;
         _content = _pbChat.text;
         _image = _pbChat.image;
         _voice = _pbChat.voice;
         _time = [NSDate dateWithTimeIntervalSince1970:_pbChat.createDate];
+        _voiceDuration = _pbChat.duration;
         
         _fromUserId = _pbChat.fromUserId;
         _fromUser_Ava = _pbChat.fromUser.avatar;
@@ -52,6 +52,7 @@
     _content = _pbChat.text;
     _image = _pbChat.image;
     _voice = _pbChat.voice;
+    _voiceDuration = _pbChat.duration;
     
     _fromUserId = _pbChat.fromUserId;
     _fromUser_Ava = _pbChat.fromUser.avatar;

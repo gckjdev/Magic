@@ -32,12 +32,12 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 @interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate,ChatCellDelegate>
 
 
-@property (nonatomic,strong) ChatToolView   *toolView;
-@property (nonatomic,strong) MessageTableView *tableView;
-@property (nonatomic,strong) NSMutableArray*   messageFrames;
-@property (nonatomic, assign) CGFloat      toolViewHeight;
-@property (nonatomic,strong) ChangeAvatar   *changeAvatar;
-@property (nonatomic,strong) NSString   *tmpMyVoiceFile;
+@property (nonatomic,strong) ChatToolView           *toolView;
+@property (nonatomic,strong) MessageTableView       *tableView;
+@property (nonatomic,strong) NSMutableArray*        messageFrames;
+@property (nonatomic, assign) CGFloat               toolViewHeight;
+@property (nonatomic,strong) ChangeAvatar           *changeAvatar;
+@property (nonatomic,strong) NSString               *tmpMyVoiceFile;
 @end
 
 

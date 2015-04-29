@@ -22,15 +22,23 @@
 
 #define COMMON_SPACE 6.0f
 
+#define COMMON_MID_SPACE 20.0f
+
+
 #define IMAGE_MAX_SIZE (150.0f)
 
 #define TEXT_MAX_WIDTH 200.0f
+
+#define CONTENT_MAX_WIDTH 200.0f
+#define CONTENT_MIN_WIDTH 70.0f
+
+#define CONTENT_MIN_HEIGHT 50.0f
 
 @implementation ChatCellFrame
 -(void)setMessage:(ChatMessage *)message
 {
     _message = message;
-//    CGFloat padding = 10;
+
    
     if (message.hideTime == NO) {
         CGFloat timeX = 0;
@@ -73,7 +81,8 @@
         showSize = textBtnSize;
     }
     else if (_message.type == MESSAGETYPE_VOICE){
-        CGSize textBtnSize = CGSizeMake(100, 50);
+        
+        CGSize textBtnSize = [self getVoiceContentSize:message.voiceDuration];
         showSize = textBtnSize;
     }
     
@@ -92,11 +101,37 @@
     else if(_message.type == MESSAGETYPE_TEXT){
         _textF = (CGRect){{contentX,contentY},showSize};
         _contentF = (CGRect){{contentX,contentY},showSize};
-    }else if(_message.type == MESSAGETYPE_VOICE){
-        CGFloat posX = contentX + showSize.width - SMALL_ICON_SIZE - MJTextPadding;
-        CGFloat posY = contentY + (showSize.height - SMALL_ICON_SIZE)/2;
-        _voiceAnimationF = (CGRect){{posX,posY},CGSizeMake(SMALL_ICON_SIZE, SMALL_ICON_SIZE)};
-        _contentF = (CGRect){{contentX,contentY},showSize};
+    }
+    else if(_message.type == MESSAGETYPE_VOICE){
+        
+         _contentF = (CGRect){{contentX,contentY},showSize};
+        
+        if (_message.fromType == MESSAGEFROMTYPE_ME) {
+            CGFloat voicePosX = contentX + showSize.width - SMALL_ICON_SIZE - MJTextPadding;
+            CGFloat voicePosY = contentY + (showSize.height - SMALL_ICON_SIZE)/2;
+            _voiceAnimationF = (CGRect){{voicePosX,voicePosY},CGSizeMake(SMALL_ICON_SIZE, SMALL_ICON_SIZE)};
+           
+            
+            CGFloat durationPoxX = CGRectGetMinX(_contentF) - COMMON_MID_SPACE ;
+            CGFloat durationPoxY = CGRectGetMinY(_contentF);
+            CGFloat durationWidth = SMALL_ICON_SIZE;
+            CGFloat durationHeight = CGRectGetHeight(_contentF);
+            _voiceDurationF = CGRectMake(durationPoxX, durationPoxY, durationWidth, durationHeight);
+        }
+        else{
+            CGFloat contentMaxX = CGRectGetMaxX(_contentF);
+            CGFloat voicePosX = CGRectGetMinX(_contentF)  + MJTextPadding;
+            CGFloat voicePosY = contentY + (showSize.height - SMALL_ICON_SIZE)/2;
+            _voiceAnimationF = (CGRect){{voicePosX,voicePosY},CGSizeMake(SMALL_ICON_SIZE, SMALL_ICON_SIZE)};
+            
+            
+            CGFloat durationPoxX = contentMaxX  ;
+            CGFloat durationPoxY = CGRectGetMinY(_contentF);
+            CGFloat durationWidth = SMALL_ICON_SIZE;
+            CGFloat durationHeight = CGRectGetHeight(_contentF);
+            _voiceDurationF = CGRectMake(durationPoxX, durationPoxY, durationWidth, durationHeight);
+        }
+     
         
     }
     
@@ -104,5 +139,22 @@
     CGFloat contentMaxY = CGRectGetMaxY(_contentF);
     CGFloat iconMaxY = CGRectGetMaxY(_iconF);
     _cellHeight = MAX(contentMaxY,iconMaxY)+CELLPADDING;
+}
+
+-(CGSize)getVoiceContentSize:(NSInteger)duration{
+    CGSize result;
+    if (duration<1) {
+        result = CGSizeMake(CONTENT_MIN_WIDTH, CONTENT_MIN_HEIGHT);
+    }
+    else if (duration<60){
+        CGFloat resultWidth = CONTENT_MIN_WIDTH + (CONTENT_MAX_WIDTH - CONTENT_MIN_HEIGHT)*(duration/60.f);
+        
+        result = CGSizeMake(resultWidth, CONTENT_MIN_HEIGHT);
+        
+    }
+    else{
+        result = CGSizeMake(CONTENT_MAX_WIDTH, CONTENT_MIN_HEIGHT);
+    }
+    return result;
 }
 @end

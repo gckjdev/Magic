@@ -21,6 +21,7 @@
 @property (nonatomic,assign,readonly) CGRect        timeF;
 @property (nonatomic,assign,readonly) CGRect        textF;
 @property (nonatomic, assign,readonly) CGRect      voiceAnimationF;
+@property (nonatomic, assign,readonly) CGRect      voiceDurationF;
 @property (nonatomic, assign,readonly) CGRect       imageF;
 @property (nonatomic, assign,readonly) CGRect       contentF;
 @property (nonatomic,assign,readonly) CGFloat       cellHeight;

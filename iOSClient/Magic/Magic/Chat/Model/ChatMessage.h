@@ -29,6 +29,7 @@ typedef enum{
 @property(nonatomic,strong)     NSDate              *time;
 @property (nonatomic,copy)      NSString            *image;
 @property (nonatomic,copy)      NSString            *voice;
+@property (nonatomic, assign)   NSInteger           voiceDuration;
 
 @property (nonatomic,copy)      NSString            *fromUserId;
 @property (nonatomic,copy)      NSString            *fromUser_Ava;
@@ -37,8 +38,8 @@ typedef enum{
 @property (nonatomic, assign)   MessageFromType     fromType;
 @property(nonatomic,assign)     BOOL                hideTime;
 
-@property (nonatomic,strong) PBChat*   pbChat;
+@property (nonatomic,strong)    PBChat*             pbChat;
 
-@property (nonatomic,strong) UIImageView   *myImage;
+@property (nonatomic,strong)    UIImageView         *myImage;
 
 @end
