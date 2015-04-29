@@ -38,7 +38,6 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 @property (nonatomic, assign) CGFloat               toolViewHeight;
 @property (nonatomic,strong) ChangeAvatar           *changeAvatar;
 @property (nonatomic,strong) NSString               *tmpMyVoiceFile;
-@property (nonatomic, assign) CGFloat               playCellIndex;
 @end
 
 

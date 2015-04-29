@@ -22,7 +22,7 @@
 
 
 
-#define IMAGEVIEW_PADDING 20.0f
+#define IMAGEVIEW_PADDING 15.0f
 
 @interface ChatCell()
 @property (nonatomic,strong) UILabel         *timeView;
@@ -104,7 +104,8 @@
 
     //4.图片
     _showImageView = [[UIImageView alloc]init];
-
+    [_showImageView.layer setCornerRadius:6];
+    [_showImageView setClipsToBounds:YES];
     [self.contentView addSubview:_showImageView];
 //    [_showImageView setBackgroundColor:[UIColor redColor]];
     
@@ -114,11 +115,6 @@
     _voiceAnimationView = [[UIImageView alloc]init];
     [self.contentView addSubview:_voiceAnimationView];
     [_voiceAnimationView setContentMode:UIViewContentModeScaleAspectFit];
-    
-    
- 
-  
-    
 
 }
 

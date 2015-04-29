@@ -65,8 +65,13 @@
             NSArray *newChatArray = [[ChatManager sharedInstance]chatList];
             
             if ([_localChatArray count] != [newChatArray count]) {
+                
                 [self dealWithChatArray:newChatArray];
+                
+                [self updatePlayingCellIndex:[_localChatArray count] newDataCount:[newChatArray count]];
+                
                 [self reloadData];
+                
                 _localChatArray = newChatArray;
             }
             [self headerEndRefreshing];
@@ -92,9 +97,16 @@
             NSArray *newChatArray = [[ChatManager sharedInstance]chatList];
             
             if ([_localChatArray count] != [newChatArray count]) {
+                
                 [self dealWithChatArray:newChatArray];
+                
+                [self updatePlayingCellIndex:[_localChatArray count] newDataCount:[newChatArray count]];
                 [self reloadData];
+                
+               
                 [self tableViewScrollToBottom];
+                
+                _localChatArray = newChatArray;
             }
           
             
@@ -107,13 +119,22 @@
 -(void)stopPlayingCellAnimation{
     ChatCell *cell = (ChatCell*)[self cellForRowAtIndexPath:_playingCellPath];
     [cell voiceAnimationStop];
+    _playingCellPath = nil;
 }
 -(void)startPlayingCellAnimation
 {
     ChatCell *cell = (ChatCell*)[self cellForRowAtIndexPath:_playingCellPath];
     [cell voiceAnimationStart];
 }
-
+-(void)updatePlayingCellIndex:(NSInteger)localDataCount newDataCount:(NSInteger)newDataCount{
+    
+    if (_playingCellPath == nil) {
+        return;
+    }
+    NSInteger row = [_playingCellPath row];
+    row += newDataCount - localDataCount;
+    _playingCellPath = [NSIndexPath indexPathForRow:row inSection:_playingCellPath.section];
+}
 -(void)dealWithChatArray:(NSArray *)chatArray{
     NSMutableArray *messageFArray = [NSMutableArray array];
     NSInteger len = [chatArray count];
