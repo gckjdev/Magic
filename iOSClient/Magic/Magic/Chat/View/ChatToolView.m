@@ -81,16 +81,12 @@
     _contentView = [[UITextView alloc]init];
     _contentView.backgroundColor = BARRAGE_BG_COLOR;
     [self addSubview:_contentView];
-    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).offset(COMMON_ICON_SIZE);
-        make.centerY.equalTo(self);
-#ifdef showFaceBtn
-        make.right.equalTo(self).offset(-COMMON_ICON_SIZE*2);
-#else
-        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
-#endif
-        make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
-    }];
+//    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self).offset(COMMON_ICON_SIZE);
+//        make.centerY.equalTo(self);
+//        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
+//        make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
+//    }];
     
    
 }
@@ -286,10 +282,19 @@
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(_viewHeight);
         make.centerX.mas_equalTo(self.superview);
+        
+        make.bottom.mas_equalTo(self.superview.mas_bottom);
+        make.width.mas_equalTo(kScreenWidth);
+      
+        
     }];
     
     [_contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(_viewHeight - COMMON_ICON_SIZE/2);
+        
+        make.left.equalTo(self).offset(COMMON_ICON_SIZE);
+        make.centerY.equalTo(self);
+        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
     }];
     [super updateConstraints];
 }

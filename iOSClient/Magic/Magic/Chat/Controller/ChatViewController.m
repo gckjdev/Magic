@@ -90,7 +90,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 
 -(void)setupTableView{
     
-    CGFloat tableHeight =  -_toolViewHeight;
+//    CGFloat tableHeight =  -_toolViewHeight;
     self.tableView = [[MessageTableView alloc]init];
    
     _tableView.viewHeight = _toolViewHeight;
@@ -98,13 +98,13 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     
     [self.view addSubview:self.tableView];
     
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.height.equalTo(self.view).offset(tableHeight);
-        make.width.equalTo(self.view);
-        make.top.equalTo(self.view);
-   
-    }];
+//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(self.view);
+//        make.height.equalTo(self.view).offset(tableHeight);
+//        make.width.equalTo(self.view);
+//        make.top.equalTo(self.view);
+//   
+//    }];
  
     [_tableView RefreshData];
     
@@ -117,11 +117,11 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     _toolView.viewHeight = _toolViewHeight;
     _toolView.delegate = self;
     [self.view addSubview:_toolView];
-    [_toolView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.view.mas_bottom);
-        make.width.mas_equalTo(kScreenWidth);
-        make.height.mas_equalTo(_toolView.viewHeight);
-    }];
+//    [_toolView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.mas_equalTo(self.view.mas_bottom);
+//        make.width.mas_equalTo(kScreenWidth);
+//        make.height.mas_equalTo(_toolView.viewHeight);
+//    }];
 }
 
 

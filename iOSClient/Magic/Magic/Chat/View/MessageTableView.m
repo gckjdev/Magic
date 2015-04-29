@@ -176,6 +176,10 @@
 -(void)updateConstraints{
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.superview).with.offset(-self.viewHeight);
+        
+        make.centerX.equalTo(self.superview);
+        make.width.equalTo(self.superview);
+        make.top.equalTo(self.superview);
     }];
     [super updateConstraints];
 }
