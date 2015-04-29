@@ -38,6 +38,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 @property (nonatomic, assign) CGFloat               toolViewHeight;
 @property (nonatomic,strong) ChangeAvatar           *changeAvatar;
 @property (nonatomic,strong) NSString               *tmpMyVoiceFile;
+@property (nonatomic, assign) CGFloat               playCellIndex;
 @end
 
 
@@ -98,15 +99,9 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     
     [self.view addSubview:self.tableView];
     
-//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(self.view);
-//        make.height.equalTo(self.view).offset(tableHeight);
-//        make.width.equalTo(self.view);
-//        make.top.equalTo(self.view);
-//   
-//    }];
+
  
-    [_tableView RefreshData];
+    [_tableView refreshData];
     
 
 }
@@ -117,11 +112,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     _toolView.viewHeight = _toolViewHeight;
     _toolView.delegate = self;
     [self.view addSubview:_toolView];
-//    [_toolView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.mas_equalTo(self.view.mas_bottom);
-//        make.width.mas_equalTo(kScreenWidth);
-//        make.height.mas_equalTo(_toolView.viewHeight);
-//    }];
+
 }
 
 
@@ -213,7 +204,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
                                           callback:^(NSError *error)
     {
         if (error == nil) {
-            [_tableView RefreshData];
+            [_tableView refreshData];
         }
         
     }];
@@ -229,7 +220,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
    
     [[ChatService sharedInstance]sendChatWithText:text toUserId:nil callback:^(NSError *error) {
         if (error == nil) {
-             [_tableView RefreshData];
+             [_tableView refreshData];
         }
        
     }];
@@ -246,7 +237,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
                           
                           if (image){
                               [[ChatService sharedInstance]sendChatWithImage:image toUserId:nil callback:^(NSError *error) {
-                                  [_tableView RefreshData];
+                                  [_tableView refreshData];
                               }];
                               
                           }
@@ -273,10 +264,22 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 
 -(void)voiceViewSinglePress:(PBChat*)pbChat cell:(ChatCell *)cell
 {
-   [self getVoiceFile:pbChat callback:^(NSString *filePath) {
+    NSIndexPath * path = [self.tableView indexPathForCell:cell];
+    
+    [_tableView stopPlayingCellAnimation];
+    _tableView.playingCellPath = path;
+    
+    [self getVoiceFile:pbChat callback:^(NSString *filePath) {
        PPDebug(@"neng : filePath %@",filePath);
+       [_tableView startPlayingCellAnimation];
+        
        [[AudioManager sharedInstance]playInitWithFile:[NSURL URLWithString:filePath]];
-       [[AudioManager sharedInstance] playerStart];
+       [[AudioManager sharedInstance] playerStart:^(BOOL flag) {
+           PPDebug(@"playFinish %d",flag);
+
+           [_tableView stopPlayingCellAnimation];
+           
+       }];
    }];
 }
 

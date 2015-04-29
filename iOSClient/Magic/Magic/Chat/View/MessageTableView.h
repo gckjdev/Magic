@@ -18,8 +18,10 @@ typedef void  (^VoiceViewSinglePressBlock)(PBChat* pbChat,ChatCell *cell);
 @property (nonatomic, strong) NSArray   *messageFrames;
 @property (nonatomic, assign) CGFloat   viewHeight;
 @property (nonatomic, assign) id      controller;
+@property (nonatomic,strong) NSIndexPath   *playingCellPath;
 @property (nonatomic,copy) ImageViewSinglePressBlock imageViewSinglePressBlock;
 @property (nonatomic,copy) VoiceViewSinglePressBlock voiceViewSinglePressBlock;
--(void)RefreshData;
-
+-(void)refreshData;
+-(void)stopPlayingCellAnimation;
+-(void)startPlayingCellAnimation;
 @end
