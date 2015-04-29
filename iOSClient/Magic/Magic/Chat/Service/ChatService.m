@@ -207,7 +207,7 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     if (url == nil)
         return;
     
-    _downloadDataFileCallBackBlock = callback;
+//    _downloadDataFileCallBackBlock = callback;
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -224,8 +224,8 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
         [downloadHttpRequest startSynchronous];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            PPDebug(@"request finished");
-            EXECUTE_BLOCK(_downloadDataFileCallBackBlock,
+            PPDebug(@"download finished");
+            EXECUTE_BLOCK(callback,
                           downloadHttpRequest.downloadDestinationPath,
                           downloadHttpRequest.error);
         });
