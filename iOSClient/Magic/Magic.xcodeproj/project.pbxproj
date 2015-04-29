@@ -552,6 +552,21 @@
 		3638C31B1AE0B070008246CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31A1AE0B070008246CF /* MobileCoreServices.framework */; };
 		3638C31D1AE0B07D008246CF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31C1AE0B07D008246CF /* CFNetwork.framework */; };
 		3638C3211AE0B0D1008246CF /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3638C31F1AE0B0D1008246CF /* libMiPushSDK.a */; };
+		651B266A1AF0E6270076CE71 /* ChatRecordHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651B26691AF0E6270076CE71 /* ChatRecordHintView.m */; };
+		651B26751AF0E7830076CE71 /* bottleRecordingSignal000@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B266B1AF0E7830076CE71 /* bottleRecordingSignal000@2x.png */; };
+		651B26761AF0E7830076CE71 /* bottleRecordingSignal001@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B266C1AF0E7830076CE71 /* bottleRecordingSignal001@2x.png */; };
+		651B26771AF0E7830076CE71 /* bottleRecordingSignal002@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B266D1AF0E7830076CE71 /* bottleRecordingSignal002@2x.png */; };
+		651B26781AF0E7830076CE71 /* bottleRecordingSignal003@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B266E1AF0E7830076CE71 /* bottleRecordingSignal003@2x.png */; };
+		651B26791AF0E7830076CE71 /* bottleRecordingSignal004@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B266F1AF0E7830076CE71 /* bottleRecordingSignal004@2x.png */; };
+		651B267A1AF0E7830076CE71 /* bottleRecordingSignal005@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26701AF0E7830076CE71 /* bottleRecordingSignal005@2x.png */; };
+		651B267B1AF0E7830076CE71 /* bottleRecordingSignal006@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26711AF0E7830076CE71 /* bottleRecordingSignal006@2x.png */; };
+		651B267C1AF0E7830076CE71 /* bottleRecordingSignal007@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26721AF0E7830076CE71 /* bottleRecordingSignal007@2x.png */; };
+		651B267D1AF0E7830076CE71 /* bottleRecordingSignal008@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26731AF0E7830076CE71 /* bottleRecordingSignal008@2x.png */; };
+		651B267E1AF0E7830076CE71 /* bottleRecordingSignal009@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26741AF0E7830076CE71 /* bottleRecordingSignal009@2x.png */; };
+		651B26831AF0E90B0076CE71 /* RecordCancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B267F1AF0E90B0076CE71 /* RecordCancel@2x.png */; };
+		651B26841AF0E90B0076CE71 /* RecordCancel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26801AF0E90B0076CE71 /* RecordCancel@3x.png */; };
+		651B26851AF0E90B0076CE71 /* RecordingBkg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26811AF0E90B0076CE71 /* RecordingBkg@2x.png */; };
+		651B26861AF0E90B0076CE71 /* RecordingBkg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 651B26821AF0E90B0076CE71 /* RecordingBkg@3x.png */; };
 		652C88B21AEDDB4E00884299 /* icon-record-voice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AD1AEDDB4E00884299 /* icon-record-voice.png */; };
 		652C88B31AEDDB4E00884299 /* iconfont-leftvoice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */; };
 		652C88B41AEDDB4E00884299 /* iconfont-rightvoice.png in Resources */ = {isa = PBXBuildFile; fileRef = 652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */; };
@@ -1416,6 +1431,22 @@
 		3638C3201AE0B0D1008246CF /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		3D127CDED7A3722734306BED /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62E987D56EAB81CEF90C80AA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		651B26681AF0E6270076CE71 /* ChatRecordHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRecordHintView.h; sourceTree = "<group>"; };
+		651B26691AF0E6270076CE71 /* ChatRecordHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRecordHintView.m; sourceTree = "<group>"; };
+		651B266B1AF0E7830076CE71 /* bottleRecordingSignal000@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal000@2x.png"; sourceTree = "<group>"; };
+		651B266C1AF0E7830076CE71 /* bottleRecordingSignal001@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal001@2x.png"; sourceTree = "<group>"; };
+		651B266D1AF0E7830076CE71 /* bottleRecordingSignal002@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal002@2x.png"; sourceTree = "<group>"; };
+		651B266E1AF0E7830076CE71 /* bottleRecordingSignal003@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal003@2x.png"; sourceTree = "<group>"; };
+		651B266F1AF0E7830076CE71 /* bottleRecordingSignal004@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal004@2x.png"; sourceTree = "<group>"; };
+		651B26701AF0E7830076CE71 /* bottleRecordingSignal005@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal005@2x.png"; sourceTree = "<group>"; };
+		651B26711AF0E7830076CE71 /* bottleRecordingSignal006@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal006@2x.png"; sourceTree = "<group>"; };
+		651B26721AF0E7830076CE71 /* bottleRecordingSignal007@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal007@2x.png"; sourceTree = "<group>"; };
+		651B26731AF0E7830076CE71 /* bottleRecordingSignal008@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal008@2x.png"; sourceTree = "<group>"; };
+		651B26741AF0E7830076CE71 /* bottleRecordingSignal009@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottleRecordingSignal009@2x.png"; sourceTree = "<group>"; };
+		651B267F1AF0E90B0076CE71 /* RecordCancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecordCancel@2x.png"; sourceTree = "<group>"; };
+		651B26801AF0E90B0076CE71 /* RecordCancel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecordCancel@3x.png"; sourceTree = "<group>"; };
+		651B26811AF0E90B0076CE71 /* RecordingBkg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecordingBkg@2x.png"; sourceTree = "<group>"; };
+		651B26821AF0E90B0076CE71 /* RecordingBkg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecordingBkg@3x.png"; sourceTree = "<group>"; };
 		652C88AD1AEDDB4E00884299 /* icon-record-voice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-record-voice.png"; sourceTree = "<group>"; };
 		652C88AE1AEDDB4E00884299 /* iconfont-leftvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-leftvoice.png"; sourceTree = "<group>"; };
 		652C88AF1AEDDB4E00884299 /* iconfont-rightvoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-rightvoice.png"; sourceTree = "<group>"; };
@@ -3492,6 +3523,20 @@
 				652C88DE1AEE3D3700884299 /* ReceiverVoiceNodePlaying001@2x.png */,
 				652C88DF1AEE3D3700884299 /* ReceiverVoiceNodePlaying001@3x.png */,
 				652C88E01AEE3D3700884299 /* ReceiverVoiceNodePlaying002@2x.png */,
+				651B267F1AF0E90B0076CE71 /* RecordCancel@2x.png */,
+				651B26801AF0E90B0076CE71 /* RecordCancel@3x.png */,
+				651B26811AF0E90B0076CE71 /* RecordingBkg@2x.png */,
+				651B26821AF0E90B0076CE71 /* RecordingBkg@3x.png */,
+				651B266B1AF0E7830076CE71 /* bottleRecordingSignal000@2x.png */,
+				651B266C1AF0E7830076CE71 /* bottleRecordingSignal001@2x.png */,
+				651B266D1AF0E7830076CE71 /* bottleRecordingSignal002@2x.png */,
+				651B266E1AF0E7830076CE71 /* bottleRecordingSignal003@2x.png */,
+				651B266F1AF0E7830076CE71 /* bottleRecordingSignal004@2x.png */,
+				651B26701AF0E7830076CE71 /* bottleRecordingSignal005@2x.png */,
+				651B26711AF0E7830076CE71 /* bottleRecordingSignal006@2x.png */,
+				651B26721AF0E7830076CE71 /* bottleRecordingSignal007@2x.png */,
+				651B26731AF0E7830076CE71 /* bottleRecordingSignal008@2x.png */,
+				651B26741AF0E7830076CE71 /* bottleRecordingSignal009@2x.png */,
 				652C88E11AEE3D3700884299 /* ReceiverVoiceNodePlaying002@3x.png */,
 				652C88E21AEE3D3700884299 /* ReceiverVoiceNodePlaying003@2x.png */,
 				652C88E31AEE3D3700884299 /* ReceiverVoiceNodePlaying003@3x.png */,
@@ -3560,6 +3605,8 @@
 				656FCF831AE7661F00823DBA /* ChatSideMenuController.m */,
 				656FCF7F1AE7649800823DBA /* ChatSideMenuView.h */,
 				656FCF801AE7649800823DBA /* ChatSideMenuView.m */,
+				651B26681AF0E6270076CE71 /* ChatRecordHintView.h */,
+				651B26691AF0E6270076CE71 /* ChatRecordHintView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3705,6 +3752,7 @@
 				3638C2BE1ADF8079008246CF /* setting@2x.png in Resources */,
 				3638C2F01ADF8079008246CF /* sina_selected@2x.png in Resources */,
 				3638C1DA1ADF8079008246CF /* Common.proto in Resources */,
+				651B26781AF0E7830076CE71 /* bottleRecordingSignal003@2x.png in Resources */,
 				3638C18B1ADF8079008246CF /* default_avatar@3x.png in Resources */,
 				3638BD3E1ADF7C53008246CF /* LaunchScreen.xib in Resources */,
 				3638C2BC1ADF8079008246CF /* friends@2x.png in Resources */,
@@ -3712,6 +3760,7 @@
 				3638C2EA1ADF8079008246CF /* qq_selected@2x.png in Resources */,
 				3638C2E71ADF8079008246CF /* pull_down@2x.png in Resources */,
 				3638C2F21ADF8079008246CF /* weixin@2x.png in Resources */,
+				651B267B1AF0E7830076CE71 /* bottleRecordingSignal006@2x.png in Resources */,
 				3638C2E41ADF8079008246CF /* phone@2x.png in Resources */,
 				3638C25D1ADF8079008246CF /* tag_normal@3x.png in Resources */,
 				3638C2221ADF8079008246CF /* layout6.dat in Resources */,
@@ -3755,7 +3804,9 @@
 				3638C1DB1ADF8079008246CF /* Constants.proto in Resources */,
 				3638C1A91ADF8079008246CF /* pick_friend_add@3x.png in Resources */,
 				3638C2611ADF8079008246CF /* text_normal@3x.png in Resources */,
+				651B267C1AF0E7830076CE71 /* bottleRecordingSignal007@2x.png in Resources */,
 				3638C19A1ADF8079008246CF /* invite_with_code@2x.png in Resources */,
+				651B26791AF0E7830076CE71 /* bottleRecordingSignal004@2x.png in Resources */,
 				3638C2661ADF8079008246CF /* new_message_normal@2x.png in Resources */,
 				652C88B31AEDDB4E00884299 /* iconfont-leftvoice.png in Resources */,
 				3638C1891ADF8079008246CF /* arrows@2x.png in Resources */,
@@ -3792,6 +3843,7 @@
 				3638C28C1ADF8079008246CF /* share_qq_space_pressed@3x.png in Resources */,
 				3638C1B71ADF8079008246CF /* addfriend_qqlogo@3x.png in Resources */,
 				3638C1941ADF8079008246CF /* invite_with_code@2x.png in Resources */,
+				651B267A1AF0E7830076CE71 /* bottleRecordingSignal005@2x.png in Resources */,
 				3638C2DB1ADF8079008246CF /* invite@3x.png in Resources */,
 				3638C2961ADF8079008246CF /* share_wechat_timeline@3x.png in Resources */,
 				3638C1B61ADF8079008246CF /* addfriend_qqlogo@2x.png in Resources */,
@@ -3821,6 +3873,7 @@
 				3638C27C1ADF8079008246CF /* share_wechat_section@3x.png in Resources */,
 				3638C20B1ADF8079008246CF /* firstpage_selected@3x.png in Resources */,
 				3638C2841ADF8079008246CF /* share@3x.png in Resources */,
+				651B26861AF0E90B0076CE71 /* RecordingBkg@3x.png in Resources */,
 				3638C1B51ADF8079008246CF /* addfriend_maybe@3x.png in Resources */,
 				3638C21A1ADF8079008246CF /* female@2x.png in Resources */,
 				3638C2831ADF8079008246CF /* share@2x.png in Resources */,
@@ -3890,6 +3943,7 @@
 				3638C2D91ADF8079008246CF /* friends@3x.png in Resources */,
 				3638C2321ADF8079008246CF /* NewFeedController.xib in Resources */,
 				3638C2EB1ADF8079008246CF /* qq_selected@3x.png in Resources */,
+				651B26831AF0E90B0076CE71 /* RecordCancel@2x.png in Resources */,
 				3638C2081ADF8079008246CF /* firstpage_normal@2x.png in Resources */,
 				3638C1AF1ADF8079008246CF /* pick_friend_delete_pressed@3x.png in Resources */,
 				3638C2721ADF8079008246CF /* Grids_normal@2x.png in Resources */,
@@ -3905,16 +3959,19 @@
 				3638C1E71ADF8079008246CF /* demo1.dat in Resources */,
 				3638C2041ADF8079008246CF /* barbg64@3x.png in Resources */,
 				652C88E71AEE3D3700884299 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
+				651B26751AF0E7830076CE71 /* bottleRecordingSignal000@2x.png in Resources */,
 				3638C26B1ADF8079008246CF /* pause@3x.png in Resources */,
 				652C88CC1AEE101900884299 /* ToolViewKeyboardHL@3x.png in Resources */,
 				3638C2DA1ADF8079008246CF /* invite@2x.png in Resources */,
 				652C88B41AEDDB4E00884299 /* iconfont-rightvoice.png in Resources */,
 				3638C2791ADF8079008246CF /* share_sina_pressed@2x.png in Resources */,
+				651B267E1AF0E7830076CE71 /* bottleRecordingSignal009@2x.png in Resources */,
 				3638C1E91ADF8079008246CF /* demo11.dat in Resources */,
 				3638C2501ADF8079008246CF /* graffiti_normal@2x.png in Resources */,
 				3638C1871ADF8079008246CF /* addfriend_search@2x.png in Resources */,
 				652C88C71AEE101900884299 /* ToolViewInputVoiceHL@2x.png in Resources */,
 				3638C1AB1ADF8079008246CF /* pick_friend_add_pressed@3x.png in Resources */,
+				651B267D1AF0E7830076CE71 /* bottleRecordingSignal008@2x.png in Resources */,
 				3638C2551ADF8079008246CF /* grids@3x.png in Resources */,
 				3638C1A01ADF8079008246CF /* delete_friend@2x.png in Resources */,
 				3638C2161ADF8079008246CF /* published_selected@2x.png in Resources */,
@@ -3957,16 +4014,20 @@
 				652C88DA1AEE2C2500884299 /* SenderVoiceNodePlaying002@3x.png in Resources */,
 				3638C2901ADF8079008246CF /* share_sina_pressed@3x.png in Resources */,
 				3638C0FB1ADF8078008246CF /* Resource.bundle in Resources */,
+				651B26761AF0E7830076CE71 /* bottleRecordingSignal001@2x.png in Resources */,
 				3638C2771ADF8079008246CF /* share_sina@2x.png in Resources */,
 				3638C2ED1ADF8079008246CF /* setting@3x.png in Resources */,
 				3638C1E41ADF8079008246CF /* User.proto in Resources */,
 				3638C26C1ADF8079008246CF /* pause_selected@2x.png in Resources */,
 				3638C1D41ADF8079008246CF /* plus_menu_add_tag@3x.png in Resources */,
+				651B26841AF0E90B0076CE71 /* RecordCancel@3x.png in Resources */,
+				651B26851AF0E90B0076CE71 /* RecordingBkg@2x.png in Resources */,
 				3638C2801ADF8079008246CF /* share_wechat_timeline@3x.png in Resources */,
 				3638C27F1ADF8079008246CF /* share_wechat_timeline@2x.png in Resources */,
 				652C88E51AEE3D3700884299 /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
 				3638C26A1ADF8079008246CF /* pause@2x.png in Resources */,
 				3638C1D91ADF8079008246CF /* Barrage.proto in Resources */,
+				651B26771AF0E7830076CE71 /* bottleRecordingSignal002@2x.png in Resources */,
 				3638C1F21ADF8079008246CF /* demo8.dat in Resources */,
 				3638C16F1ADF8079008246CF /* FriendListController.xib in Resources */,
 				3638C2171ADF8079008246CF /* published_selected@3x.png in Resources */,
@@ -4180,6 +4241,7 @@
 				3638C1BC1ADF8079008246CF /* AvatarsCollectionViewLayout.m in Sources */,
 				3638C2B51ADF8079008246CF /* PhoneEditImageController.m in Sources */,
 				3638C2FF1ADF8079008246CF /* UserDetailCell.m in Sources */,
+				651B266A1AF0E6270076CE71 /* ChatRecordHintView.m in Sources */,
 				3638C1521ADF8079008246CF /* UILabel+Extend.m in Sources */,
 				3638C1C21ADF8079008246CF /* FriendListTableView.m in Sources */,
 				3638C1551ADF8079008246CF /* LogUtil.m in Sources */,

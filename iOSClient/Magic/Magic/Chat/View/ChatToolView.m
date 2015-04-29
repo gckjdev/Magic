@@ -14,6 +14,7 @@
 #import "FontInfo.h"
 #import "ColorInfo.h"
 #import "ViewInfo.h"
+#import "UIImageUtil.h"
 
 
 #define COMMON_ICON_SIZE 40.0f
@@ -51,7 +52,6 @@
     [self setupContentView];
     [self setupPlaceHolder];
     [self setupTalkButton];
-    [self setupFaceButton];
     [self setupPlusButton];
     [self setupSendButton];
  
@@ -78,17 +78,10 @@
 }
 
 -(void)setupContentView{
+    
     _contentView = [[UITextView alloc]init];
     _contentView.backgroundColor = BARRAGE_BG_COLOR;
     [self addSubview:_contentView];
-//    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self).offset(COMMON_ICON_SIZE);
-//        make.centerY.equalTo(self);
-//        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
-//        make.height.mas_equalTo(@(COMMON_ICON_SIZE - COMMON_ICON_SIZE/4));
-//    }];
-    
-   
 }
 
 -(void)setupPlaceHolder{
@@ -116,8 +109,10 @@
     [_talkButton setTitle:@"松开 结束"  forState:UIControlStateHighlighted];
     [_talkButton.titleLabel  setFont:BARRAGE_TEXTFIELD_FONT];
     [_talkButton setTitleColor:COLOR255(0,0,0,200) forState:UIControlStateNormal];
+    [_talkButton setBackgroundImage:[UIImage imageWithColor:COLOR255(0,0,0,60)] forState:UIControlStateHighlighted];
     [_talkButton setHidden:YES];
     [_talkButton.layer setBorderWidth:1.0];
+    [_talkButton setClipsToBounds:YES];
     [_talkButton.layer setCornerRadius:5.0];
     UIColor *borderColor = COLOR255(0,0,0,100);
     [_talkButton.layer setBorderColor: borderColor.CGColor];
@@ -134,20 +129,7 @@
     [_talkButton addTarget:self action:@selector(talkButtonTouchCancelAction) forControlEvents:UIControlEventTouchCancel];
 }
 
--(void)setupFaceButton{
-#ifdef showFaceBtn
-    _faceBtn = [[UIButton alloc]init];
-    [_faceBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_nor"] forState:UIControlStateNormal];
-    [_faceBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_press"] forState:UIControlStateHighlighted];
-    [_faceBtn addTarget:self action:@selector(faceBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_faceBtn];
-    [_faceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(COMMON_ICON_SIZE, COMMON_ICON_SIZE));
-        make.right.equalTo(self).offset(-COMMON_ICON_SIZE);
-        make.centerY.equalTo(self);
-    }];
-#endif
-}
+
 -(void)setupPlusButton{
     _plusBtn = [[UIButton alloc]init];
     
@@ -240,7 +222,6 @@
                    forState:UIControlStateNormal];
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewKeyboardHL"]
                    forState:UIControlStateHighlighted];
-//        [self endEditing:YES];
     }
     else{
         [_talkButton setHidden:YES];
@@ -248,9 +229,6 @@
         [_placeHolder setHidden:NO];
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoice"] forState:UIControlStateNormal];
         [_soundBtn setImage:[UIImage imageNamed:@"ToolViewInputVoiceHL"] forState:UIControlStateHighlighted];
-        
-       
-//        [_contentView becomeFirstResponder];
     }
    
     if (self.delegate&&[self.delegate respondsToSelector:@selector(changeInputMode:textView:)]) {
