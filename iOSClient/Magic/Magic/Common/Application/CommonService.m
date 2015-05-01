@@ -196,8 +196,10 @@
                       // success
                       NSString* cdnKey = [resp objectForKey:@"key"];
                       
-                      NSString* url = [[CdnManager sharedInstance] getUserDataUrl:cdnKey];
                       
+                      
+                      NSString* url = [[CdnManager sharedInstance] getUserDataUrl:cdnKey];
+                      PPDebug(@"neng upload url:%@",url);
                       EXECUTE_BLOCK(callback,url ,nil);
                   }
                   else{

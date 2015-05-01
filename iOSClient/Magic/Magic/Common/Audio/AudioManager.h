@@ -9,6 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
+
+#define DEFAULT_SAVE_VOICE @"Voice"
+
+@protocol AuidoManagerDelegate <NSObject>
+
+@optional
+-(void)recordingUpdateImage:(NSInteger) volumeNum;
+
+@end
 typedef void(^PlayFinishCallBackBlock) (BOOL flag);
 
 
@@ -18,7 +27,8 @@ typedef void(^PlayFinishCallBackBlock) (BOOL flag);
 
 @property (nonatomic,strong) AVAudioRecorder   *recorder;
 @property (nonatomic,strong) AVAudioPlayer   *player;
-
+@property (nonatomic, assign) float      recordDuration;
+@property (nonatomic, assign) id<AuidoManagerDelegate>      delegate;
 
 + (instancetype) sharedInstance;
 + (void)setPermission;
@@ -26,7 +36,7 @@ typedef void(^PlayFinishCallBackBlock) (BOOL flag);
 
 -(void)recorderInitWithPath:(NSURL*)PathURL;
 -(void)recorderStart;
--(void)recorderEnd;
+-(void)recorderStop;
 -(void)recorderCancel;
 
 -(void)playInitWithFile:(NSURL*)fileURL;
@@ -35,4 +45,7 @@ typedef void(^PlayFinishCallBackBlock) (BOOL flag);
 -(void)playerStop;
 -(void)playerPause;
 -(void)playerResume;
+
+//play，record销毁计时器等资源
+-(void)cancel;
 @end

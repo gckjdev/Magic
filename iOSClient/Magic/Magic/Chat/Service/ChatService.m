@@ -71,9 +71,15 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
     [chatBuilder setType:PBChatTypeVoiceChat];
     [chatBuilder setToUserId:toUserId];
     
-    [[AudioManager sharedInstance]playInitWithFile:fileURL];
     
-    int duration = [AudioManager sharedInstance].player.duration;
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:fileURL options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                          [NSNumber numberWithBool:YES],
+                                                                          AVURLAssetPreferPreciseDurationAndTimingKey,
+                                                                          nil]] ;
+    CMTime audioDuration = audioAsset.duration;
+    float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+    
+    int duration = audioDurationSeconds;
     [chatBuilder setDuration:duration];
     
     NSData * data = [NSData dataWithContentsOfURL:fileURL];
@@ -85,18 +91,18 @@ IMPL_SINGLETON_FOR_CLASS(UserService)
             [self sendChatCommonMessage:chatBuilder callback:^(NSError *error1) {
                 
                 if (error1 ==nil) {
-                    PPDebug(@"sendImageChatMessage  success");
+                    PPDebug(@"sendChatWithAudio  success");
                 }
                 else
                 {
-                    PPDebug(@"sendImageChatMessage  fail %@",error1.debugDescription);
+                    PPDebug(@"sendChatWithAudio  fail %@",error1.debugDescription);
                 }
                 EXECUTE_BLOCK(callback,error1);
             }];
         }
         else
         {
-            PPDebug(@"sendImageChatMessage  fail %@",error.debugDescription);
+            PPDebug(@"sendChatWithAudio  fail %@",error.debugDescription);
             EXECUTE_BLOCK(callback,error);
         }
     }];

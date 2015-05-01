@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "User.pb.h"
 
-@class ChatCell;
-typedef void  (^ImageViewSinglePressBlock)(PBChat* pbChat,UIImage *image);
-typedef void  (^VoiceViewSinglePressBlock)(PBChat* pbChat,ChatCell *cell);
 
 @interface MessageTableView : UITableView
 
@@ -19,8 +16,7 @@ typedef void  (^VoiceViewSinglePressBlock)(PBChat* pbChat,ChatCell *cell);
 @property (nonatomic, assign) CGFloat   viewHeight;
 @property (nonatomic, assign) id      controller;
 @property (nonatomic,strong) NSIndexPath   *playingCellPath;
-@property (nonatomic,copy) ImageViewSinglePressBlock imageViewSinglePressBlock;
-@property (nonatomic,copy) VoiceViewSinglePressBlock voiceViewSinglePressBlock;
+
 -(void)refreshData;
 -(void)stopPlayingCellAnimation;
 -(void)startPlayingCellAnimation;

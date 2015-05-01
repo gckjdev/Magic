@@ -127,6 +127,7 @@
     [_talkButton addTarget:self action:@selector(talkButtonTouchDownAction) forControlEvents:UIControlEventTouchDown];
     [_talkButton addTarget:self action:@selector(talkButtonTouchUpInsideAction) forControlEvents:UIControlEventTouchUpInside];
     [_talkButton addTarget:self action:@selector(talkButtonTouchCancelAction) forControlEvents:UIControlEventTouchCancel];
+    [_talkButton addTarget:self action:@selector(talkButtonTouchUpOutsideAction) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 
@@ -255,7 +256,11 @@
         [self.delegate talkButtonTouchCancel];
     }
 }
-
+-(void)talkButtonTouchUpOutsideAction{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(talkButtonTouchUpOutside)]) {
+        [self.delegate talkButtonTouchCancel];
+    }
+}
 - (void)updateConstraints {
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(_viewHeight);
