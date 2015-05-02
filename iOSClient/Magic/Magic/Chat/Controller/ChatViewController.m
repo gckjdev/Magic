@@ -23,13 +23,14 @@
 #import "FileUtil.h"
 #import "StringUtil.h"
 #import "VoiceCacheManager.h"
+#import "ChatRecordHintView.h"
 
 
 #define DEFAULT_SAVE_AUDIO_NAME @"user_talking.wav"
 
 typedef void (^GetVoicePathCallBack) (NSString* filePath);
 
-@interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate,ChatCellDelegate>
+@interface ChatViewController ()<UITextFieldDelegate,UITextViewDelegate,ChatToolViewDelegate,ChatCellDelegate,AuidoManagerDelegate>
 
 
 @property (nonatomic,strong) ChatToolView           *toolView;
@@ -38,6 +39,7 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 @property (nonatomic, assign) CGFloat               toolViewHeight;
 @property (nonatomic,strong) ChangeAvatar           *changeAvatar;
 @property (nonatomic,strong) NSString               *tmpMyVoiceFile;
+@property (nonatomic,strong) ChatRecordHintView     *recordHintView;
 @end
 
 
@@ -54,8 +56,10 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     [self setupView];
     [self setupTableView];
     [self setupToolView];
+    [self setupRecordHintView];
     [self addLeftMenuButton];
-
+    
+    [AudioManager sharedInstance].delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,9 +92,19 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
     self.changeAvatar = [[ChangeAvatar alloc] init];
 }
 
+-(void)setupRecordHintView{
+    _recordHintView = [[ChatRecordHintView alloc]init];
+    [_recordHintView setHidden:YES];
+    [self.view addSubview:_recordHintView];
+    [_recordHintView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(CHATRECORDHINTVIEW_WIDTH, CHATRECORDHINTVIEW_HEIGHT));
+        make.centerX.mas_equalTo(self.view);
+        make.centerY.mas_equalTo(self.view).offset(-kTabBarHeight);
+    }];
+}
 -(void)setupTableView{
     
-//    CGFloat tableHeight =  -_toolViewHeight;
+
     self.tableView = [[MessageTableView alloc]init];
    
     _tableView.viewHeight = _toolViewHeight;
@@ -185,18 +199,20 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 
 -(void)talkButtonTouchDown
 {
-    NSString *tmpDir = [FileUtil getAppTempDir];
+    NSString *tmpDir = [FileUtil getAppDocumentDir];
 
-    _tmpMyVoiceFile = [NSString stringWithFormat:@"%@%@.wav",tmpDir,[NSString GetUUID]];
+    _tmpMyVoiceFile = [NSString stringWithFormat:@"%@/%@/%@.wav",tmpDir,DEFAULT_SAVE_VOICE,[NSString GetUUID]];
     PPDebug(@"neng : wav save  : %@ ",_tmpMyVoiceFile);
     [[AudioManager sharedInstance]recorderInitWithPath:[NSURL URLWithString:_tmpMyVoiceFile]];
     [[AudioManager sharedInstance]recorderStart];
+    
+    [_recordHintView setHidden:NO];
 }
 
 -(void)talkButtonTouchUpInside
 {
-    [[AudioManager sharedInstance]recorderEnd];
-    
+    [[AudioManager sharedInstance]recorderStop];
+    [_recordHintView setHidden:YES];
  
     
     [[ChatService sharedInstance]sendChatWithAudio:_tmpMyVoiceFile toUserId:@""
@@ -212,6 +228,13 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
 -(void)talkButtonTouchCancel
 {
     [[AudioManager sharedInstance]recorderCancel];
+    [_recordHintView setHidden:YES];
+}
+
+-(void)talkButtonTouchUpOutside
+{
+    [[AudioManager sharedInstance]recorderCancel];
+    [_recordHintView setHidden:YES];
 }
 
 -(void)sendMessageButtonSingleTouch:(NSString*)text
@@ -310,5 +333,12 @@ typedef void (^GetVoicePathCallBack) (NSString* filePath);
         
     }
     EXECUTE_BLOCK(callback,voiceFilePath);
+}
+#pragma mark - AudioManagerDelegate
+-(void)recordingUpdateImage:(NSInteger) volumeNum
+{
+    PPDebug(@"neng : volumeNum %d",volumeNum);
+    [_recordHintView updateVolumeImage:volumeNum];
+    
 }
 @end

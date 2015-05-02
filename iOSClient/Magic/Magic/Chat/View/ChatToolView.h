@@ -19,6 +19,7 @@
 -(void)talkButtonTouchDown;
 -(void)talkButtonTouchUpInside;
 -(void)talkButtonTouchCancel;
+-(void)talkButtonTouchUpOutside;
 
 -(void)changeInputMode:(BOOL)isTalkMode textView:(UITextView*)textView;
 @end

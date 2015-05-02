@@ -12,10 +12,20 @@
 #import "PPDebug.h"
 #import "FileUtil.h"
 
+
+
 @interface AudioManager()<AVAudioPlayerDelegate>
 
 @property (nonatomic,strong) NSDictionary *recorderSettingsDict;
+
 @property (nonatomic,copy) NSString *playName;
+
+@property (nonatomic,copy) NSString *recordPath;
+
+@property (nonatomic, strong) NSTimer *timer;
+
+
+
 @property (nonatomic,copy) PlayFinishCallBackBlock playFinishCallBackBlock;
 @end
 
@@ -50,33 +60,36 @@
 {
     self = [super init];
     if (self) {
-        
+        _recorderSettingsDict =[[NSDictionary alloc] initWithObjectsAndKeys:
+                                [NSNumber numberWithFloat: 8000.0],AVSampleRateKey, //采样率
+                                [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
+                                [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
+                                [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
+                                [NSNumber numberWithInt: AVAudioQualityMedium],AVEncoderAudioQualityKey,//音频编码质量
+                                nil];
     }
     return self;
 }
 
 #pragma mark - recorder
 -(void)recorderInitWithPath:(NSURL*)PathURL{
-    _recorderSettingsDict =[[NSDictionary alloc] initWithObjectsAndKeys:
-                            [NSNumber numberWithFloat: 8000.0],AVSampleRateKey, //采样率
-                            [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
-                            [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,//采样位数 默认 16
-                            [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,//通道的数目
-                            [NSNumber numberWithInt: AVAudioQualityMedium],AVEncoderAudioQualityKey,//音频编码质量
-                            nil];
+   
     //按下录音
     if ([self canRecord]) {
         
-        NSError *error = nil;
-        _recorder = nil;
+         NSError *error = nil;
+        [self recorderStop];
+        
+        _recordPath = PathURL.absoluteString;
+
+        
+        [self createFilePath];
         _recorder = [[AVAudioRecorder alloc] initWithURL:PathURL settings:_recorderSettingsDict error:&error];
         
         if (_recorder) {
             _recorder.meteringEnabled = YES;
             [_recorder prepareToRecord];
-            
-//            [_recorder record];
-            
+
             
         } else
         {
@@ -88,21 +101,88 @@
 
 }
 
+//创建存储路径
+-(void)createFilePath
+{
+    NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(
+                                                            NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docsDir = [dirPaths objectAtIndex:0];
+    NSString *savedImagePath = [docsDir
+                                stringByAppendingPathComponent:DEFAULT_SAVE_VOICE];
+    BOOL isDir = NO;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL existed = [fileManager fileExistsAtPath:savedImagePath isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+        [fileManager createDirectoryAtPath:savedImagePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+}
 -(void)recorderStart
 {
    [_recorder record];
+    
+    NSTimer *timer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(updateImage) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    [timer fire];
+    self.timer = timer;
 }
 
--(void)recorderEnd{
+-(void)recorderStop{
     
-    [_recorder stop];
+    if (_recorder&&_recorder.isRecording) {
+         [_recorder stop];
+        _recorder = nil;
+    }
+    else{
+        _recorder = nil;
+    }
+   
+    [self.timer invalidate];
+    
+
+    
+
 }
 
 -(void)recorderCancel{
-    [_recorder stop];
+    if (_recorder&&_recorder.isRecording) {
+        [_recorder stop];
+         _recorder = nil;
+    }
     [_recorder deleteRecording];
+    [self.timer invalidate];
 }
-
+- (void)updateImage {
+    
+    [self.recorder updateMeters];
+    double lowPassResults = pow(10, (0.05 * [self.recorder peakPowerForChannel:0]));
+    float result  = 1000 * (float)lowPassResults;
+    NSLog(@"%f", result);
+    int no = 0;
+    if (result > 0 && result <= 5) {
+        no = 1;
+    } else if ( result <= 10) {
+        no = 2;
+    } else if (result <= 20) {
+        no = 3;
+    } else if (result <= 30) {
+        no = 4;
+    } else if ( result <= 40) {
+        no = 5;
+    } else if (result <= 50) {
+        no = 6;
+    }else if  (result <= 60){
+        no = 7;
+    }else if  (result <= 70){
+        no = 8;
+    }else {
+        no = 9;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(recordingUpdateImage:)]) {
+        [self.delegate recordingUpdateImage :no];
+    }
+}
 
 #pragma  mark - player
 
@@ -142,10 +222,14 @@
 
 -(void)playerStop
 {
-//    if(_player.isPlaying){
-//        EXECUTE_BLOCK(_playFinishCallBackBlock,NO);
-//    }
-    [_player stop];
+
+    if(_player&&_player.isPlaying){
+        [self playerStop];
+        _player = nil;
+    }
+    else{
+        _player = nil;
+    }
     
 }
 -(void)playerPause
@@ -164,6 +248,13 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        NSError * sessionError;
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+        if(audioSession == nil)
+            NSLog(@"Error creating session: %@", [sessionError description]);
+        else
+            [audioSession setActive:YES error:nil];
+        
         if ([audioSession respondsToSelector:@selector(requestRecordPermission:)]) {
             [audioSession performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
                 if (granted) {
@@ -184,6 +275,12 @@
     }
     
     return bCanRecord;
+}
+
+-(void)cancel
+{
+    [self playerStop];
+    [self recorderStop];
 }
 
 #pragma mark - player delegate

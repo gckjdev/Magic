@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
+#define CHATRECORDHINTVIEW_WIDTH    180.0f
+#define CHATRECORDHINTVIEW_HEIGHT   180.0f
+
 @interface ChatRecordHintView : UIView
+@property (nonatomic,strong) UIButton   *volumeImageView;
+
+-(void)updateVolumeImage:(NSInteger)volumeNum;
 
 @end
